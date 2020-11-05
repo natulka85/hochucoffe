@@ -1,0 +1,112 @@
+.pers-info{
+  &__list{
+    display: flex;
+    padding-top: 14px;
+    justify-content: flex-end;
+  }
+  &__item{
+    position: relative;
+    text-align: center;
+    width: 86px;
+    cursor: pointer;
+    &.is-main,
+    &.is-catalog{
+      display: none;
+    }
+    &:not(:first-child){
+      margin-left: 34px;
+    }
+  }
+  &__text{
+    white-space: nowrap;
+  }
+  &__num{
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: $white;
+    background: $bege;
+  }
+  &__link{
+    color: $white;
+    display: block;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  &__icon{
+    height: 46px;
+    line-height: 46px;
+    &.icon-1c_sravnn:before{
+      font-size: 22px;
+    }
+    &.icon-1e_heart:before{
+      font-size: 26px;
+    }
+    &.icon-1g_coffecapn:before{
+      font-size: 36px;
+    }
+  }
+}
+
+@media #{$media-640} {
+  .pers-info{
+    position: fixed;
+    bottom: -1px;
+    z-index: 1000;
+    background: $grayLight;
+    width: 100%;
+    @include Shadow();
+    &__link{
+      color: $grayBrown;
+    }
+    &__list{
+      justify-content: space-between;
+      padding: 8px 6px;
+    }
+    &__text{
+      font-size: 12px;
+      line-height: 16px;
+    }
+    &__item{
+      width: auto;
+      &.is-main,
+      &.is-catalog{
+        display: block;
+      }
+      &:not(:first-child) {
+        margin-left: 0;
+      }
+    }
+   &__icon{
+     height: 26px;
+     line-height: 26px;
+     &.icon-1c_sravnn:before{
+       font-size: 18px;
+     }
+     &.icon-1e_heart:before{
+       font-size: 16px;
+     }
+     &.icon-1g_coffecapn:before{
+       font-size: 22px;
+     }
+     &.icon-2i_katalog:before{
+       font-size: 20px;
+     }
+     &.icon-2j_house:before{
+       font-size: 20px;
+     }
+   }
+    &__num{
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      font-size: 12px;
+    }
+  }
+}

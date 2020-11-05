@@ -1,0 +1,88 @@
+doctype html
+html(lang="en")
+    - var pageTitle = 'Корзина';
+    include ../includes/head
+    body
+        //script(type='text/javascript', src='/js/vendor/plyr.min.js')
+        .wrapper
+            .content
+                include ../includes/header
+                .page.inner
+                    include ../includes/menu-top
+                    .basket
+                        include ../includes//breadcrumbs
+                        .page-block-head
+                            h1.page-title._type-1 Корзина
+                        .basket__content-wr
+                            .basket__content
+                                .basket__left.is-success
+                                    .basket__text._type-1 Ваш заказ №1345 принят!
+                                    .basket__text._type-2
+                                        p
+                                         span Иван,
+                                         |Вы успешно оформили заказ 20.11.2019 22:31:15.
+                                        p
+                                            span Благодарим, что выбрали нас!<br>
+                                            | Информация о заявке выслана на Ваш электронный адрес.
+                                        p Если у Вас возникнут вопросы к службе доставки в день получения заказа,<br>
+                                            |обращайтесь по телефону: <a href="#"><span>8 (800) 546 55 72</span></a>
+
+
+                                .basket__right
+                                    .basket__result.is-success
+                                        .basket__text._type-3 Информация по заказу
+                                        .basket__res-block
+                                            .basket__name Имя
+                                            .basket__value Наталья
+                                        .basket__res-block
+                                            .basket__name Телефон
+                                            .basket__value +7(926)111-11-11
+                                        .basket__res-block
+                                            .basket__name Email
+                                            .basket__value info@test.ru
+                                        .basket__res-op-wrap
+                                            .basket__res-op
+                                                .basket__res-op-name Доставка:
+                                                .basket__res-op-value Курьером
+                                            .basket__res-op
+                                                .basket__res-op-name Адрес:
+                                                .basket__res-op-value г.Москва, ул.Люблинская, 39/2
+                                            .basket__res-op
+                                                .basket__res-op-name Оплата:
+                                                .basket__res-op-value Банковской картой
+
+
+
+
+                            .basket__table
+                                .basket__text._type-3 Состав заказа:
+                                table
+                                    tr
+                                        th Наименование
+                                        th Цена
+                                        th Кол-во
+                                        th Сумма
+                                        th Скидка
+                                        th Итого
+                                    - for (var i=0; i<8; i++)
+                                        tr
+                                            td Смесь Анапат
+                                            td 2 420 ₽
+                                            td 2
+                                            td 4 840 ₽
+                                            td 1 000 ₽
+                                            td 3 840 ₽
+                                .basket__table-result
+                                    span Итого к оплате:
+                                    strong 15 640 ₽
+
+
+                include ../includes/footer_2
+
+
+
+
+
+
+
+

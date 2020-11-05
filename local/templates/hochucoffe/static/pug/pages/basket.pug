@@ -1,0 +1,130 @@
+doctype html
+html(lang="en")
+    - var pageTitle = 'Корзина';
+    include ../includes/head
+    body
+        //script(type='text/javascript', src='/js/vendor/plyr.min.js')
+        .wrapper
+            .content
+                include ../includes/header
+                .page.inner
+                    include ../includes/menu-top
+                    .basket
+                        include ../includes//breadcrumbs
+                        .page-block-head
+                            h1.page-title._type-1 Корзина
+                        .basket__content-wr
+                            .basket__content
+                                .basket__left
+                                    .basket__list
+                                        - for (var i=0; i<8; i++)
+                                            .basket__item
+                                                .basket__el
+                                                    .basket__el-pic
+                                                        img(src="../../images/develop/basket-prod.png")
+                                                    .basket__el-name-wrap
+                                                        .basket__el-name Смесь Анапат для приготовления в джезве/турке, 100г
+                                                        .basket__gram
+                                                            .cst-select-list.js-sort-list
+                                                                span.cst-select-current.icon-1h_galka 300 г
+                                                                .cst-select(name='gr')
+                                                                    .cst-select-option(value='300') 300 г
+                                                                    .cst-select-option(value='1000') 1000 г
+                                                                    .cst-select-option(value='1500') 1500 г
+                                                    .basket__price
+                                                        .basket__price-c 2 420 ₽
+                                                        .basket__price-old 3 520 ₽
+                                                .basket__el-control
+                                                    .basket__cnt
+                                                        .count-block.js-counter
+                                                            .count-block__btn.js-minus.icon-2b_minus
+                                                            input.count-block__value(value="33")
+                                                            .count-block__btn.js-plus.icon-2a_plus
+                                                    .basket__cont-btn.btn-like Отложить
+                                                    .basket__cont-btn.btn-remove Удалить
+                                    .basket__promo
+                                        input(placeholder="Промокод").basket__promo-input
+                                        .basket__promo-btn Применить
+
+                                .basket__right
+                                    .basket__result
+                                        .basket__res-block
+                                            .basket__name.is-main Итого:
+                                            .basket__value.is-main 9 680 ₽
+                                        .basket__res-block
+                                            .basket__name Товары, 6 шт.
+                                            .basket__value 13 000 ₽
+                                        .basket__res-block
+                                            .basket__name Скидка
+                                            .basket__value -3 320 ₽
+                                        .basket__res-block
+                                            .basket__name Доставка
+                                            .basket__value Бесплатно
+                                        .basket__res-op-wrap
+                                            .basket__res-op
+                                                .basket__res-op-name Доставка:
+                                                .basket__res-op-value.is-link Курьером
+                                            .basket__res-op
+                                                .basket__res-op-name Адрес:
+                                                .basket__res-op-value г.Москва, ул.Люблинская, 39/2
+                                                .basket__link-change Изменить
+                                            .basket__res-op
+                                                .basket__res-op-name Оплата:
+                                                .basket__res-op-value.is-link Банковской картой
+                                        .basket__res-btn-wrap
+                                            a(href='/hochucoffe/static/html/pages/basket_success.html').basket__res-btn.btn.is-brown-light Оформить заказ
+
+
+
+
+                            .basket__form
+                                .basket__title Ваши данные:
+                                .basket__fields.is-name
+                                    .basket__field
+                                        input(placeholder="Имя").basket__input
+                                        span.basket__label (введите Ваше имя)
+                                    .basket__field
+                                        input(placeholder="Телефон").basket__input
+                                        span.basket__label (уточним детали заказа)
+                                    .basket__field
+                                        input(placeholder="Email").basket__input
+                                        span.basket__label (для письма о статусе заказа)
+                                .basket__title Способ доставки:
+                                .basket__form-address
+                                    span Адрес
+                                    span.basket__ad-val г.Москва, ул.Люблинскаяб 39/2
+                                    .basket__link-change Изменить
+                                .basket__fields.is-deliv
+                                    .basket__field
+                                        .basket__form-btn-choose.is-active Доставка курьером (Москва и МО)
+                                        .basket__form-note До 3000 рублей — 400р/доставка<br>Свыше 3000 рублей — бесплатно
+                                    .basket__field
+                                        .basket__form-btn-choose Доставка курьером за МКАД
+                                        .basket__form-note 15 рублей / км.
+                                    .basket__field
+                                        .basket__form-btn-choose Самовывоз
+                                        .basket__form-note Бесплатно
+                                        .basket__form-link
+                                            span.icon-2c_navig Выберите пункт выдачи
+                                .basket__title Способ оплаты:
+                                .basket__fields.is-pay
+                                    .basket__field
+                                        .basket__form-btn-choose Наличными курьеру
+                                    .basket__field
+                                        .basket__form-btn-choose.is-active Банковской картой
+                                .basket__fields.is-pay
+                                    .basket__field
+                                        textarea(placeholder="Комментарий").basket__textarea
+                                        span.basket__label (например, не звонить спит ребенок)
+
+
+
+                include ../includes/footer_2
+
+
+
+
+
+
+
+

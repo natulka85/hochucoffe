@@ -1,0 +1,28 @@
+.breadcrumbs{
+  margin-top: 36px;
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    &.is-center{
+      justify-content: center;
+      margin-top: 10px;
+    }
+  }
+  &__item{
+    margin-right: 18px;
+  }
+  &__link{
+    text-align: left;
+    color: $brownDark;
+  }
+  &__span{
+    color: $grayBrown;
+  }
+  &__link{
+    &:after{
+      content: '/';
+      display: inline-block;
+      margin-left: 18px;
+    }
+  }
+}

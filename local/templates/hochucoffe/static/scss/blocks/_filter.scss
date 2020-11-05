@@ -1,0 +1,110 @@
+.filter{
+  &__control-block{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  &__info{
+    padding: 15px 13px;
+    background: $grayLight;
+    border-radius: 16px;
+  }
+  &__info-title{
+    font-weight: 500;
+  }
+  &__info-btn{
+    font-weight: 500;
+    color: $linkBlue;
+    border-bottom: 1px dashed $linkBlue;
+    transition: .3s;
+    cursor: pointer;
+    &:hover{
+      border-bottom-color: transparent;
+    }
+  }
+  &__info-params{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  &__info-params-name{
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+  &__info-params-value{
+    color: $brownLight;
+    background: #F1F1F1;
+    height: 22px;
+    line-height: 22px;
+    white-space: nowrap;
+    display: inline-block;
+    border-radius: 16px;
+    padding-left: 8px;
+    padding-right: 22px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 4px;
+    &>span{
+      line-height: 1;
+    }
+  }
+  &__remove{
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    top: 50%;
+    margin-top: -11px;
+    right: 0;
+    cursor: pointer;
+    &:before{
+      font-size: 10px;
+    }
+  }
+  &__choose{
+    .filter__info-title{
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .filter__info-btn{
+      color: $grayBrown;
+      font-weight: 300;
+      margin-right: 20px;
+      border-bottom-color: $grayBrown;
+    }
+    .main-checkbox__span:after{
+      border-color: $grayBorder;
+      width: 26px;
+      height: 26px;
+      top: -5px;
+    }
+    .main-checkbox__span:before{
+      top: -5px;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+    }
+  }
+  &__choose-block{
+    margin: 20px 0 30px 0;
+  }
+  &__cnt{
+    color: $grayBrown;
+    padding-left: 10px;
+  }
+  &__label{
+    cursor: pointer;
+  }
+  &__field{
+    margin-top: 20px;
+  }
+  &__btn{
+    height: 38px;
+    width: 100%;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+}

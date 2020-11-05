@@ -1,0 +1,39 @@
+.menu-top{
+  border-radius: 46px 46px 0 0;
+  overflow: hidden;
+  &__list{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 1px solid $grayBorder;
+  }
+  &__item{
+    transition: .3s;
+    flex-grow: 1;
+    text-align: center;
+    background: $grayLight;
+    border-left: 1px solid $grayBorder;
+    &:hover{
+      background: $gradientBlue;
+      .menu-top__link{
+        color: $white;
+        text-decoration: none;
+      }
+    }
+  }
+  &__link{
+    font-family: "Istok Web",sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: block;
+    height: 44px;
+    line-height: 44px;
+    transition: .3s;
+  }
+}
+@media #{$media-640} {
+  .menu-top{
+    display: none;
+  }
+}

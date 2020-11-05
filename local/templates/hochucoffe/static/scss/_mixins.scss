@@ -1,0 +1,248 @@
+// Mixins.
+@import "vars";
+@mixin nl {
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+    list-style: none;
+    list-style-position: outside;
+}
+
+@mixin cf {
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+    }
+    &:after {
+        clear: both;
+    }
+    .lt-ie8 & {
+        zoom: 1;
+    }
+}
+
+@mixin blocks-justify {
+    text-align: justify;
+    text-justify: newspaper;
+}
+
+// You can add your own mixins here:
+@mixin media-1240 {
+    @media (max-width: #{$media-1240}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin large {
+    @media (max-width: #{$large-width}) {
+        @content;
+    }
+}
+
+@mixin font-face-full($fontfamily,$font,$width,$style){
+    $file: "../fonts/" + $fontfamily + "/" + $font;
+    @include font-face-normal($fontfamily, $file, $width, $style);
+}
+@function str-replace($string, $search, $replace: "") {
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+@mixin font-face-normal($name, $path, $weight: null, $style: null, $exts: eot woff ttf svg) {
+    $src: null;
+
+    $extmods: (
+            eot: "?",
+            svg: "#" + str-replace($name, " ", "_")
+    );
+
+    $formats: (
+            otf: "opentype",
+            ttf: "truetype"
+    );
+
+    @each $ext in $exts {
+        $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+    }
+
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+        font-display: swap;
+        src: $src;
+    }
+}
+
+@mixin standardlist(){
+    ul{
+        list-style: none;
+        line-height: 1.86;
+        padding-left: 0;
+        margin: 2rem 0;
+        & > li{
+            position: relative;
+            padding-left: 24px;
+            &:before{
+                content: '';
+                display: block;
+                border-radius: 50%;
+                width: 10px;
+                height: 10px;
+                border: 2px solid #4c9560;
+                position: absolute;
+                left: 2px;
+                top: 8px;
+                @media screen and(max-width: 640px){
+                    top: 4px;
+                }
+            }
+            &:not(:last-child){
+                margin-bottom: 1rem;
+                @media screen and(max-width: 640px){
+                    margin-bottom: 1.8rem;
+                }
+            }
+        }
+        @media screen and(max-width: 640px){
+            margin-bottom: 3rem;
+            font-size: 13px;
+            line-height: 1.23;
+        }
+    }
+    ol{
+        padding-left: 0;
+        line-height: 1.86;
+        list-style-type: none; /* Убираем исходные маркеры */
+        counter-reset: num; /* Задаём имя счетчика */
+        margin: 2rem 0;
+        & >li{
+            &:before{
+                content: counter(num) '. '; /* Выводим число */
+                counter-increment: num; /* Увеличиваем значение счётчика */
+                color: #4c9560; /* Цвет */
+                padding-right: 1rem;
+            }
+            &:not(:last-child){
+                margin-bottom: 1rem;
+                @media screen and(max-width: 640px){
+                    margin-bottom: 1.8rem;
+                }
+            }
+        }
+        @media screen and(max-width: 640px){
+            margin-bottom: 3rem;
+            font-size: 13px;
+            line-height: 1.23;
+        }
+    }
+}
+@mixin standardP(){
+    p {
+        line-height: 1.86;
+
+            &:not(:last-child){
+                margin-bottom: 2rem;
+            }
+        @media screen and(max-width: 640px){
+            font-size: 13px;
+            line-height: 1.23;
+        }
+    }
+}
+
+@mixin standardHH(){
+    h1,
+    h1.name-page{
+        margin-bottom: 25px;
+    }
+    h2{
+        font-size: 28px;
+        margin: 25px 0;
+        font-weight: normal;
+        @media #{$media-640} {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+    }
+    h3{
+        font-size: 26px;
+        margin: 23px 0;
+        font-weight: normal;
+        @media #{$media-640} {
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+    }
+    h4{
+        font-size: 24px;
+        margin: 0;
+        font-weight: normal;
+        line-height: 1.86;
+        @media #{$media-640} {
+            font-size: 20px;
+        }
+    }
+    h5{
+        font-size: 22px;
+        margin: 0;
+        line-height: 1.86;
+        font-weight: normal;
+        @media #{$media-640} {
+            font-size: 18px;
+        }
+    }
+    h6{
+        font-size: 20px;
+        margin: 0;
+        line-height: 1.86;
+        font-weight: normal;
+        @media #{$media-640} {
+            font-size: 16px;
+        }
+    }
+}
+
+@function max($numbers...) {
+    @return m#{a}x(#{$numbers});
+}
+
+@function min($numbers...) {
+    @return m#{i}n(#{$numbers});
+}
+
+@mixin mainBoxshadow(){
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+@mixin gradient($type){
+    @if $type == 'brown'{
+    background: linear-gradient(180deg, #48261A 0%, #130C0A 100%);
+    }
+    @else if($type=='brown-light'){
+        background: linear-gradient(180deg, #492C23 0%, #2D1A14 100%);
+    }
+    @else if($type=='bege'){
+        background: linear-gradient(180deg, #D5A672 0%, #C48237 100%);
+    }
+    @else if($type=='blue'){
+        background: linear-gradient(180deg, #62C2D8 0%, #25ACCB 100%);
+    }
+}
+@mixin Shadow(){
+    border: 1px solid $grayBorder;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
+}

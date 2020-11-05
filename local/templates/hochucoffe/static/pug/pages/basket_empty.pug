@@ -1,0 +1,119 @@
+doctype html
+html(lang="en")
+    - var pageTitle = 'Корзина';
+    include ../includes/head
+    body
+        //script(type='text/javascript', src='/js/vendor/plyr.min.js')
+        .wrapper
+            .content
+                include ../includes/header
+                .page.inner
+                    include ../includes/menu-top
+                    .basket
+                        include ../includes//breadcrumbs
+                        .page-block-head
+                            h1.page-title._type-1 Корзина
+                        .basket__content-wr
+                            .basket__content.is-empty
+                                .basket__left.is-empty
+                                    .basket__icon.icon-1g_coffecapn
+                                .basket__right
+                                    .basket__text._type-4 Ваша корзина пуста :(
+                                    .basket__text._type-5 Вы можете перейти в <a href="#">каталог</a> и легко это исправить :)
+                                    .basket__text._type-5 Какое утро без кофе? ^^
+
+
+                            section.cloud
+                                .cloud__list
+                                    .cloud__item.is-active
+                                        a.cloud__link(href="#") Камерун
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Сильная обжарка
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Средня обжарка
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Молотый
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") до 1000 ₽
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Дорогой кофе
+                                            span.cloud__num 50
+                                    .cloud__item.is-active
+                                        a.cloud__link(href="#") Камерун
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Сильная обжарка
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Средня обжарка
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Молотый
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") до 1000 ₽
+                                            span.cloud__num 50
+                                    .cloud__item
+                                        a.cloud__link(href="#") Дорогой кофе
+                                            span.cloud__num 50
+
+
+                            section.your-viewed
+                                .page-block-head
+                                    h2.page-title._type-2 Вы недавно смотрели
+                                    a.page-title-link(href="../../html/pages/catalog.html") Смотреть все
+                                .catg__list
+                                    - for (var i=0; i<5; i++)
+                                        .catg__item
+                                            .catg__img
+                                                img(src='../../images/develop/cat.png')
+                                                .catg__lable.is-sale 50%
+                                            .catg__content
+                                                .catg__price-block
+                                                    .catg__price 2120 ₽
+                                                    .catg__price-old 3120 ₽
+                                                .catg__avail-block
+                                                    .catg__avail В наличии
+                                                    .catg__raiting
+                                                        .catg__stars
+                                                            .catg__star.icon-1b_star_full
+                                                            .catg__star.icon-1b_star_full
+                                                            .catg__star.icon-1b_star_full
+                                                            .catg__star.icon-1b_star_full
+                                                            .catg__star.icon-1b_star_full
+                                                        span.catg__raiting-cnt 5.0
+                                                a.catg__name Кофе в зернах арабика
+                                                .catg__short Вишня, кокос, манго, кофе
+                                                .catg__select-block
+                                                    .cst-select-list.js-sort-list
+                                                        span.cst-select-current.icon-1h_galka 300 г
+                                                        .cst-select(name='gr')
+                                                            .cst-select-option(value='300') 300 г
+                                                            .cst-select-option(value='1000') 1000 г
+                                                            .cst-select-option(value='1500') 1500 г
+                                                    .cst-select-list.js-sort-list
+                                                        span.cst-select-current.icon-1h_galka Малая обжарка
+                                                        .cst-select.js-sort-list(name='ob')
+                                                            .cst-select-option(value='Малая') Малая обжарка
+                                                            .cst-select-option(value='Средняя') Средняя обжарка
+                                                            .cst-select-option(value='Сильная') Сильная обжарка
+                                                .catg__control
+                                                    .catg__sravn.btn-sravn
+                                                    .catg__like.btn-like
+                                                    .catg__btn.btn.is-brown-light
+                                                        span В корзину
+
+                include ../includes/footer_2
+
+
+
+
+
+
+
+

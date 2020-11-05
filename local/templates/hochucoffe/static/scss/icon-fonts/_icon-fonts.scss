@@ -1,0 +1,256 @@
+@font-face {
+	font-family: "IconsFont";
+	font-display: swap;
+	src: url('../fonts/IconsFont/IconsFont.eot?v=336');
+	src: url('../fonts/IconsFont/IconsFont.eot?#iefix&v=336') format('eot'),
+	url('../fonts/IconsFont/IconsFont.woff2?v=336') format('woff2'),
+	url('../fonts/IconsFont/IconsFont.woff?v=336') format('woff'),
+	url('../fonts/IconsFont/IconsFont.ttf?v=336') format('truetype'),
+	url('../fonts/IconsFont/IconsFont.svg#IconsFont') format('svg');
+}
+
+@mixin icon-styles {
+	font-family: "IconsFont";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	// speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+	text-decoration: none;
+	text-transform: none;
+	font-size: initial;
+}
+
+%icon {
+	@include icon-styles;
+}
+
+@function icon-char($filename) {
+	$char: "";
+
+	@if $filename == 1a_star {
+	$char: "\E001";
+}
+	@if $filename == 1b_star_full {
+	$char: "\E002";
+}
+	@if $filename == 1c_sravnn {
+	$char: "\E003";
+}
+	@if $filename == 1d_sravnn_full {
+	$char: "\E004";
+}
+	@if $filename == 1e_heart {
+	$char: "\E005";
+}
+	@if $filename == 1f_heart_full {
+	$char: "\E006";
+}
+	@if $filename == 1g_coffecapn {
+	$char: "\E007";
+}
+	@if $filename == 1h_galka {
+	$char: "\E008";
+}
+	@if $filename == 1i_search {
+	$char: "\E009";
+}
+	@if $filename == 1j_check {
+	$char: "\E00A";
+}
+	@if $filename == 1k_aeroplan {
+	$char: "\E00B";
+}
+	@if $filename == 1l_fb {
+	$char: "\E00C";
+}
+	@if $filename == 1m_inst {
+	$char: "\E00D";
+}
+	@if $filename == 1n_vk {
+	$char: "\E00E";
+}
+	@if $filename == 1o_krest {
+	$char: "\E00F";
+}
+	@if $filename == 1p_penc {
+	$char: "\E010";
+}
+	@if $filename == 1r_arrow {
+	$char: "\E011";
+}
+	@if $filename == 1s_twit {
+	$char: "\E012";
+}
+	@if $filename == 1t_skype {
+	$char: "\E013";
+}
+	@if $filename == 1u_mes {
+	$char: "\E014";
+}
+	@if $filename == 1v_wats {
+	$char: "\E015";
+}
+	@if $filename == 1w_inst {
+	$char: "\E016";
+}
+	@if $filename == 1x_vk {
+	$char: "\E017";
+}
+	@if $filename == 1y_fb {
+	$char: "\E018";
+}
+	@if $filename == 1z_garbage {
+	$char: "\E019";
+}
+	@if $filename == 2a_plus {
+	$char: "\E01A";
+}
+	@if $filename == 2b_minus {
+	$char: "\E01B";
+}
+	@if $filename == 2c_navig {
+	$char: "\E01C";
+}
+	@if $filename == 2d_share {
+	$char: "\E01D";
+}
+	@if $filename == 2e_obg_1 {
+	$char: "\E01E";
+}
+	@if $filename == 2f_obg_2 {
+	$char: "\E01F";
+}
+	@if $filename == 2g_obg_3 {
+	$char: "\E020";
+}
+	@if $filename == 2h_phone {
+	$char: "\E021";
+}
+	@if $filename == 2i_katalog {
+	$char: "\E022";
+}
+	@if $filename == 2j_house {
+	$char: "\E023";
+}
+
+@return $char;
+}
+
+@mixin icon($filename, $insert: before, $extend: true) {
+&:#{$insert} {
+	@if $extend {
+		@extend %icon;
+	} @else {
+		@include icon-styles;
+	}
+	content: icon-char($filename);
+}
+}
+
+.icon-1a_star {
+	@include icon(1a_star);
+}
+.icon-1b_star_full {
+	@include icon(1b_star_full);
+}
+.icon-1c_sravnn {
+	@include icon(1c_sravnn);
+}
+.icon-1d_sravnn_full {
+	@include icon(1d_sravnn_full);
+}
+.icon-1e_heart {
+	@include icon(1e_heart);
+}
+.icon-1f_heart_full {
+	@include icon(1f_heart_full);
+}
+.icon-1g_coffecapn {
+	@include icon(1g_coffecapn);
+}
+.icon-1h_galka {
+	@include icon(1h_galka);
+}
+.icon-1i_search {
+	@include icon(1i_search);
+}
+.icon-1j_check {
+	@include icon(1j_check);
+}
+.icon-1k_aeroplan {
+	@include icon(1k_aeroplan);
+}
+.icon-1l_fb {
+	@include icon(1l_fb);
+}
+.icon-1m_inst {
+	@include icon(1m_inst);
+}
+.icon-1n_vk {
+	@include icon(1n_vk);
+}
+.icon-1o_krest {
+	@include icon(1o_krest);
+}
+.icon-1p_penc {
+	@include icon(1p_penc);
+}
+.icon-1r_arrow {
+	@include icon(1r_arrow);
+}
+.icon-1s_twit {
+	@include icon(1s_twit);
+}
+.icon-1t_skype {
+	@include icon(1t_skype);
+}
+.icon-1u_mes {
+	@include icon(1u_mes);
+}
+.icon-1v_wats {
+	@include icon(1v_wats);
+}
+.icon-1w_inst {
+	@include icon(1w_inst);
+}
+.icon-1x_vk {
+	@include icon(1x_vk);
+}
+.icon-1y_fb {
+	@include icon(1y_fb);
+}
+.icon-1z_garbage {
+	@include icon(1z_garbage);
+}
+.icon-2a_plus {
+	@include icon(2a_plus);
+}
+.icon-2b_minus {
+	@include icon(2b_minus);
+}
+.icon-2c_navig {
+	@include icon(2c_navig);
+}
+.icon-2d_share {
+	@include icon(2d_share);
+}
+.icon-2e_obg_1 {
+	@include icon(2e_obg_1);
+}
+.icon-2f_obg_2 {
+	@include icon(2f_obg_2);
+}
+.icon-2g_obg_3 {
+	@include icon(2g_obg_3);
+}
+.icon-2h_phone {
+	@include icon(2h_phone);
+}
+.icon-2i_katalog {
+	@include icon(2i_katalog);
+}
+.icon-2j_house {
+	@include icon(2j_house);
+}

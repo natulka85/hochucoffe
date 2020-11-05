@@ -1,0 +1,102 @@
+@import "main-menu";
+@import "pers-info";
+@import "search";
+@import "menu-top";
+.header {
+  background: $brownDeep;
+  width: 100%;
+  min-width: 1500px;
+  max-width: 1920px;
+  margin: auto;
+  border-radius: 0 0 50px 50px;
+  &__content{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__logo{
+    padding-left: 30px;
+  }
+  &__phone{
+    &:before{
+      display: none;
+      font-size: 24px;
+      color: $begeLight;
+    }
+  }
+  &__phone-content{
+    display: flex;
+    align-items: center;
+    padding-left: 70px;
+    color: $white;
+  }
+
+  &__phone-link{
+    color: $white;
+    font-weight: bold;
+    font-size: 20px;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  &__block-l{
+    display: flex;
+  }
+  &__callback{
+    padding: 10px 22px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: .3s;
+    &:hover{
+      background: rgba(255, 255, 255, 0.4);
+    }
+  }
+  &__block-l{
+    padding-top: 20px;
+    padding-bottom: 56px;
+  }
+}
+
+@media #{$media-640} {
+  .header{
+    max-width: 100%;
+    min-width: 376px;
+    height: 114px;
+    border-radius: 0 0 14px 14px;
+    &__left{
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+    &__block-l{
+      padding: 6px 0;
+      justify-content: space-between;
+      flex-grow: 1;
+    }
+    &__logo{
+      width: 138px;
+      padding: 0;
+    }
+    &__content{
+      flex-wrap: wrap;
+    }
+    &__phone{
+      padding-right: 40px;
+      padding-top: 4px;
+      &:before{
+        display: block;
+      }
+    }
+    &__phone-content{
+      position: absolute;
+      display: none;
+    }
+    &__content{
+      display: block;
+    }
+  }
+}

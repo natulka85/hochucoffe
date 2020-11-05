@@ -1,0 +1,415 @@
+.catg{
+  &__list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  &__item{
+    width: 250px;
+    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid transparent;
+    transition: .4s;
+    .catg__star{
+      &:not(:nth-child(3)){
+        opacity: 0;
+      }
+    }
+    &:hover{
+      border-color:$grayBorder;
+      .catg__raiting-cnt{
+        opacity: 0;
+      }
+      .catg__star{
+        opacity: 1;
+      }
+      .cst-select-current{
+        border-color: rgba(53,32,25,.5);
+        color: $brownDark;
+        &:before {
+          color: $brownDark;
+        }
+      }
+      .catg__btn.is-brown-light{
+        @include gradient('brown');
+        &:hover{
+          background: linear-gradient(180deg,#81402a 0,#3b2620 100%);
+        }
+        span{
+          color: $white;
+          border-bottom-color: transparent;
+        }
+      }
+      .catg__like,
+      .catg__sravn{
+        opacity: 1;
+      }
+    }
+  }
+  &__name{
+    font-size: 18px;
+    line-height: 18px;
+    margin-top: 18px;
+    display: block;
+  }
+  &__content{
+    padding: 0 2px;
+  }
+  &__price{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  &__price-old{
+    font-size: 18px;
+    color: $grayBrown;
+    text-decoration: line-through;
+    margin-left: 12px;
+    position: relative;
+    top: -3px;
+  }
+  &__price-block{
+    display: flex;
+    margin-top: 28px;
+  }
+  &__avail-block{
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__avail{
+    color: $bege;
+    font-family: Helvetica,sans-serif;
+    font-weight: 400;
+  }
+  &__raiting{
+    color: $bege;
+    position: relative;
+  }
+  &__raiting-cnt{
+    font-family: Helvetica,sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    position: absolute;
+    opacity: 1;
+    right: 14px;
+    top: 50%;
+    margin-top: -8px;
+    transition: .3s;
+  }
+  &__stars{
+    display: flex;
+    color: $bege;
+  }
+  &__star{
+    transition: .3s;
+    &:not(:last-child){
+      margin-right: 4px;
+    }
+    &:before{
+      font-size: 16px;
+    }
+  }
+  &__short{
+    font-family: Helvetica,sans-serif;
+    font-weight: 300;
+    margin-top: 10px;
+  }
+  &__img{
+    height: 160px;
+    text-align: center;
+    line-height: 160px;
+    position: relative;
+  }
+  &__lable{
+    &.is-sale{
+      background: #EB5757;
+      border-radius: 8px 0px;
+      font-family: "Istok Web",sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      color: $white;
+      text-align: center;
+      padding: 6px 4px;
+      position: absolute;
+      height: 28px;
+      line-height: 1.1;
+      right: 44px;
+      bottom: -14px;
+    }
+  }
+  &__select-block{
+    margin-top: 18px;
+    display: flex;
+    .cst-select-list{
+      &:nth-child(1){
+        margin-right: 6px;
+        .cst-select-current{
+          width: 78px;
+        }
+
+      }
+      &:nth-child(2){
+        margin-right: 6px;
+        .cst-select-current{
+          width: 140px;
+        }
+      }
+    }
+  }
+  &__control{
+    margin-top: 7px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &__btn.is-brown-light{
+    height: 36px;
+    line-height: 36px;
+    display: inline-block;
+    padding: 0 18px;
+    font-size: 16px;
+    border-radius: 8px;
+    background: transparent;
+    span{
+      border-bottom: 1px dashed $brownDark;
+      color: $brownDark;
+    }
+  }
+  &__sravn{
+    width: 30px;
+    text-align: left;
+    cursor: pointer;
+    opacity: 0;
+    transition: .3s;
+  }
+  &__like{
+    width: 30px;
+    text-align: left;
+    cursor: pointer;
+    opacity: 0;
+    transition: .3s;
+  }
+  &__list-control{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 46px;
+    padding-top: 12px;
+  }
+  &__list-control-bl{
+    display: flex;
+    align-items: center;
+  }
+  &__list-control-name{
+    font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    margin-right: 30px;
+  }
+  &__list-control-value{
+    font-weight: 500;
+    border-bottom: 1px dashed $brownDark;
+    cursor: pointer;
+    position: relative;
+    height: 20px;
+    line-height: 20px;
+    &:not(:last-child){
+      margin-right: 30px;
+    }
+    &.is-active,
+    &:hover{
+      color: $bege;
+      border-bottom-color: $bege;
+    }
+    &:before{
+      position: absolute;
+      font-size: 7px;
+      display: none;
+      right: 0;
+    }
+    &.is-max{
+      padding-right: 14px;
+      &:before{
+        display: block;
+        transform: rotate(90deg);
+      }
+    }
+    &.is-min{
+      padding-right: 14px;
+      &:before{
+        display: block;
+        transform: rotate(-90deg);
+      }
+    }
+    &.not-change{
+      border-bottom-color: transparent;
+      cursor: default;
+      &:hover{
+        color: $brownDark;
+      }
+    }
+  }
+}
+
+///select
+
+.cst-select-list{
+  position: relative;
+  font-size: 13px;
+  flex-grow: 1;
+  &.is-opened{
+    .cst-select{
+      opacity: 1;
+      height: auto;
+      display: block;
+    }
+  }
+}
+.cst-select-current{
+  height: 26px;
+  //line-height: 26px;
+  border: 1px solid $grayBorder;
+  color: $grayBrown;
+  border-radius: 7px;
+  transition: .3s;
+  cursor: pointer;
+  padding: 5px 22px 5px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  background: $white;
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+
+  &:before{
+    position: absolute;
+    font-size: 6px;
+    right: 8px;
+    top: 50%;
+    margin-top: -3px;
+    line-height: 1;
+    color: $grayBrown;
+  }
+
+
+}
+.cst-select{
+  background: $white;
+  border-radius: 12px;
+  border: 1px solid rgba(53,32,25,.5);
+  padding: 5px 8px;
+  cursor: pointer;
+  height: 0;
+  opacity: 0;
+  transition: height .6s, opacity .7s;
+  transform-origin: top;
+  position: absolute;
+  width: 100%;
+  margin-top: 4px;
+  display: none;
+  z-index: 1;
+}
+.cst-select-option{
+  transition: .3s;
+  line-height: 22px;
+  &:hover{
+    color: $bege;
+  }
+}
+
+.catg__item.is-brown,
+.catg__item.is-bege,
+.catg__item.is-blue,{
+  &:hover{
+    .cst-select-current{
+      color: $white;
+      &:before{
+        color: $white;
+      }
+    }
+  }
+  .catg{
+    &__name{
+      font-family: InkyK,sans-serif;
+      color: $white;
+    }
+    &__price{
+      font-family: InkyK,sans-serif;
+      color: $white;
+    }
+    &__price-old{
+      color: $grayBorder;
+    }
+    &__avail{
+      color: $white;
+    }
+    &__raiting{
+      color: $white;
+    }
+    &__short{
+      color: $white;
+    }
+    &__like{
+      color: $white;
+    }
+    &__sravn{
+      color: $white;
+    }
+  }
+  .cst-select-current{
+    background: transparent;
+    border-color: $white;
+    color: $white;
+    &:before{
+      color: $white;
+    }
+  }
+  .catg__btn.is-brown-light{
+    background: $white;
+    font-family: InkyK,sans-serif;
+    font-size: 18px;
+    line-height: 42px;
+    &>span{
+      border: none;
+    }
+    &:hover{
+      background: $white;
+      filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    }
+  }
+}
+.catg__item.is-brown{
+  @include gradient('brown');
+  &:hover{
+    .catg__btn.is-brown-light{
+      background: $white;
+      color: $brownDark;
+      span{
+        color: $brownDark;
+      }
+    }
+  }
+  .catg__btn.is-brown-light{
+    color: $brownDark;
+  }
+}.catg__item.is-bege{
+  @include gradient('bege');
+   .catg__btn.is-brown-light{
+     background: $white;
+     color: $bege;
+     span{
+       color: $bege;
+     }
+   }
+
+}.catg__item.is-blue{
+  @include gradient('blue');
+    .catg__btn.is-brown-light{
+      background: $white;
+      color: $blue;
+      span{
+        color: $blue;
+      }
+    }
+}
+

@@ -1,0 +1,77 @@
+.pagination{
+  margin-top: 36px;
+  &__list{
+    display: flex;
+    font-weight: 500;
+    align-items: center;
+  }
+  &__item{
+    position: relative;
+    &>a{
+      display: inline-block;
+      transition: .3s;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      border-radius: 50%;
+      background: $white;
+      text-align: center;
+      margin: 0 10px;
+      &:hover{
+        text-decoration: none;
+        color: $bege;
+      }
+      &:before{
+        font-size: 10px;
+        position: absolute;
+        top: 50%;
+        margin-top: -13px;
+      }
+    }
+
+      &.is-active,
+      &:hover{
+          &>a{
+            background: $bege;
+            color: $white;
+          }
+      }
+
+
+    &.is-back{
+      &.is-active,
+      &:hover{
+        &>a{
+          background: $white;
+          color: $bege;
+        }
+      }
+      &>a{
+        width: auto;
+        padding-left: 36px;
+        background: $white;
+        &:before{
+          left: 0;
+          transform: rotate(180deg);
+        }
+      }
+    }
+    &.is-forward{
+      &.is-active,
+      &:hover{
+        &>a{
+          background: $white;
+          color: $bege;
+        }
+      }
+      &>a{
+        width: auto;
+        padding-right: 36px;
+        background: $white;
+        &:before{
+          right: 0;
+        }
+      }
+    }
+  }
+}

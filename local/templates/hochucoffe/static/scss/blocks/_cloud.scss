@@ -1,0 +1,41 @@
+.cloud{
+  &__list{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: -18px;
+  }
+  &__item{
+    border: 1px solid $grayBorder;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background: $white;
+    transition: .3s;
+    position: relative;
+    white-space: nowrap;
+    margin-right: 18px;
+    margin-bottom: 14px;
+    &:hover,&.is-active{
+      border-color: $blue;
+      background: $grayLight;
+    }
+  }
+  &__link{
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    padding: 0 18px;
+
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  &__num{
+    font-size: 12px;
+    color: $grayBrown;
+    margin-left: 6px;
+    position: relative;
+    top: 2px;
+  }
+}

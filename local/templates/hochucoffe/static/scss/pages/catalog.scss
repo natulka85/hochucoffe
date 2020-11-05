@@ -1,0 +1,46 @@
+@import "../blocks/filter";
+.catalog{
+  padding: 0 34px;
+  .cloud__list{
+    margin-bottom: 40px;
+  }
+  .catg__item{
+    margin-bottom: 30px;
+  }
+}
+
+.sidebar{
+  width: 300px;
+  margin-right: 30px;
+  position: absolute;
+
+}
+
+.your-interests{
+  margin-top: 100px;
+  margin-right: -20px;
+  .page-block-head{
+    margin-bottom: 40px;
+  }
+  .slick-arrow{
+    margin-top: -100px;
+    background: transparent;
+  }
+  .catg__item{
+    margin-right: 20px;
+  }
+}
+.your-viewed{
+  padding: 0 20px;
+  margin-top: 100px;
+  .page-block-head{
+    margin-bottom: 40px;
+  }
+  .slick-arrow{
+    margin-top: -100px;
+    background: transparent;
+  }
+}
+.your-tags{
+  margin-top: 40px;
+}

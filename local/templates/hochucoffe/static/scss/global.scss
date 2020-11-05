@@ -1,0 +1,31 @@
+/*vars*/
+@import "vars";
+/*mixins*/
+@import "mixins";
+/*normalize*/
+@import "normalize";
+/*fonts*/
+@import "fonts";
+//fonts
+/*icon-fonts/icon-fonts*/
+@import "icon-fonts/icon-fonts";
+
+@import "external-libraries/slick";
+@import "external-libraries/jquery-ui";
+@import "external-libraries/jquery.fancybox3";
+
+//custom
+/*common*/
+@import "common";
+
+@import "blocks/breadcrumbs";
+@import "blocks/header";
+@import "blocks/catg";
+@import "blocks/cloud";
+@import "blocks/pagination";
+
+@import "pages/index";
+@import "pages/catalog";
+@import "pages/contacts";
+@import "pages/basket";
+@import "pages/product";
