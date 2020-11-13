@@ -15,7 +15,7 @@
     cursor: pointer;
     transition: .3s;
     &:hover{
-      @include mainBoxshadow();
+      @include Shadow();
       z-index: 1;
       left: 6px;
       top: -6px;
@@ -46,5 +46,34 @@
   }
   .slick-arrow.slick-prev{
     left: 20px;
+  }
+}
+
+@media #{$media-640}{
+  .sections{
+    &__item{
+      padding: 20px 12px;
+      height: 134px;
+    }
+    &__title{
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+    &__content{
+      padding-right: 40px;
+      p{
+        font-size: 10px;
+      }
+    }
+    &__link{
+      display: flex;
+      align-content: center;
+      justify-content: space-between;
+    }
+    &__img{
+      max-width: 74px;
+      max-height: 90px;
+      text-align: center;
+    }
   }
 }

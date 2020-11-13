@@ -30,28 +30,35 @@ html(lang="en")
                                     a.sections__link
                                         .sections__content
                                             .sections__title Арабика
-                                            p - богатый вкус с яркой кислотностью и приятными нотками<br> - зерна овальной формы и как правило более круглые
-                                        img.sections__img(src='../../images/develop/sect_1.png')
+                                            p - богатый вкус с яркой кислотностью и приятными нотками<br><br> - зерна овальной формы и как правило более круглые
+                                        .sections__img
+                                            img(src='../../images/develop/sect_1.png')
                     section.utp
                         .utp__list
                             .utp__item
                                 .utp__text Выбор любой степени помола и обжарки
-                                img.utp__img(src='../../images/develop/utp_1.png')
+                                .utp__img
+                                    img(src='../../images/develop/utp_1.png')
                             .utp__item
                                 .utp__text
-                                img.utp__img(src='../../images/develop/utp_2.png')
+                                .utp__img
+                                    img(src='../../images/develop/utp_2.png')
                             .utp__item
                                 .utp__text Только кофе высокого качества
-                                img.utp__img(src='../../images/develop/utp_3.png')
+                                .utp__img
+                                    img(src='../../images/develop/utp_3.png')
                             .utp__item
                                 .utp__text Только кофе высокого качества
-                                img.utp__img(src='../../images/develop/utp_2.png')
+                                .utp__img
+                                    img(src='../../images/develop/utp_2.png')
                             .utp__item
                                 .utp__text Только кофе высокого качества
-                                img.utp__img(src='../../images/develop/utp_4.png')
+                                .utp__img
+                                    img(src='../../images/develop/utp_4.png')
                             .utp__item
                                 .utp__text Только кофе высокого качества
-                                img.utp__img(src='../../images/develop/utp_2.png')
+                                .utp__img
+                                    img(src='../../images/develop/utp_2.png')
                     section.hits
                         .page-block-head
                             h2.page-title._type-2 Хиты продаж
@@ -61,7 +68,8 @@ html(lang="en")
                                 .catg__item
                                     .catg__img
                                         img(src='../../images/develop/cat.png')
-                                        .catg__lable.is-sale 50%
+                                        .catg__labels.labels
+                                            .labels__item.is-sale 50%
                                     .catg__content
                                         .catg__price-block
                                             .catg__price 2120 ₽
@@ -111,7 +119,8 @@ html(lang="en")
                                 .catg__item
                                     .catg__img
                                         img(src='../../images/develop/cat.png')
-                                        .catg__lable.is-sale 50%
+                                        .catg__labels.labels
+                                            .labels__item.is-sale 50%
                                     .catg__content
                                         .catg__price-block
                                             .catg__price 2120 ₽
@@ -247,6 +256,7 @@ html(lang="en")
                                 h2.page-title._type-2.icon-1h_galka Быстро найти любимый кофе
                             .form__note Ответьте на несколько вопросов о том, какой кофе Вы ищете и мы покажем страницу, где оно представлено
                         .form__content
+                            .form__content-wrap
                             form.index-form
                                 .index-form__fields
                                     .index-form__quest Какой кофе предпочитаете?

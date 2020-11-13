@@ -8,6 +8,9 @@
       }
     }
   }
+  &__list:not(.slick-initialized){
+    opacity: 0;
+  }
   &__img{
     transition: .3s;
     transform: scale(1);
@@ -41,16 +44,26 @@
 .utp{
   margin: 30px 0;
   padding: 0 38px;
-  &__list{
+  .slick-track{
     display: flex;
-    justify-content: space-between;
+  }
+  &__list{
+    //display: flex;
+    //justify-content: space-between;
   }
   &__item{
     position: relative;
     border-radius: 18px;
     transition: .4s;
+    min-width: 200px;
+    width: 200px;
+    //float: left;
+    //height: 230px;
     &:hover{
-      @include mainBoxshadow();
+      @include Shadow();
+    }
+    &:not(:last-child){
+      margin-right: 40px;
     }
   }
   &__text{
@@ -61,6 +74,11 @@
     left: 10px;
     top: 10px;
   }
+  &__img{
+    //width: 230px;
+    width: 100%;
+    height: 100%;
+  }
 }
 .hits{
   padding: 0 20px;
@@ -68,6 +86,9 @@
   .page-block-head{
     padding-left: 40px;
     margin-bottom: 40px;
+  }
+  .slick-list{
+    width: 100%;
   }
 }
 .pomol{
@@ -91,6 +112,9 @@
     padding-left: 40px;
     margin-bottom: 40px;
   }
+  .slick-list{
+    width: 100%;
+  }
 }
 .map{
   padding: 0 20px;
@@ -106,6 +130,7 @@
   &__flag{
     display: inline-block;
     margin-left: 30px;
+    width: 40px;
   }
   &__content{
     display: flex;
@@ -182,6 +207,7 @@
 
 .form{
   width: 1280px;
+  max-width: 100%;
   margin: 50px auto 0 auto;
   background: #FFFFFF;
   border: 1px solid #EBEBEB;
@@ -232,9 +258,17 @@
     color: $grayBrown;
     padding-top: 8px;
   }
-  &__content{
-    padding-left: 70px;
+  &__content-wrap{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     background: url('../images/develop/barista_1.png') right center no-repeat;
+  }
+  &__content{
+    position: relative;
+    padding-left: 70px;
     opacity: 0;
     max-height: 0;
     overflow: hidden;
@@ -342,21 +376,24 @@
     margin-bottom: 50px;
   }
   &__list{
-    display: flex;
-    justify-content: space-between;
+    //display: flex;
+    //justify-content: space-between;
   }
   &__item{
     border: 1px solid $grayBorder;
     border-radius: 18px;
     background: $grayLight;
-    padding: 10px 0;
+    padding-bottom: 10px;
     max-width: 296px;
+    overflow: hidden;
+    margin-right: 3.9em
   }
   &__top{
     background: $white;
     display: flex;
     height: 152px;
     padding-right: 10px;
+    padding-top: 10px;
   }
   &__img{
     text-align: center;
@@ -411,6 +448,7 @@
     line-height: 22px;
     color: $bege;
     display: inline-block;
+    white-space: nowrap;
     &:hover{
       text-decoration: none;
       border-bottom-color: transparent;
@@ -423,6 +461,7 @@
 .view{
   padding: 0 20px;
   margin-top: 70px;
+  position: relative;
   .page-block-head{
     margin-bottom: 10px;
     padding-left: 40px;
@@ -458,6 +497,7 @@
     justify-content: space-between;
     width: 390px;
     margin-bottom: 2px;
+    max-width: 100%;
   }
   &__desc-name{
     color: $grayBrown;
@@ -479,6 +519,7 @@
     display: flex;
     margin-top: 28px;
     width: 390px;
+    max-width: 100%;
     justify-content: space-between;
   }
   &__control-link{
@@ -521,6 +562,14 @@
     &.slick-next{
       right: 70px;
     }
+  }
+  &__bottom-arrows{
+    position: absolute;
+    bottom: 123px;
+    height: 26px;
+    width: 90px;
+    right: 0;
+    display: none;
   }
 }
 
@@ -590,11 +639,311 @@
     border-radius: 14px 14px 0 0 ;
     overflow: hidden;
     .slick-dots {
-      bottom: 16px;
+      bottom: 6px;
     }
     .slick-dots li:after{
-      height: 2px;
-      width: 12px;
+      height: 1px;
+      width: 18px;
+    }
+  }
+  .utp{
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    &__item{
+      width: 112px;
+      min-width: 112px;
+      &:not(:last-child){
+        margin-right: 8px;
+      }
+    }
+    &__text{
+      font-size: 10px;
+      line-height: 12px;
+    }
+  }
+  .hits{
+    padding: 0;
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+  }
+  .pomol{
+    margin-top: 30px;
+    padding: 0;
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    &__note{
+      font-size: 10px;
+      padding-right: 0;
+    }
+  }
+  .sale{
+    padding: 0;
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+  }
+  .map{
+    margin-top: 30px;
+    padding: 0;
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    &__left{
+      display: none;
+    }
+    &__right{
+      width: 100%;
+    }
+    &__country-list{
+      padding-left: 0;
+    }
+    &__country-link{
+      font-size: 14px;
+      line-height: 18px;
+      margin-bottom: 14px;
+      width: 150px;
+    }
+  }
+  .form{
+    &__note{
+      font-size: 10px;
+      line-height: 10px;
+      padding-top: 0;
+      max-width: 296px;
+    }
+    &__content{
+      padding-left: 14px;
+    }
+    &__head{
+      padding: 4px 0;
+    }
+    .page-title:before{
+      font-size: 8px;
+      top: -1px;
+      right: -30px;
+    }
+    &__content-wrap{
+      opacity: 0.3;
+    }
+  }
+  .index-form{
+    &__span{
+      font-size: 12px;
+    }
+    &__field-group{
+      padding-right: 0;
+    }
+    &__field{
+      margin-bottom: 12px;
+      width: 34%;
+    }
+    &__quest{
+      font-size: 12px;
+      line-height: 16px;
+      margin: 10px 0;
+    }
+    &__btn-wrap{
+      padding: 12px 0 18px 0;
+    }
+    &__btn{
+      width: 164px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 12px;
+      padding: 0 8px;
+    }
+  }
+  .reviews{
+    margin-top: 38px;
+    padding: 0;
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    .slick-track{
+      margin-left: 3px;
+    }
+    &__top{
+      height: 80px;
+      padding-right: 6px;
+    }
+    &__right{
+      min-width: 96px;
+    }
+    &__bottom{
+      padding: 6px 10px;
+    }
+    &__item{
+      margin-right: 6px;
+    }
+    &__product{
+      font-size: 12px;
+      line-height: 14px;
+      padding: 0;
+      margin-bottom: 8px;
+    }
+    &__stat{
+      font-size: 10px;
+      line-height: 10px;
+      margin-bottom: 3px;
+    }
+    &__name{
+      margin-top: 4px;
+      font-size: 12px;
+      line-height: 15px;
+    }
+    &__text{
+      font-size: 11px;
+      line-height: 14px;
+    }
+    &__link{
+      font-size: 10px;
+      line-height: 12px;
+      padding-top: 10px;
+    }
+
+    .catg__star{
+      &:before{
+        font-size: 10px;
+      }
+      &:not(:last-child){
+        margin-right: 2px;
+      }
+    }
+  }
+  .view{
+    margin-top: 38px;
+    padding: 0;
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    .slick-arrow{
+      opacity: 1;
+      top: 80px;
+      &.slick-next{
+        right: 30px;
+      }
+      &.slick-prev{
+        right: 60px;
+      }
+    }
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    &__item{
+      padding: 10px;
+    }
+    &__content{
+      display: block;
+      padding: 28px 14px;
+      box-shadow: 0 0 12px rgba(0,0,0,.1);
+    }
+    &__left{
+      width: 100%;
+    }
+    &__right{
+      width: 100%;
+      padding: 0;
+    }
+    &__title{
+      font-size: 16px;
+      line-height: 20px;
+      margin-bottom: 12px;
+    }
+    &__desc-name{
+      font-size: 12px;
+      line-height: 15px;
+    }
+    &__desc-value{
+      font-size: 12px;
+      line-height: 15px;
+    }
+    &__describe{
+      margin-top: 16px;
+    }
+    &__sect{
+      font-size: 12px;
+      margin-bottom: 8px;
+      line-height: 16px;
+    }
+    &__text{
+      font-size: 12px;
+      line-height: 20px;
+    }
+    &__control-link{
+      font-size: 12px;
+      line-height: 16px;
+    }
+    &__bottom-arrows{
+      display: block;
+    }
+  }
+
+  ///subscribe
+
+  .subscribe{
+    padding: 12px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    margin-top: 40px;
+    &__title{
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      padding-right: 0;
+      margin-bottom: 5px;
+      &:before{
+        font-size: 26px;
+        margin-top: -12px;
+        right: -40px;
+      }
+    }
+    &__form{
+      width: 100%;
+      text-align: center;
+    }
+    &__field{
+      margin-bottom: 10px;
+    }
+    &__input{
+      height: 30px;
+      line-height: 30px;
+      width: 194px;
+      margin-right: 0;
+      &::placeholder{
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+    &__btn{
+      height: 30px;
+      line-height: 30px;
+      font-size: 14px;
+      width: 194px;
+      margin: auto;
+    }
+    &__fields{
+      display: block;
+    }
+  }
+  .index-banner-bottom{
+    margin-top: 20px;
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    &__img{
+      border-radius: 0 0 14px 14px;
+      overflow: hidden;
     }
   }
 }

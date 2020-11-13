@@ -26,3 +26,15 @@
     }
   }
 }
+
+@media #{$media-640} {
+  .breadcrumbs{
+    font-size: 10px;
+    margin-top: 16px;
+    &__link{
+      &:after{
+        font-size: 8px;
+      }
+    }
+  }
+}

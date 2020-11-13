@@ -12,6 +12,7 @@
     border-radius: 20px;
     transition: .3s;
     cursor: pointer;
+    white-space: nowrap;
     &:not(:last-child){
       margin-right: 30px;
     }

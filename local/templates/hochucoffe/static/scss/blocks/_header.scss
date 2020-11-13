@@ -5,7 +5,7 @@
 .header {
   background: $brownDeep;
   width: 100%;
-  min-width: 1500px;
+  //min-width: 1500px;
   max-width: 1920px;
   margin: auto;
   border-radius: 0 0 50px 50px;
@@ -38,8 +38,12 @@
       text-decoration: none;
     }
   }
+  &__right{
+    padding-right: 30px;
+  }
   &__block-l{
     display: flex;
+    align-content: center;
   }
   &__callback{
     padding: 10px 22px;
@@ -65,7 +69,7 @@
   .header{
     max-width: 100%;
     min-width: 376px;
-    height: 114px;
+    height: 124px;
     border-radius: 0 0 14px 14px;
     &__left{
       display: flex;

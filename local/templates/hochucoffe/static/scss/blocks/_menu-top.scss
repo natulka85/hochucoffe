@@ -5,14 +5,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-left: 1px solid $grayBorder;
   }
   &__item{
     transition: .3s;
     flex-grow: 1;
     text-align: center;
     background: $grayLight;
-    border-left: 1px solid $grayBorder;
+    &:not(:first-child){
+      border-left: 1px solid $grayBorder;
+    }
     &:hover{
       background: $gradientBlue;
       .menu-top__link{

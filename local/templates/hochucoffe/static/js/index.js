@@ -19,7 +19,7 @@ $(function(){
     }
     if($('.map__left').length > 0){
         var req = new XMLHttpRequest();
-        req.open('GET', '/hochucoffe/static/images/svg/world_map.svg', true);
+        req.open('GET', '/local/templates/hochucoffe/static/images/svg/world_map.svg', true);
         req.onreadystatechange = function() {
             if (req.readyState == 4 && req.status == 200) {
                 var container = document.createElement('div');
@@ -37,10 +37,6 @@ $(function(){
             var coord = mapPoint.offset();
 
             makeWindow($(this).html(),coord)
-
-
-
-
         })
         $(document).on('mouseleave', '.map__country-link, .map__left path', function(){
             $('.map__left path').attr('class','');
@@ -62,5 +58,17 @@ $(function(){
             $(this).parents('.form').toggleClass('is-opened');
         })
     }
+
+    if($('.view__list').length > 0){
+        console.log('test_list');
+        $(document).on('click','.view__bottom-arrows span.slick-prev',function(){
+          $(this).parents('.view').find('button.slick-prev').trigger('click');
+          console.log('test');
+        })
+        $(document).on('click','.view__bottom-arrows span.slick-next',function(){
+            $(this).parents('.view').find('button.slick-next').trigger('click');
+        })
+    }
+
 })
 

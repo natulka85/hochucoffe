@@ -54,17 +54,17 @@
     margin: auto;
     margin-top: 0;
     &__input{
-      height: 30px;
-      line-height: 30px;
+      height: 38px;
+      line-height: 38px;
       width: 100%;
       padding-left: 14px;
       &::placeholder{
-        font-size: 12px;
+        font-size: 14px;
       }
     }
     &__btn{
-      height: 30px;
-      line-height: 30px;
+      height: 38px;
+      line-height: 38px;
       padding-right: 18px;
       &:before{
         font-size: 18px;
@@ -72,3 +72,4 @@
     }
   }
 }
+

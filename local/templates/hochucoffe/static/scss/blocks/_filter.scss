@@ -1,4 +1,5 @@
 .filter{
+  background: $white;
   &__control-block{
     display: flex;
     justify-content: space-between;
@@ -78,10 +79,12 @@
       border-color: $grayBorder;
       width: 26px;
       height: 26px;
-      top: -5px;
+      top: 50%;
+      margin-top: -13px;
     }
     .main-checkbox__span:before{
-      top: -5px;
+      top: 50%;
+      margin-top: -13px;
       width: 26px;
       height: 26px;
       line-height: 26px;
@@ -96,9 +99,21 @@
   }
   &__label{
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 30px;
+    margin-top: 4px;
+    &.disabled{
+      opacity: .3;
+      cursor: not-allowed;
+    }
   }
   &__field{
-    margin-top: 20px;
+
+  }
+  &__btn-wrap{
+    background: #FFFFFF;
   }
   &__btn{
     height: 38px;
@@ -106,5 +121,182 @@
     border-radius: 10px;
     text-transform: uppercase;
     font-size: 16px;
+    max-width: 340px;
+    margin: auto;
+  }
+  &__more-btn{
+    margin-top: 20px;
+  }
+  &__span{
+    width: 100%;
+    display: inline-block;
+    line-height: 1;
+  }
+}
+
+/* Catalog filter pointer */
+.filter__tip{
+  position: absolute;
+  border-radius: 4px;
+  padding: 17px 15px;
+  left: calc(100% + 10px);
+  display: none;
+  background: $grayLight;
+  @include Shadow();
+  width: 150px;
+  z-index: 1000;
+  text-align: center;
+
+  &:before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    left: -6px;
+    border: 6px solid transparent;
+    border-right: 6px solid $grayLight;
+    border-left: none;
+
+  }
+
+  @media(min-width: 768px){
+    display: block;
+  }
+
+  a{
+    display: none;
+    text-decoration: underline;
+    line-height: 24px;
+  }
+}
+
+#modef_wait {
+  background: url(../images/svg/waite.svg) no-repeat center;
+  background-size: contain;
+  display: none;
+  width: 30px;
+  height: 30px;
+  margin: 10px auto;
+}
+
+
+.c-filt-price-field{
+  height: 26px;
+  border: 1px solid $grayBorder;
+  &:nth-child(1){
+    margin-right: 20px;
+  }
+}
+
+.c-filt-price{
+  padding-bottom: 10px;
+}
+
+.noUi-base{
+  position: relative;
+  height: 6px;
+  width: 176px;
+  bottom: 0px;
+}
+/*********** PRICE RANGE *********/
+.noUi-horizontal{
+  height: 6px;
+  border-radius: 3px;
+
+  .noUi-handle {
+    width: 26px;
+    height: 26px;
+    left: -13px;
+    top: -10px;
+    border-radius: 50%;
+  }
+}
+
+.noUi-target, .noUi-background{
+  background: $grayBorder;
+  border:none;
+  box-shadow:none;
+  position: relative;
+  bottom: -44px;
+  width: 176px;
+}
+
+.noUi-connect{
+  position: absolute;
+  height: 100%;
+  @include gradient('bege');
+  box-shadow:none;
+  border-radius: 2px!important;
+}
+
+.noUi-handle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: none;
+  transition: .2s;
+  &:focus{
+    outline: none;
+  }
+
+  &:after{
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border:none;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    margin-left: -6px;
+    margin-top: -6px;
+    background: transparent;
+  }
+
+  &:before{
+    background-color: transparent;
+  }
+
+  &:hover{
+  }
+}
+@media #{$media-640} {
+  .filter{
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    display: none;
+    height: calc(100vh - 116px);
+    overflow-y: scroll;
+    &.is-opened{
+      display: block;
+    }
+    &__choose-block{
+      padding-left: 16px;
+    }
+    &__btn-wrap{
+      position: fixed;
+      width: 100%;
+      bottom: 58px;
+      background: $grayLight;
+      padding: 10px;
+    }
+    &__choose{
+      .main-checkbox__span:after{
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+        top: 2px;
+      }
+      .main-checkbox__span:before{
+        width: 12px;
+        height: 12px;
+        line-height: 12px;
+        top: 2px;
+      }
+    }
   }
 }

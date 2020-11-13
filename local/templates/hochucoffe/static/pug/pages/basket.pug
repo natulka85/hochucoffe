@@ -40,8 +40,11 @@ html(lang="en")
                                                             .count-block__btn.js-minus.icon-2b_minus
                                                             input.count-block__value(value="33")
                                                             .count-block__btn.js-plus.icon-2a_plus
-                                                    .basket__cont-btn.btn-like Отложить
-                                                    .basket__cont-btn.btn-remove Удалить
+                                                    .basket__cont-btn-wrap
+                                                        .basket__cont-btn.btn-like
+                                                            span Отложить
+                                                        .basket__cont-btn.btn-remove
+                                                            span Удалить
                                     .basket__promo
                                         input(placeholder="Промокод").basket__promo-input
                                         .basket__promo-btn Применить
@@ -67,18 +70,26 @@ html(lang="en")
                                             .basket__res-op
                                                 .basket__res-op-name Адрес:
                                                 .basket__res-op-value г.Москва, ул.Люблинская, 39/2
-                                                .basket__link-change Изменить
+                                                a.basket__link-change(href="#change_adr") Изменить
                                             .basket__res-op
                                                 .basket__res-op-name Оплата:
                                                 .basket__res-op-value.is-link Банковской картой
                                         .basket__res-btn-wrap
-                                            a(href='/hochucoffe/static/html/pages/basket_success.html').basket__res-btn.btn.is-brown-light Оформить заказ
+                                            a(href='/hochucoffe/static/html/pages/basket_success.html').basket__res-btn.btn.is-brown-light.is-order Оформить заказ
+                                            .basket__res-btn.btn.is-brown-light.is-to-order Перейти к оформлению
 
 
 
 
                             .basket__form
-                                .basket__title Ваши данные:
+                                .basket__title-h
+                                    .basket__title Ваши данные:
+                                    .basket__check
+                                        .basket__field
+                                            label.basket__label
+                                                input(type='checkbox' name="fast_order" value="Y").basket__checkbox.main-checkbox__checkbox
+                                                span.main-checkbox__span.basket__span Минимум данных
+                                                span.basket__note (Ужасно лень все заполнять)
                                 .basket__fields.is-name
                                     .basket__field
                                         input(placeholder="Имя").basket__input
@@ -86,36 +97,42 @@ html(lang="en")
                                     .basket__field
                                         input(placeholder="Телефон").basket__input
                                         span.basket__label (уточним детали заказа)
-                                    .basket__field
-                                        input(placeholder="Email").basket__input
-                                        span.basket__label (для письма о статусе заказа)
-                                .basket__title Способ доставки:
-                                .basket__form-address
-                                    span Адрес
-                                    span.basket__ad-val г.Москва, ул.Люблинскаяб 39/2
-                                    .basket__link-change Изменить
-                                .basket__fields.is-deliv
-                                    .basket__field
-                                        .basket__form-btn-choose.is-active Доставка курьером (Москва и МО)
-                                        .basket__form-note До 3000 рублей — 400р/доставка<br>Свыше 3000 рублей — бесплатно
-                                    .basket__field
-                                        .basket__form-btn-choose Доставка курьером за МКАД
-                                        .basket__form-note 15 рублей / км.
-                                    .basket__field
-                                        .basket__form-btn-choose Самовывоз
-                                        .basket__form-note Бесплатно
-                                        .basket__form-link
-                                            span.icon-2c_navig Выберите пункт выдачи
-                                .basket__title Способ оплаты:
-                                .basket__fields.is-pay
-                                    .basket__field
-                                        .basket__form-btn-choose Наличными курьеру
-                                    .basket__field
-                                        .basket__form-btn-choose.is-active Банковской картой
-                                .basket__fields.is-pay
-                                    .basket__field
-                                        textarea(placeholder="Комментарий").basket__textarea
-                                        span.basket__label (например, не звонить спит ребенок)
+                                    .basket__full-order
+                                        .basket__field
+                                            input(placeholder="Email").basket__input
+                                            span.basket__label (для письма о статусе заказа)
+                                div(id="change_adr")
+                                .basket__full-order
+                                    .basket__title Способ доставки:
+                                    .basket__form-address
+                                        span Адрес
+                                        span.basket__ad-val г.Москва, ул.Люблинскаяб 39/2
+                                        .basket__link-change Изменить
+                                    .basket__fields.is-deliv
+                                        .basket__field
+                                            .basket__form-btn-choose.is-active Доставка курьером (Москва и МО)
+                                            .basket__form-note До 3000 рублей — 400р/доставка<br>Свыше 3000 рублей — бесплатно
+                                        .basket__field
+                                            .basket__form-btn-choose Доставка курьером за МКАД
+                                            .basket__form-note 15 рублей / км.
+                                        .basket__field
+                                            .basket__form-btn-choose Самовывоз
+                                            .basket__form-note Бесплатно
+                                            .basket__form-link
+                                                span.icon-2c_navig Выберите пункт выдачи
+                                    .basket__title Способ оплаты:
+                                    .basket__fields.is-pay
+                                        .basket__field
+                                            .basket__form-btn-choose Наличными курьеру
+                                        .basket__field
+                                            .basket__form-btn-choose.is-active Банковской картой
+                                    .basket__fields.is-pay
+                                        .basket__field
+                                            textarea(placeholder="Комментарий").basket__textarea
+                                            span.basket__label (например, не звонить спит ребенок)
+                                .basket__res-btn-wrap
+                                    a(href='/hochucoffe/static/html/pages/basket_success.html').basket__res-btn.btn.is-brown-light.is-order-bot Оформить заказ
+
 
 
 

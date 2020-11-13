@@ -14,7 +14,7 @@
     margin-bottom: 60px;
   }
   &__visit{
-    box-shadow: 0 4px 19px rgba(0, 0, 0, 0.25);
+    @include Shadow();
     border-radius: 10px;
     position: relative;
     border: 1px solid $grayBorder;
@@ -145,5 +145,88 @@
     height: 576px;
     margin-top: 32px;
     margin-bottom: 160px;
+  }
+}
+@media #{$media-640} {
+  .contacts{
+    padding: 20px 10px;
+    .breadcrumbs,.page-block-head{
+      padding-left: 10px;
+    }
+    &__card{
+      flex-wrap: wrap;
+      width: calc(100% + 20px);
+      margin-left: -10px;
+    }
+    &__visit{
+      width: 100%;
+      height: 242px;
+      &.is-face{
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+    }
+    &__visit-logo{
+      width: 40%;
+      margin: auto auto 2px auto
+    }
+    &__info{
+      font-size: 14px;
+      line-height: 22px;
+    }
+    &__visit-left{
+      padding-left: 15px;
+    }
+    &__visit-right{
+      padding-left: 15px;
+    }
+    &__visit-title{
+      font-size: 22px;
+      margin-bottom: 20px;
+      padding-top: 18px;
+      padding-right: 34px;
+      &:before{
+        font-size: 22px;
+      }
+    }
+    &__form-input{
+      &::placeholder{
+        font-size: 14px;
+      }
+    }
+    &__form-field{
+      margin-bottom: 12px;
+    }
+    &__form{
+      padding: 0 20px;
+    }
+    &__form-btn{
+      height: 36px;
+      line-height: 36px;
+      font-size: 16px;
+      &:not(:last-child) {
+        margin-right: 16px;
+      }
+    }
+    &__text {
+      margin-top: 22px;
+      font-size: 18px;
+      line-height: 22px;
+      margin-bottom: 24px;
+    }
+    &__soc-block{
+      margin-top: 20px;
+    }
+    &__soc-el{
+      margin-right: 16px;
+      &:before{
+        font-size: 32px;
+      }
+    }
+    &__map {
+      height: 276px;
+      margin-top: 20px;
+      margin-bottom: 100px;
+    }
   }
 }

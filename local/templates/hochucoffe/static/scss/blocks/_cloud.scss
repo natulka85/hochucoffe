@@ -39,3 +39,22 @@
     top: 2px;
   }
 }
+
+@media #{$media-640} {
+  .cloud{
+    margin-bottom: 30px;
+    &__item{
+      margin-right: 4px;
+      margin-bottom: 10px;
+    }
+    &__link{
+      font-size: 12px;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 8px;
+    }
+    &__num{
+      font-size: 10px;
+    }
+  }
+}

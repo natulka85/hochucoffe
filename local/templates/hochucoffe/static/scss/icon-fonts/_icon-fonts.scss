@@ -134,6 +134,15 @@
 	@if $filename == 2j_house {
 	$char: "\E023";
 }
+	@if $filename == 2k_filter {
+	$char: "\E024";
+}
+	@if $filename == 2l_sort {
+	$char: "\E025";
+}
+	@if $filename == 2m_arrow-l {
+	$char: "\E026";
+}
 
 @return $char;
 }
@@ -253,4 +262,13 @@
 }
 .icon-2j_house {
 	@include icon(2j_house);
+}
+.icon-2k_filter {
+	@include icon(2k_filter);
+}
+.icon-2l_sort {
+	@include icon(2l_sort);
+}
+.icon-2m_arrow-l {
+	@include icon(2m_arrow-l);
 }

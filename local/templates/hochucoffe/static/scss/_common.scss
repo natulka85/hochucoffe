@@ -18,7 +18,8 @@ body {
     box-sizing: border-box;
     //height: inherit;
     //min-width: 320px;
-    min-width: 1490px;
+    //min-width: 1490px;
+    min-width: 1500px;
     //height: 100%;
 }
 
@@ -227,6 +228,7 @@ a{
             line-height: 22px;
             position: absolute;
             left: 1px;
+            top: 0;
         }
         &.is-radio{
                 &:after{
@@ -307,6 +309,7 @@ video::-webkit-media-controls {
     cursor: pointer;
     position: relative;
     top: -5px;
+    white-space: nowrap;
     &:hover{
         text-decoration: none;
         border-bottom-color: transparent;
@@ -483,7 +486,19 @@ video::-webkit-media-controls {
                 min-height: 100%;
             }
         }
+        &.is-sale{
+            background: #EB5757;
+            border-radius: 8px 0px;
+            font-family: "Istok Web",sans-serif;
+            font-weight: bold;
+            color: $white;
+            text-align: center;
+        }
     }
+}
+
+.mob__btn-back{
+    display: none;
 }
 
 @media #{$media-640} {
@@ -494,8 +509,156 @@ video::-webkit-media-controls {
     .page{
         margin-top: -24px;
         border-radius: 14px;
+        box-shadow: none;
     }
     .inner{
         max-width: calc(100% - 20px);
     }
+    .page-title{
+        &._type-1{
+            font-size: 16px;
+            line-height: 20px;
+            margin: 12px 0;
+            &+.page-title-note{
+                font-size: 10px;
+                line-height: 10px;
+                bottom: 14px;
+            }
+        }
+        &._type-2{
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+    .page-title-link{
+        font-size: 10px;
+        margin-left: 8px;
+    }
+    .page-block-head{
+        padding-left: 0;
+    }
+
+    .slick-list{
+        .catg__item {
+            border-right: 1px solid #ebebeb;
+            border-bottom: none;
+            &:not(:nth-last-of-type(-n+2)){
+                border-bottom: none;
+            }
+        }
+    }
+
+    .main-checkbox{
+        &__span{
+            padding-left: 20px;
+            &:before{
+                height: 12px;
+                width: 12px;
+                line-height: 12px;
+                font-size: 8px;
+            }
+            &:after{
+                height: 12px;
+                width: 12px;
+                line-height: 12px;
+                border-radius: 2px;
+            }
+        }
+    }
+    .page-text{
+        padding: 0 18px;
+        font-size: 12px;
+        line-height: 24px;
+        p{
+            line-height: 24px;
+        }
+
+    }
+    .main-content{
+        padding-left: 0;
+    }
+    .btn-like{
+        &:before{
+            font-size: 16px;
+        }
+        &.is-active,
+        &:hover{
+            &:before{
+                font-size: 16px;
+            }
+        }
+    }
+    .btn-sravn{
+        &:before{
+            font-size: 16px;
+        }
+        &.is-active,
+        &:hover{
+            &:before{
+                font-size: 16px;
+            }
+        }
+    }
+    .mob__btn-back{
+        display: block;
+        background: $grayLight;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 16px;
+        &:before{
+            font-size: 14px;
+            color: $grayBrown;
+        }
+    }
+    .count-block{
+        &__btn{
+            width: 24px;
+            height: 22px;
+            line-height: 22px;
+            &:before{
+                font-size: 12px;
+            }
+            &:hover{
+                border-color: transparent;
+            }
+        }
+        &__value{
+            width: 28px;
+            height: 22px;
+            line-height: 22px;
+            color: $grayBrown;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+    .doFixed{
+        position: static !important;
+    }
+    .doFixedBottom{
+        position: static !important;
+    }
+
+    .labels{
+        &__item{
+            &.is-new{
+                font-size: 10px;
+                height: 14px;
+                line-height: 14px;
+            }
+            &.is-coffe{
+                &:before{
+                    font-size: 16px !important;
+                }
+            }
+            &.is-country{
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
 }
+
+
+
+
+

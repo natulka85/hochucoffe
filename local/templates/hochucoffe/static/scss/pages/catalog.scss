@@ -1,4 +1,5 @@
 @import "../blocks/filter";
+@import "../blocks/menu-catalog";
 .catalog{
   padding: 0 34px;
   .cloud__list{
@@ -7,18 +8,23 @@
   .catg__item{
     margin-bottom: 30px;
   }
+  &__main-wrap{
+    width: 100%;
+    overflow: hidden;
+  }
 }
 
 .sidebar{
   width: 300px;
   margin-right: 30px;
-  position: absolute;
+  float: left;
+  position: relative;
 
 }
 
 .your-interests{
   margin-top: 100px;
-  margin-right: -20px;
+  //margin-right: -20px;
   .page-block-head{
     margin-bottom: 40px;
   }
@@ -44,3 +50,64 @@
 .your-tags{
   margin-top: 40px;
 }
+
+@media #{$media-640} {
+  .catalog {
+    padding: 0 10px;
+
+    .catg {
+      &__item {
+        margin-bottom: 0;
+      }
+
+      &__list {
+        width: calc(100% + 20px);
+        margin-left: -10px;
+      }
+    }
+
+    .your-interests {
+      margin-top: 40px;
+      width: calc(100% + 20px);
+      margin-left: -10px;
+      .slick-list{
+        width: calc(100% - 1px);
+      }
+      .slick-dots {
+        bottom: -22px;
+      }
+      .catg__list{
+        width: 100%;
+        margin-left: 0;
+      }
+      .catg__item{
+        margin-right: 0;
+      }
+    }
+
+    .your-tags {
+      margin-top: 60px;
+    }
+
+    .your-viewed {
+      margin-top: 40px;
+      margin-bottom: 100px;
+      width: calc(100% + 20px);
+      margin-left: -10px;
+      .slick-list{
+        width: calc(100% - 1px);
+      }
+      .slick-dots {
+        bottom: -22px;
+      }
+      .catg__list{
+        width: 100%;
+        margin-left: 0;
+      }
+      .catg__item{
+        margin-right: 0;
+      }
+    }
+  }
+}
+

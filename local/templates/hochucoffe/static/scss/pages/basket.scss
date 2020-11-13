@@ -11,12 +11,31 @@
   &__content{
     position: relative;
     display: flex;
-    &.is-empty{
-      align-items: center;
-    }
   }
   &__content-wr{
     padding-bottom: 280px;
+    &.is-success{
+      padding-top: 40px;
+      background: url(../images/bg/bg_basket.png) no-repeat 58% 115px;
+
+      .basket__res-block{
+        line-height: 20px;
+      }
+      .basket__res-op-name{
+        color: $grayBrown;
+      }
+      .basket__res-op-value{
+        color: $brownDark;
+      }
+    }
+    &.is-empty{
+      .basket__left{
+        width: 22%;
+      }
+      .basket__content{
+        align-items: center;
+      }
+    }
   }
   &__right{
     position: sticky;
@@ -36,17 +55,6 @@
     &.doFixedBottom{
       position: absolute;
       bottom: 10px;
-    }
-    &.is-success{
-      .basket__res-block{
-        line-height: 20px;
-      }
-      .basket__res-op-name{
-        color: $grayBrown;
-      }
-      .basket__res-op-value{
-        color: $brownDark;
-      }
     }
   }
   &__res-block{
@@ -80,7 +88,7 @@
   &__res-op{
     display: flex;
     font-size: 18px;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
     position: relative;
   }
   &__res-op-name{
@@ -108,9 +116,10 @@
     cursor: pointer;
     position: absolute;
     left: 0;
-    top: 24px;
+    top: 18px;
     &:hover{
       border-bottom-color: transparent;
+      text-decoration: none;
     }
   }
   &__res-btn-wrap{
@@ -126,19 +135,18 @@
     &:hover{
       text-decoration: none;
     }
+    &.is-to-order{
+      display: none;
+    }
+    .is-order-bot{
+      display: none;
+    }
   }
   &__left{
     width: 67%;
     padding-left: 40px;
     padding-right: 100px;
-    &.is-success{
-      padding-top: 40px;
-      background: url(../images/bg/bg_basket.png) no-repeat right 42px;
-      //background-size: ;
-    }
-    &.is-empty{
-      width: 22%;
-    }
+
   }
   &__list{
 
@@ -159,11 +167,14 @@
   &__el{
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    padding-left: 80px;
   }
   &__el-pic{
     width: 60px;
     height: 60px;
-    margin-right: 20px;
+    position: absolute;
+    left: 0;
   }
   &__el-name-wrap{
     width: 100%;
@@ -173,7 +184,6 @@
     line-height: 18px;
     max-width: 290px;
     display: block;
-    padding-left: 10px;
   }
   &__price-c{
     white-space: nowrap;
@@ -202,6 +212,11 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+  &__cont-btn-wrap{
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
   }
   &__cont-btn{
     margin-left: 16px;
@@ -263,12 +278,13 @@
   &__form-address{
     position: relative;
     margin-bottom: 48px;
+    display: flex;
   }
   &__ad-val{
     font-weight: bold;
     font-size: 20px;
     line-height: 20px;
-    padding-left: 10px;
+    padding-left: 40px;
   }
   &__form-btn-choose{
     width: 300px;
@@ -309,6 +325,7 @@
     margin-bottom: 24px;
     margin-right: 50px;
     position: relative;
+    max-width: 100%;
   }
   &__input{
     width: 300px;
@@ -335,6 +352,7 @@
     line-height: 44px;
     transition: .3s;
     width: 653px;
+    max-width: 100%;
     height: 150px;
     padding: 14px;
     &::placeholder{
@@ -457,6 +475,7 @@
     padding-left: 30px;
     strong{
       font-size: 20px;
+      padding-left: 10px;
     }
   }
   &__icon{
@@ -464,6 +483,287 @@
       &:before{
         font-size: 248px;
       }
+    }
+  }
+  &__title-h{
+    display: flex;
+    align-content: center;
+    .basket__check{
+      flex-grow: 1;
+    }
+    .main-checkbox__checkbox{
+      &:checked+.main-checkbox__span:after{
+        @include gradient('bege');
+      }
+    }
+    .main-checkbox__span{
+      color: $bege;
+      &:after{
+        top: -4px;
+        border-color: $bege;
+      }
+      &:before{
+        top: -4px;
+      }
+    }
+    .basket__label{
+      margin: 0;
+      left: 165px;
+      top: 11px;
+    }
+    .basket__note{
+      display: block;
+      padding-left: 38px;
+    }
+  }
+}
+
+@media #{$media-640} {
+  .basket{
+    padding: 20px 10px;
+    .page-block-head,
+    .breadcrumbs{
+      padding-left: 0;
+    }
+    &__item{
+      padding: 10px 0;
+    }
+    &__content{
+      flex-wrap: wrap;
+    }
+    &__left{
+      width: 100%;
+      padding: 0;
+    }
+    &__right{
+      position: static;
+      width: 100%;
+    }
+    &__content-wr{
+      &.is-success{
+        padding: 18px 20px 300px 20px;
+        width: calc(100% + 20px);
+        margin-left: -10px;
+        background-position: calc(100% + 10px) bottom;
+        .basket__res-op-wrap{
+          display: block;
+          margin-top: 14px;
+        }
+        .basket__res-op{
+          margin-bottom: 10px;
+        }
+        .basket__name{
+          font-size: 14px;
+          line-height: 18px;
+        }
+        .basket__value{
+          font-size: 14px;
+          line-height: 18px;
+        }
+        .basket__res-block{
+          margin-bottom: 8px;
+        }
+      }
+      &.is-empty{
+        .basket__left{
+          width: 32%;
+        }
+        .basket__content{
+          width: 68%;
+          padding-left: 10px;
+        }
+      }
+    }
+    &__result{
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      padding: 20px 34px;
+
+    }
+    &__el-name{
+      font-size: 12px;
+      line-height: 15px;
+      padding-right: 20px;
+    }
+    &__cont-btn{
+      visibility: visible;
+      opacity: 1;
+      &>span{
+        display: none;
+      }
+    }
+    &__cnt{
+      position: static;
+      flex-grow: 1;
+      .count-block{
+        justify-content: center;
+      }
+    }
+    &__gram{
+      position: absolute;
+      bottom: 10px;
+      .cst-select-current{
+        height: 24px;
+        padding: 4px 14px 4px 4px;
+        border-color: transparent;
+        &:before{
+          right: 4px;
+        }
+      }
+    }
+    &__el{
+      padding-left: 66px;
+    }
+    &__el-control{
+      padding-right: 80px;
+      padding-left: 108px;
+      margin-top: 12px;
+    }
+    &__cont-btn{
+      margin-left: 4px;
+      height: 24px;
+      line-height: 24px;
+      &:before{
+        font-size: 14px;
+      }
+      &.is-active,
+      &:hover{
+        &:before{
+          font-size: 14px;
+        }
+      }
+    }
+    &__promo-btn,
+    &__promo-input{
+      height: 30px;
+      line-height: 30px;
+    }
+    &__res-op-wrap{
+      display: none;
+    }
+    &__res-btn{
+      &.is-order{
+        display: none;
+      }
+      &.is-to-order{
+        display: block;
+      }
+      .is-order-bot{
+        display: block;
+      }
+    }
+    &__res-btn-wrap{
+      margin-top: 14px;
+    }
+    &__title{
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 16px;
+    }
+    &__form{
+      margin-top: 30px;
+      padding: 0 14px;
+    }
+    &__input{
+
+    }
+    &__field{
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+    &__title-h {
+      .basket__label{
+        left: 30px;
+        top: 6px;
+      }
+      .main-checkbox__span{
+        &:after,
+        &:before{
+          top: 0;
+        }
+      }
+      .basket__note{
+        padding-left: 20px;
+        white-space: nowrap;
+      }
+    }
+    &__form-address{
+      margin-bottom: 40px;
+    }
+    &__ad-val{
+      font-size: 16px;
+      line-height: 16px;
+    }
+    &__text{
+      &._type-2{
+        line-height: 22px;
+        margin-bottom: 22px;
+      }
+      &.type-3{
+        font-size: 18px;
+        line-height: 22px;
+      }
+      &.type-4{
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 8px;
+      }
+      &.type-5{
+        font-size: 16px;
+        line-height: 18px;
+        margin-bottom: 10px;
+      }
+    }
+    &__table{
+      width: calc(100% + 20px);
+      margin-left: -10px;
+      margin-top: 30px;
+      padding-left: 0;
+      .basket__text._type-3{
+        padding-left: 10px;
+      }
+      table{
+        th{
+          font-size: 14px;
+          line-height: 16px;
+          &:nth-child(1) {
+            padding-left: 20px;
+          }
+          &:nth-child(n+4){
+            display: none;
+          }
+
+        }
+        td{
+          font-size: 12px;
+          &:nth-child(1) {
+            padding-left: 20px;
+          }
+          &:nth-child(n+4){
+            display: none;
+          }
+        }
+      }
+
+    }
+    &__table-result{
+      font-size: 14px;
+      line-height: 18px;
+      padding-left: 20px;
+      margin-top: 12px;
+      strong{
+        font-size: 14px;
+      }
+    }
+    &__icon.icon-1g_coffecapn:before {
+      font-size: 148px;
+    }
+
+    .cloud{
+      margin-top: 50px;
+    }
+    .your-viewed{
+      margin-top: 50px;
     }
   }
 }

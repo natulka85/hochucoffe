@@ -57,6 +57,7 @@
 @media #{$media-640} {
   .pers-info{
     position: fixed;
+    left: 0;
     bottom: -1px;
     z-index: 1000;
     background: $grayLight;
@@ -82,6 +83,10 @@
       &:not(:first-child) {
         margin-left: 0;
       }
+      &.is-b{order:3}
+      &.is-ot{order:4}
+      &.is-sr{order:5}
+
     }
    &__icon{
      height: 26px;

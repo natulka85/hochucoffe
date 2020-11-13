@@ -1,76 +1,93 @@
 .pagination{
-  margin-top: 36px;
+  margin: 36px 0;
   &__list{
     display: flex;
-    font-weight: 500;
-    align-items: center;
   }
   &__item{
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 50%;
     position: relative;
+    margin: 0 10px;
     &>a{
       display: inline-block;
-      transition: .3s;
-      width: 26px;
-      height: 26px;
-      line-height: 26px;
-      border-radius: 50%;
-      background: $white;
-      text-align: center;
-      margin: 0 10px;
       &:hover{
         text-decoration: none;
-        color: $bege;
-      }
-      &:before{
-        font-size: 10px;
-        position: absolute;
-        top: 50%;
-        margin-top: -13px;
       }
     }
-
-      &.is-active,
-      &:hover{
-          &>a{
-            background: $bege;
-            color: $white;
-          }
-      }
-
+    &.is-active,
+    &:hover{
+      background: $bege;
+      color: #ffffff;
+    }
 
     &.is-back{
-      &.is-active,
-      &:hover{
-        &>a{
-          background: $white;
-          color: $bege;
-        }
-      }
-      &>a{
-        width: auto;
-        padding-left: 36px;
-        background: $white;
-        &:before{
-          left: 0;
-          transform: rotate(180deg);
-        }
+      border-radius: 0;
+      padding-left: 38px;
+      width: auto;
+      margin-left: 0;
+      margin-right: 18px;
+      &:before{
+        position: absolute;
+        left: 0;
+        transform: rotate(180deg);
       }
     }
     &.is-forward{
-      &.is-active,
+      border-radius: 0;
+      padding-right: 38px;
+      width: auto;
+      margin-right: 0;
+      margin-left: 18px;
+      &:before{
+        position: absolute;
+        right: 0;
+      }
+    }
+    &.is-back,
+    &.is-forward{
+      &:before{
+        @extend .icon-1r_arrow;
+        display: inline-block;
+        font-size: 10px;
+      }
       &:hover{
+        text-decoration: none;
+        color: $bege;
+        background: transparent;
+      }
+    }
+  }
+}
+
+@media #{$media-640} {
+  .pagination{
+    font-size: 10px;
+    margin-top: 20px;
+    &__list{
+      font-weight: 400;
+    }
+    &__item{
+      height: 22px;
+      line-height: 22px;
+      &.is-back{
         &>a{
-          background: $white;
-          color: $bege;
+          text-align: left;
         }
       }
-      &>a{
-        width: auto;
-        padding-right: 36px;
-        background: $white;
-        &:before{
-          right: 0;
+      &.is-forward{
+        &>a{
+          text-align: right;
         }
+      }
+      &>span{
+        width: 22px;
+        height: 22px;
+        margin-left: -11px;
       }
     }
   }
