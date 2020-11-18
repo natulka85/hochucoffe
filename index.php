@@ -5,7 +5,7 @@ $APPLICATION->SetTitle("");
 $APPLICATION->SetPageProperty("description","");
 $APPLICATION->SetPageProperty("keywords","");
 global $BP_TEMPLATE;
-\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/index.js");
+\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/index.min.js");
 ?>
 <section class="banner">
     <div class="banner__list">

@@ -42,16 +42,31 @@ global $BP_TEMPLATE;?>
     <?endif?>
     <form class="filter__choose" name="smartfilter" id="smartfilter" action="<?echo $BP_TEMPLATE->ChpuFilter()->convertOldToNew($arResult["FORM_ACTION"])?>" method="get" >
         <?foreach($arResult["arConstruct"] as $key=>$struct):?>
-            <div class="filter__choose-block">
-                <?if(count($arResult["ITEMS"][$key]["VALUES"])>0):?>
-                <?endif;?>
-                <div class="filter__control-block">
-                    <div class="filter__info-title"><?=$struct?></div>
-                    <div class="filter__info-btn">Cбросить</div>
+                <?if(is_array($struct)):?>
+                    <div class="filter__choose-block">
+                        <div class="filter__control-block">
+                            <div class="filter__info-title"><?=$key?></div>
+                            <div class="filter__info-btn">Cбросить</div>
+                        </div>
+                        <?foreach ($struct as $s=>$v):?>
+                                <?if(count($arResult["ITEMS"][$s]["VALUES"])>0):?>
+                                    <?item_tmpl($arResult["ITEMS"][$s]["DISPLAY_TYPE"], $arResult["ITEMS"][$s],$arResult["ITEMS"][$s]['Q_OPENED']);?>
+                                <?endif;?>
+                        <?endforeach;?>
+                     </div>
+            <?else:?>
+                <div class="filter__choose-block">
+                    <?if(count($arResult["ITEMS"][$key]["VALUES"])>0):?>
+                    <div class="filter__control-block">
+                        <div class="filter__info-title"><?=$struct?></div>
+                        <div class="filter__info-btn">Cбросить</div>
+                    </div>
+                    <?item_tmpl($arResult["ITEMS"][$key]["DISPLAY_TYPE"], $arResult["ITEMS"][$key],$arResult["ITEMS"][$key]['Q_OPENED']);?>
+                    <?endif;?>
                 </div>
-                <?item_tmpl($arResult["ITEMS"][$key]["DISPLAY_TYPE"], $arResult["ITEMS"][$key],$arResult["ITEMS"][$key]['Q_OPENED']);?>
+                <?endif;?>
 
-            </div>
+
         <?endforeach;?>
 
         <div class="filter__btn-wrap">

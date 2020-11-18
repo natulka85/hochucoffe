@@ -1,0 +1,18 @@
+.search-page{
+  padding: 0 34px;
+  .catg__item{
+    margin-bottom: 30px;
+    width: 23.8%;
+    &:nth-child(3n) {
+      margin-right: 20px;
+    }
+    &:nth-child(4n) {
+      margin-right: 0;
+    }
+  }
+  &__count{
+    font-size: 18px;
+    display: block;
+    margin: 20px 0;
+  }
+}

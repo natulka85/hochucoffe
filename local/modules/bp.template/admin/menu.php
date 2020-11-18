@@ -30,8 +30,81 @@ $menu = array(
                 'icon' => 'update_marketplace',
                 'items_id' => 'menu_bp_template_const',
             ),
+            array(
+                'text' => Loc::getMessage('BP_TEMPLATE_SEO_TITLE'),
+                'url' => 'bp_template_index.php?file=seo.php&lang=' . LANGUAGE_ID,
+                'more_url' => array(
+                    'bp_template_index.php?file=seo_product.php',
+                    'bp_template_index.php?file=seo_sections.php',
+                ),
+                'title' => Loc::getMessage('BP_TEMPLATE_SEO_TITLE'),
+                'icon' => 'seo_menu_icon',
+                'items_id' => 'menu_bp_template_seo',
+                'items' => array(
+                    array(
+                        'text' => Loc::getMessage('BP_TEMPLATE_SEO_PRODUCT_TITLE'),
+                        'url' => 'bp_template_index.php?file=seo_product.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => Loc::getMessage('BP_TEMPLATE_SEO_PRODUCT_TITLE'),
+                        //'icon' => 'update_marketplace',
+                    ),
+                    array(
+                        'text' => Loc::getMessage('BP_TEMPLATE_SEO_SECTIONS_TITLE'),
+                        'url' => 'bp_template_index.php?file=seo_sections.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => Loc::getMessage('BP_TEMPLATE_SEO_SECTIONS_TITLE'),
+                        //'icon' => 'update_marketplace',
+                    ),
+                    array(
+                        'text' => Loc::getMessage('BP_TEMPLATE_SEO_CANONICAL_TITLE'),
+                        'url' => 'bp_template_index.php?file=seo_canonical.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => Loc::getMessage('BP_TEMPLATE_SEO_CANONICAL_TITLE'),
+                        //'icon' => 'update_marketplace',
+                    ),
+                    array(
+                        'text' => "Правила для разделов",
+                        'url' => 'bp_template_index.php?file=seo_nometa.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => "Правила для разделов",
+                        //'icon' => 'update_marketplace',
+                    ),
+                    array(
+                        'text' => "Правила для страницы поиска",
+                        'url' => 'bp_template_index.php?file=seo_search_rules.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => "Правила для разделов",
+                        //'icon' => 'update_marketplace',
+                    ),
+                    array(
+                        'text' => "robots.txt",
+                        'url' => 'bp_template_index.php?file=seo_robots.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => "robots.txt",
+                        //'icon' => 'update_marketplace',
+                    ),
+                ),
+            ),
+            array(
+                'text' => Loc::getMessage('BP_TEMPLATE_SORT_TITLE'),
+                'url' => 'bp_template_index.php?file=sort.php&lang=' . LANGUAGE_ID,
+                'more_url' => array('bp_template_index.php?file=sort.php&lang=' . LANGUAGE_ID),
+                'title' => Loc::getMessage('BP_TEMPLATE_SORT_TITLE'),
+                'icon' => 'sale_menu_icon_crm',
+                'items_id' => 'menu_bp_template_sort',
+                'items' => array(
+                    array(
+                        'text' => Loc::getMessage('BP_TEMPLATE_SORT_VAR'),
+                        'url' => 'bp_template_index.php?file=sort_var.php&lang=' . LANGUAGE_ID,
+                        'more_url' => array(),
+                        'title' => Loc::getMessage('BP_TEMPLATE_SORT_VAR'),
+                        //'icon' => 'update_marketplace',
+                    )
+                ),
+            ),
         ),
     ),
+
 );
 
 return $menu;

@@ -238,8 +238,14 @@
     @else if($type=='bege'){
         background: linear-gradient(180deg, #D5A672 0%, #C48237 100%);
     }
+    @else if($type=='bege-reverse'){
+        background: linear-gradient(180deg, #C48237 0%, #D5A672 100%);
+    }
     @else if($type=='blue'){
         background: linear-gradient(180deg, #62C2D8 0%, #25ACCB 100%);
+    }
+    @else if($type=='blue-reverse'){
+        background: linear-gradient(180deg, #25ACCB 0%, #62C2D8 100%);
     }
 }
 @mixin Shadow(){

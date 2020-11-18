@@ -109,11 +109,48 @@
       cursor: not-allowed;
     }
   }
-  &__field{
+  &__fields{
+    max-height: 174px;
+    overflow-y: auto;
+    &::-webkit-scrollbar { width: 4px; height: 4px;}
+    &::-webkit-scrollbar-button {  background-color: $bege; }
+    &::-webkit-scrollbar-track {  background-color: $bege;}
+    &::-webkit-scrollbar-track-piece { background-color: #F1F1F1;}
+    &::-webkit-scrollbar-thumb { height: 16px; background-color: $bege; border-radius: 2px;}
+    &::-webkit-scrollbar-corner { background-color: #999;}
+    &::-webkit-resizer { background-color: #666;}
 
+  }
+  &__fields-wrap{
+    position: relative;
+  }
+  &__scroll-control{
+    position: absolute;
+    font-size: 8px;
+    color: #F1F1F1;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    &.is-up{
+      @extend .icon-1h_galka;
+      right: -8px;
+      top: -27px;
+      transform: rotate(180deg);
+    }
+    &.is-down{
+      @extend .icon-1h_galka;
+      right: -8px;
+      bottom: -27px;
+    }
+    &:before{
+      font-size: 8px !important;
+    }
   }
   &__btn-wrap{
     background: #FFFFFF;
+    display: none;
   }
   &__btn{
     height: 38px;
@@ -189,7 +226,7 @@
 }
 
 .c-filt-price{
-  padding-bottom: 10px;
+  padding-bottom: 24px;
 }
 
 .noUi-base{
@@ -217,7 +254,7 @@
   border:none;
   box-shadow:none;
   position: relative;
-  bottom: -44px;
+  bottom: -40px;
   width: 176px;
 }
 
@@ -283,6 +320,7 @@
       bottom: 58px;
       background: $grayLight;
       padding: 10px;
+      display: block;
     }
     &__choose{
       .main-checkbox__span:after{

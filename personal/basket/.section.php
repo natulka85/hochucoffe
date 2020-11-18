@@ -1,4 +1,4 @@
 <?
-$sSectionName = "Новый раздел";
+$sSectionName = "Корзина";
 $arDirProperties = array();
 ?>

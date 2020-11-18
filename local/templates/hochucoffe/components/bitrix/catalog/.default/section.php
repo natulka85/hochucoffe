@@ -10,10 +10,18 @@ if($BP_TEMPLATE->Catalog()->is404($url))
 } else {
     CHTTP::SetStatus("200 OK");
 }
+
+//echo CHTTP::GetLastStatus();
+//die();
+
+
+
 //костыль для категорий
 
-$section_code = 'tipy';
-$arFilter["=CODE"] = 'tipy';
+if (0 < intval($arResult["VARIABLES"]["SECTION_ID"]))
+    $arFilter["ID"] = $arResult["VARIABLES"]["SECTION_ID"];
+elseif ('' != $arResult["VARIABLES"]["SECTION_CODE"])
+    $arFilter["=CODE"] = $arResult["VARIABLES"]["SECTION_CODE"];
 
 
 $obCache = new CPHPCache();
@@ -48,6 +56,7 @@ elseif ($obCache->StartDataCache())
 }
 if (!isset($arCurSection))
     $arCurSection = array();
+
 
 ?>
 <?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(
@@ -145,6 +154,14 @@ if (!isset($arCurSection))
             <?
             //global $arrFilter;
 
+            $arParams["PAGE_ELEMENT_COUNT"] = $BP_TEMPLATE->Catalog()->arCount;
+            //sort
+            $arSort = $BP_TEMPLATE->Catalog()->getCurSort($_REQUEST['sort'],$arParams["IBLOCK_ID"],$arParams['CATEGORY_TYPE'], $arCurSection['ID']);
+            //pre($arParams['CATEGORY_TYPE']);
+            //pre($arSort);
+            $arParams["ELEMENT_SORT_FIELD"] = $arSort['prop'];
+            $arParams["ELEMENT_SORT_ORDER"] = $arSort['order'];
+            $arParams["ELEMENT_SORT_CODE"] = $arSort['code'];
 
             $arParams["PAGE_ELEMENT_COUNT"] = $BP_TEMPLATE->Catalog()->arCount;
             $arSettings = [
@@ -158,12 +175,12 @@ if (!isset($arCurSection))
                 "SORT_FIELD" => $arParams["ELEMENT_SORT_FIELD"],
                 "SORT_ORDER" => $arParams["ELEMENT_SORT_ORDER"],
 
-                "DISPLAY_TOP_PAGER" => "N",
+                "DISPLAY_TOP_PAGER" => "Y",
                 "DISPLAY_BOTTOM_PAGER" => "Y",
                 "PAGER_TEMPLATE" => $arParams["PAGER_TEMPLATE"],
 
                 'COUNT_LIST' => $BP_TEMPLATE->Catalog()->arCount,
-                //'SORT_LIST' => $BP_TEMPLATE->Catalog()->getSortList($arParams["IBLOCK_ID"],$arParams['CATEGORY_TYPE'],$arCurSection['ID']),
+                'SORT_LIST' => $BP_TEMPLATE->Catalog()->getSortList($arParams["IBLOCK_ID"],$arParams['CATEGORY_TYPE'],$arCurSection['ID']),
                 'SORT_CODE' => $arParams["ELEMENT_SORT_CODE"],
                 'MOD_PAGE_TYPE' => $arResult['MAIN_SECTION_TYPE'],
                 'MOD_SECTION_TYPE' => $arResult['SECTION_TYPE'],
@@ -194,6 +211,8 @@ if (!isset($arCurSection))
 
 
 <?
+
+
 $BP_TEMPLATE->SeoSection()->getRobots();
 
 $h1 = $BP_TEMPLATE->SeoSection()->generateH1($arResult['SECTION_INPUT'],$arParams['CATEGORY_TYPE']);
@@ -222,4 +241,14 @@ if ($_REQUEST["catalog_ajax_call"] == "Y")
     ]);
     die();
 }
+
+
 ?>
+
+<style>
+    @media screen and (max-width: 640px){
+        .menu-catalog{
+            display: block;
+        }
+    }
+</style>

@@ -17,8 +17,27 @@ class Catalog
         if (!isset(static::$instance)) self::$instance = new Catalog();
         return static::$instance;
     }
+    protected function __construct()
+    {
+        $dbConst = SettingsTable::getList(array(
+            'select' => array('ID','NAME','CODE','VALUE'),
+            'filter' => array('CODE' => 'VAR_%')
+        ));
+        while ($arConst = $dbConst->Fetch())
+            $this->arConsts[$arConst['CODE']] = $arConst;
 
-    public $arCount = 18;
+    }
+
+    public $arCount = 36;
+    static private $arSortVariants = array(
+        'popul',
+        'prise_max',
+        'prise_min',
+        'raiting',
+        'sale_min',
+        'data_max',
+        'data_min',
+    );
 
     public function hashurl($url ,$only_hash=false)
     {
@@ -207,9 +226,8 @@ class Catalog
             return false;
     }
 
-    public function lables($IBLOCK_ID, $PRICE1, $PRICE2, $NOVINKA, $BRAND = false, $ARTICLE=false,$HIT=false)
+    public function lables($IBLOCK_ID, $PRICE1, $PRICE2, $NOVINKA, $ARTICLE=false,$HIT=false)
     {
-
         \CModule::IncludeModule("sale");
 
         $arResult = array();
@@ -290,25 +308,15 @@ class Catalog
         $arPatterns = [
             'catalog' => "(/catalog/\?.+|/catalog/$)", //catalog
             'catalog_filter' => "(/catalog/filter/.*)", //catalog + filter
+            'section' => "(/catalog/section/([a-zA-Z0-9\\_\\-\\%\\!]+)/\?.+|/catalog/section/([a-zA-Z0-9\\_\\-\\%\\!]+)/$)", //section
+            'section_filter' => "(/catalog/section/([a-zA-Z0-9\\_\\-\\%\\!]+)/([a-zA-Z0-9\\_\\-\\%\\!]+)/.*)", //section + new filter
             //'catalog_collection' => "(/catalog/collection/.*)", //catalog + filter
         ];
 
         $is404 = true;
         foreach($arPatterns as $k=>$pattern)
         {
-            preg_match(
-                $pattern,
-                $url,
-                $out
-            );
-
-            if(
-            preg_match(
-                $pattern,
-                $url,
-                $out
-            )
-            )
+            if(preg_match( $pattern, $url, $out))
             {
                 $is404 = false;
             }
@@ -328,5 +336,53 @@ class Catalog
             \CIBlockElement::SetPropertyValuesEx($ID, $iblock_id, ['OSTATOK_POSTAVSHCHIKA' => $quantity]);
 
         }
+    }
+    public function getSortList($iblock_id = 1, $type, $section_id)
+    {
+        //if($type=='')
+            $type =  'ALL_CAT';
+
+        $arData = json_decode($this->arConsts['VAR_'.$iblock_id]['VALUE'],true);
+        $key = array_search($type, $arData['type_code']);
+        $arResult = [];
+
+        foreach($arData as $k=>$v)
+        {
+            if(isset($v[$key]['prop']) && $v[$key]['prop']!=''){
+                $arResult[$k] = $v[$key];
+            }
+        }
+        unset($arResult['type_name']);
+        unset($arResult['type_code']);
+        return $arResult;
+    }
+    public function GetSortVariants()
+    {
+        return self::$arSortVariants;
+    }
+    public function getCurSort($code = 'popul', $iblock_id = 1, $type = '', $section_id)
+    {
+        $arData = self::getSortList($iblock_id,$type,$section_id);
+        if($code=='')
+        {
+            if(!$_SESSION['bp_sort'][$section_id])
+                $code='popul';
+            else
+                $code = $_SESSION['bp_sort'][$section_id];
+
+            /*if($type == 'STOCK' || $type =='STOCK_SECTION'){
+                $code = 'sale_max';
+            }*/
+
+            if($section_id == 141 && !$_SESSION['bp_sort'][$section_id])
+                $code = 'sale_max';
+
+        } else {
+            $_SESSION['bp_sort'][$section_id] = $code;
+        }
+
+        $arData[$code]['code'] = $code;
+
+        return $arData[$code];
     }
 }

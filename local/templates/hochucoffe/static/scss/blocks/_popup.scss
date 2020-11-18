@@ -1,0 +1,79 @@
+.popup{
+  max-width: 100%;
+  top: 224px;
+  position: fixed;
+  background: #fff;
+  left: 50%;
+  @include Shadow();
+  border-radius: 14px;
+  overflow: hidden;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: .3s opacity;
+  &.is-show{
+    display: block;
+    opacity: 1;
+  }
+  &__content{
+    padding: 20px 34px;
+  }
+  &__img{
+    width: 200px;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px auto;
+  }
+  &__text{
+    &._type-1{
+      text-align: center;
+      font-size: 18px;
+      line-height: 26px;
+      strong{
+        font-family: "Istok Web",sans-serif;
+        font-size: 20px;
+      }
+    }
+  }
+  &__btn-wrap{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__btn{
+    width: 49%;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    border-radius: 4px;
+  }
+  &__close{
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    text-align: center;
+    line-height: 20px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    &:before{
+      transform: rotate(45deg);
+      color: $grayBrown;
+      display: block;
+      font-size: 18px;
+    }
+    &:hover{
+      animation: scale 1s;
+    }
+  }
+}
+@keyframes scale {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.5);
+  }
+  100%{
+    transform: scale(1);
+  }
+}

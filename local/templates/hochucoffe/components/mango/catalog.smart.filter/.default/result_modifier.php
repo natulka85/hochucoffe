@@ -4,6 +4,7 @@ global $BP_TEMPLATE;
 foreach($arResult["ITEMS"] as $k=>&$arItem){
     $vertsort +=10;
     $arItem['VERT_SORT'] = $vertsort;
+    unset($arItem['VALUES']['false']);
     if(count($arItem['VALUES']) && !isset($arItem["PRICE"])){
         foreach($arItem['VALUES'] as $v){
             if($v["CHECKED"]){
@@ -11,7 +12,7 @@ foreach($arResult["ITEMS"] as $k=>&$arItem){
                 {
                     $v["VALUE"] = 'Да';
                 }
-                if($arItem["NAME"] == 'Хит продаж}')
+                if($arItem["NAME"] == 'Хит продаж')
                 {
                     $arItem["NAME"] = 'Выбор покупателей';
                     $v["VALUE"] = 'Да';
@@ -29,6 +30,7 @@ unset($arItem);
 
 
 //set404
+
 $arCurUrl = explode('?',$arResult['FORM_ACTION']);
 
 if(strpos($arResult['SEF_SET_FILTER_URL'],'filter/clear/')!==false)
@@ -63,18 +65,31 @@ foreach($arUrls as $url)
 //чпу -  конец
 
 $arResult["arConstruct"] = array(
+    'Интересное' => [
+            19 => 'Акция',
+            20 => 'Новинка',
+            21 => 'Хит продаж'
+    ],
     7 => 'Цена',
     3 => 'Вес, г',
-    17 => 'Способ приготовления',
     13 => 'Состав',
-    16 => 'Вкус',
-    14 => 'География',
-    9 => 'Регион произрастания',
+    16 => 'Вкусовые нотки',
+    17 => 'Способ приготовления',
+    //14 => 'Страна происхождения',
+    26 => 'Страна',
     15 => 'Год урожая',
     11 => 'Способ обработки',
     12 => 'Оценка SCA',
 );
 
+//Novinka выводим только "Да" - в комплекте
+if(!empty($arResult['ITEMS'][20]['VALUES'])){
+    unset($arResult['ITEMS'][20]['VALUES'][70]);
+}
+//Альты
+$arResult['ITEMS'][19]['VALUES']['true']['VALUE_ALT'] = 'Акция';
+$arResult['ITEMS'][20]['VALUES'][69]['VALUE_ALT'] = 'Новинка';
+$arResult['ITEMS'][21]['VALUES']['true']['VALUE_ALT'] = 'Хит продаж';
 //оставляем только присутствующие в фильтре
 foreach($arResult["arConstruct"] as $key1 => &$item1){
     if(is_array($item1)){
@@ -153,12 +168,17 @@ function item_tmpl($tmpl, $arItem,$quant,$struct=false) {
             <?
             break;
         default:?>
-            <?$c = 0?>
-            <div class="filter__fields <?if(count($arItem["VALUES"])>$quant):?>js-more-list<?endif;?>">
+            <?$c = 0; ?>
+            <?if(count($arItem["VALUES"])>$quant):?>
+                <div class="filter__fields-wrap">
+                <div class="filter__scroll-control is-up"></div>
+                <div class="filter__scroll-control is-down"></div>
+            <?endif;?>
+            <div class="filter__fields">
                 <?foreach ($arItem['VALUES'] as $val=>$ar):?>
                 <?$c++;?>
-                    <div class="filter__field <?if($c > $quant):?> js-more-hidden<?endif;?>">
-                        <label class="filter__label">
+                    <div class="filter__field <?/*if($c > $quant):<!-- js-more-hidden-->*/?><?/*endif;*/?>">
+                        <label class="filter__label<?=($ar["DISABLED"]? ' disabled': '')?>">
                             <input class="filter__checkbox main-checkbox__checkbox" type="checkbox"
                                    name="<?=$ar["CONTROL_NAME"]?>"
                                    id="<?=$ar["CONTROL_NAME"]?>"
@@ -166,15 +186,21 @@ function item_tmpl($tmpl, $arItem,$quant,$struct=false) {
                                 <?=($ar["CHECKED"]? 'checked="checked"': '')?>
                                    onclick="smartFilter.click(this);"
                             >
-                            <span class="main-checkbox__span filter__span"><?=$ar['VALUE']?><span class="filter__cnt"><?if($ar['ELEMENT_COUNT']>0):?> <?=$ar['ELEMENT_COUNT']?><?endif?></span></span>
+                            <?
+                            $value_param = $ar['VALUE'];
+                            if($ar['VALUE_ALT']!=''){
+                                $value_param = $ar['VALUE_ALT'];
+                            }?>
+                            <span class="main-checkbox__span filter__span"><?=$value_param?><span class="filter__cnt"><?if($ar['ELEMENT_COUNT']>0):?> <?=$ar['ELEMENT_COUNT']?><?endif?></span></span>
 
                         </label>
                     </div>
                 <?endforeach;?>
-                <?if(count($arItem["VALUES"])>$quant):?>
+                <?/*if(count($arItem["VALUES"])>$quant):*/?><!--
                     <div class="filter__more-btn"><span class="filter__info-btn js-more-btn">Показать еще</span></div>
-                <?endif?>
+                --><?/*endif*/?>
             </div>
+            <?if(count($arItem["VALUES"])>$quant):?></div><?endif;?>
 
         <?
     }

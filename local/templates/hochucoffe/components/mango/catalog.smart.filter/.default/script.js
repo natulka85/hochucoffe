@@ -1041,3 +1041,12 @@ $(document).on('blur','.inp-text',function () {
 		$(this).val($(this).attr('current-value'));
 	}
 })
+$(document).on('click','.filter__scroll-control.is-up',function(){
+	var block = $(this).parents('.filter__fields-wrap').find('.filter__fields');
+	block.animate({scrollTop:block.scrollTop() - 100}, 300);
+});
+$(document).on('click','.filter__scroll-control.is-down',function(){
+	var block = $(this).parents('.filter__fields-wrap').find('.filter__fields');
+	console.log(block.outerHeight());
+	block.animate({scrollTop: block.scrollTop() + 100},300);
+});

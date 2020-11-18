@@ -140,9 +140,11 @@
 }
 .slick-dots li {
 	display:inline-block;
-	vertical-align:top;
-	padding:0 10px;
-	margin:0;
+	vertical-align:middle;
+    margin: 0 4px;
+    width: 18px;
+    //height: 18px;
+    line-height: 18px;
 }
 .slick-dots li button {
 	border:none;
@@ -214,9 +216,9 @@
 
 .slick-dots {
   li{
-    padding: 0 4px;
     button{
      background: transparent;
+      display: none;
     }
     &:after{
       content: '';
@@ -228,9 +230,12 @@
       display: block;
       transition: .3s;
       cursor: pointer;
+      margin: auto;
     }
     &.slick-active{
       &:after{
+        height: 16px;
+        width: 16px;
         background: $bege;
       }
     }

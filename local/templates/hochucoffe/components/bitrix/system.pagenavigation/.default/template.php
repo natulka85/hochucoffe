@@ -39,7 +39,7 @@ $arResult["bShowAll"] = false;
                     <?endif?>
                 <?endif?>
             <?else:?>
-                <span class="pagination__item is-back">Предыдущая страница</span>
+                <span class="pagination__item is-back is-no-active">Предыдущая страница</span>
             <?endif?>
 
             <?while($arResult["nStartPage"] >= $arResult["nEndPage"]):?>
@@ -79,7 +79,7 @@ $arResult["bShowAll"] = false;
                 <?endif?>
 
             <?else:?>
-                <span class="pagination__item is-back">Предыдущая страница</span>
+                <span class="pagination__item is-back is-no-active">Предыдущая страница</span>
             <?endif?>
 
             <?while($arResult["nStartPage"] <= $arResult["nEndPage"]):?>
@@ -97,7 +97,7 @@ $arResult["bShowAll"] = false;
             <?if($arResult["NavPageNomer"] < $arResult["NavPageCount"]):?>
                 <a class="pagination__item is-forward" href="<?=$arResult["sUrlPath"]?>?<?=$strNavQueryString?>PAGEN_<?=$arResult["NavNum"]?>=<?=($arResult["NavPageNomer"]+1)?>">Следующая страница</a>&nbsp;
             <?else:?>
-                <span class="pagination__item is-forward">Следующая страница</span>
+                <span class="pagination__item is-forward is-no-active">Следующая страница</span>
             <?endif?>
 
         <?endif?>

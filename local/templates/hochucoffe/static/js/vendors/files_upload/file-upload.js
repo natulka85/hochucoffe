@@ -50,7 +50,7 @@ $(function(){
 
             if(data.result.message === 'no_valid'){
 
-                var formatMessage = '<div class="popup__box is-selection-alert"><div class="popup__title"><span class="popup-title-text">Подбор по фото</span></div><div class="js-popup-close-only-this close-popup-btn"></div><div class="popup__subtile">Разрешены следующие расширения файлов: jpg, gif, bmp, png, jpeg, heic. Для изображений других форматов, напишите нам письмо на email: <a href="mailto:info@vamsvet.ru?subject=Подбор по фото">info@vamsvet.ru</a> с темой: «Подбор по фото»</div><div class="popup__btn-wrapp"><div class="popup__btn btn_c is-green js-popup-close-only-this">Закрыть</div></div></div>';
+                var formatMessage = '<div class="popup__box is-selection-alert"><div class="popup__title"><span class="popup-title-text">Подбор по фото</span></div><div class="js-popup-close-only-this close-popup-btn"></div><div class="popup__subtile">Разрешены следующие расширения файлов: jpg, gif, bmp, png, jpeg, heic. Для изображений других форматов, напишите нам письмо на email: <a href="mailto:info@hochucoffe.ru?subject=Подбор по фото">info@hochucoffe.ru</a> с темой: «Подбор по фото»</div><div class="popup__btn-wrapp"><div class="popup__btn btn_c is-green js-popup-close-only-this">Закрыть</div></div></div>';
 
                 $("body").prepend(formatMessage);
                 //$(".popup__box.selection-popup").remove();

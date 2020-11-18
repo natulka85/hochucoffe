@@ -49,11 +49,6 @@ class Userstat
 
         $arElement['PREVIEW_PICTURE_ID'] = $arElement['PREVIEW_PICTURE'];
         $arElement['PREVIEW_PICTURE'] = \CFile::GetPath($arElement['PREVIEW_PICTURE']);
-        //url
-        if($arElement['IBLOCK_ID']==2)
-        {
-            $arElement['DETAIL_PAGE_URL'] = '/catalog/product/'.$arElement['CODE'].'/';
-        }
 
         //свойства
         //по id нельзя так как разные инфоблоки могут быть
@@ -64,36 +59,12 @@ class Userstat
                 $arElement['ID'],
                 [],
                 [
-                    'CODE' => 'CML2_ARTICLE',
+                    'CODE' => '_ARTICLE_COMP',
                 ]
             );
             while($ar_props = $db_props->Fetch())
             {
                 $arElement[$ar_props['CODE']] = $ar_props['VALUE'];
-            }
-            $db_props = \CIBlockElement::GetProperty(
-                $arElement['IBLOCK_ID'],
-                $arElement['ID'],
-                [],
-                [
-                    'CODE' => '_RAZDEL_NA_SAYTE'
-                ]
-            );
-            while($ar_props = $db_props->Fetch())
-            {
-                $arElement[$ar_props['CODE']] = str_replace('Типы/','',$ar_props['VALUE']);
-            }
-            $db_props = \CIBlockElement::GetProperty(
-                $arElement['IBLOCK_ID'],
-                $arElement['ID'],
-                [],
-                [
-                    'CODE' => '_PROIZVODITEL',
-                ]
-            );
-            while($ar_props = $db_props->Fetch())
-            {
-                $arElement[$ar_props['CODE']] = $ar_props['VALUE_ENUM'];
             }
         }
         //цены

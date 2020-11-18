@@ -14,5 +14,5 @@ $(function(){
         })
     }
 
-    Sticky($('.page'), $('.menu-catalog'),0);
+    StickyMy($('.page'), $('.menu-catalog'),0);
 })

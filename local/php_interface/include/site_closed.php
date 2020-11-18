@@ -2,7 +2,7 @@
 define('STOP_STATISTICS', true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 $GLOBALS['APPLICATION']->RestartBuffer();?>
-<strong class="logo"><a href="/"><img src="/local/templates/hochucoffe/static/images//logo_main.svg" alt="" ></a></strong>
+<strong class="logo"><a href="/"><img src="/local/templates/hochucoffe/static/images/svg/logo_brown_bege.svg" alt="" ></a></strong>
 <br><br>
 Вы видите эту страницу, т.к. на сервере произошла внутренняя ошибка. <br>
 Возможно, мы обновляем программное обеспечение или проводим профилактические работы. <br>

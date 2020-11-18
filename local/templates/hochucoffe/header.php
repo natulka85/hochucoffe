@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?$APPLICATION->ShowTitle();?></title>
     <?$APPLICATION->ShowHead();?>
+    <?$APPLICATION->IncludeFile('/includes/refferer.php');?>
 </head>
 <body><!--script(type='text/javascript', src='/js/vendor/plyr.min.js')-->
 <div class="wrapper">
@@ -49,53 +50,56 @@
                     </div>
                 </div>
                 <div class="header__right">
-                    <div class="pers-info">
-                        <div class="pers-info__list">
-                            <div class="pers-info__item is-main"><a class="pers-info__link"
-                                                                    href="/">
-                                    <div class="pers-info__icon icon-2j_house"></div>
-                                    <div class="pers-info__text">Главная</div>
-                                </a></div>
-                            <div class="pers-info__item is-catalog"><a class="pers-info__link" href="/catalog/">
-                                    <div class="pers-info__icon icon-2i_katalog"></div>
-                                    <div class="pers-info__text">Каталаг</div>
-                                </a></div>
-                            <div class="pers-info__item"><a class="pers-info__link" href="/personal/compare/">
-                                    <div class="pers-info__icon icon-1c_sravnn"></div>
-                                    <div class="pers-info__text">В сравнении</div>
-                                    <div class="pers-info__num"><span>5</span></div>
-                                </a></div>
-                            <div class="pers-info__item"><a class="pers-info__link" href="/personal/delay/">
-                                    <div class="pers-info__icon icon-1e_heart"></div>
-                                    <div class="pers-info__text">Отложенные</div>
-                                    <div class="pers-info__num"><span>5</span></div>
-                                </a></div>
-                            <div class="pers-info__item"><a class="pers-info__link" href="/personal/basket/">
-                                    <div class="pers-info__icon icon-1g_coffecapn"></div>
-                                    <div class="pers-info__text">Корзина</div>
-                                    <div class="pers-info__num"><span>5</span></div>
-                                </a></div>
-                        </div>
-                    </div>
+                    <?$APPLICATION->IncludeComponent(
+                        "mango:cache.set",
+                        "smallbasket",
+                        array(
+                            "AJAX_MODE" => "Y",
+                            "AJAX_OPTION_SHADOW" => "N",
+                            "AJAX_OPTION_JUMP" => "N",
+                            "AJAX_OPTION_STYLE" => "Y",
+                            "AJAX_OPTION_HISTORY" => "N",
+                            'BASKET_LINK' => '/personal/basket/',
+                            'PATH_TO_DELAY'=> '/personal/delay/',
+                            'PATH_TO_COMPARE'=> '/personal/compare/',
+                            'EVENTS' => [],
+                        ),
+                        false
+                    );?>
                     <div class="search">
-                        <form class="search__form">
+                        <span class="search__form-section" data-section_id=""></span>
+                        <form class="search__form" action="/search/">
                             <div class="search__fields"><input class="search__input" name="q"
-                                                               placeholder="Я ищу свой любимый кофе">
+                                                               placeholder="Я ищу свой любимый кофе" autocomplete="off">
                                 <button class="search__btn icon-1i_search"></button>
                             </div>
                         </form>
+                        <div class="search-hint-ajax"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="page inner">
-            <div class="menu-top">
-                <div class="menu-top__list">
-                    <div class="menu-top__item"><a class="menu-top__link" href="#"><span>Арабика</span></a></div>
-                    <div class="menu-top__item"><a class="menu-top__link" href="#"><span>Арабика</span></a></div>
-                    <div class="menu-top__item"><a class="menu-top__link" href="#"><span>Арабика</span></a></div>
-                    <div class="menu-top__item"><a class="menu-top__link" href="#"><span>Арабика</span></a></div>
-                    <div class="menu-top__item"><a class="menu-top__link" href="#"><span>Арабика</span></a></div>
-                    <div class="menu-top__item"><a class="menu-top__link" href="#"><span>Арабика</span></a></div>
+            <?$APPLICATION->IncludeComponent("bitrix:menu","sections",
+                Array(
+                    "ROOT_MENU_TYPE" => "left",
+                    "MAX_LEVEL" => "3",
+                    "CHILD_MENU_TYPE" => "",
+                    "USE_EXT" => "Y",
+                    "DELAY" => "N",
+                    "ALLOW_MULTI_SELECT" => "Y",
+                    "MENU_CACHE_TYPE" => "N",
+                    "MENU_CACHE_TIME" => "3600",
+                    "MENU_CACHE_USE_GROUPS" => "Y",
+                    "MENU_CACHE_GET_VARS" => ""
+                )
+            );?>
+
+            <div class="menu-catalog">
+                <div class="menu-catalog__list">
+                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
+                                    class="icon-2l_sort">Сортировка</span></a></div>
+                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
+                                    class="icon-2k_filter">Фильтр</span></a></div>
                 </div>
             </div>

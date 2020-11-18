@@ -29,27 +29,44 @@ class Main
         $eventListener->addNamespace('Bp\\Template\\EventHandlers', $_SERVER['DOCUMENT_ROOT']. '/local/modules/bp.template/lib/EventHandlers');
         //Вызываем метод регистрации, который соберет все классы и вызовет для всех функцию AddEventHandler
         $eventListener->register();
-
-        if($_SESSION['user_city'] != ''){
-            $this->geo['city'] = $_SESSION['user_city'];
-        }
-        elseif(\CModule::IncludeModule('olegpro.ipgeobase')) {
-
-            $geo = IpGeoBase::getInstance()->getRecord($_SERVER['HTTP_X_FORWARDED_FOR']);
-            if($geo['city'] == '')
-                $geo['city'] = 'Москва';
-
-            $this->geo = $geo;
-            self::initCity();
-        }
+        self::initCity();
     }
 
     protected function __clone()
     {
 
     }
-    /*public static function initCity(){
+    public static function initCity(){
         global $BP_TEMPLATE;
+        if(Loader::includeModule("olegpro.ipgeobase") && !$_COOKIE['curcityid']){
+
+            $geo = IpGeoBase::getInstance()->getRecord($_SERVER['HTTP_X_FORWARDED_FOR']);
+            if($geo['city'] == '')
+                $geo['city'] = 'Москва';
+
+            if(strlen($geo["city"])>0)
+            {
+                setcookie ("curcityid", urldecode($geo["city"]),time()+3600*24*30, "/");
+            }
+            else
+            {
+                setcookie ("curcityid", urldecode('Москва'),time()+3600*24*30, "/");
+            }
+        }
+
+        if ($_SESSION['bp_cache']['bp_user']['city']=="" && $_COOKIE['curcityid']!="") {    //первый заход по сессии при рабочих куках
+            $_SESSION['bp_cache']['bp_user']['city'] = urldecode($_COOKIE['curcityid']);
+        }
+        if ($_SESSION['bp_cache']['bp_user']['city']=="") {   //город по умолчанию  - Москва при нерабочих куках
+            $_SESSION['bp_cache']['bp_user']['city'] = "Москва";
+        }
+        if (
+            $_SESSION['bp_cache']['bp_user']['city']!=""
+            && $_COOKIE['curcityid']!="" &&
+            $_SESSION['bp_cache']['bp_user']['city']!=urldecode($_COOKIE['curcityid'])
+        ) { //смена города
+            $_SESSION['bp_cache']['bp_user']['city'] = urldecode($_COOKIE['curcityid']);
+        }
 
         $cache = \Bitrix\Main\Data\Cache::createInstance();
         if ($cache->initCache('3600', serialize('initcities'),'hochucoffe'))
@@ -59,22 +76,18 @@ class Main
         elseif ($cache->startDataCache())
         {
             \CModule::IncludeModule('iblock');
-            $arFilter = ['IBLOCK_ID'=>6,'ACTIVE'=>'Y'];
-            $res = \CIBlockElement::GetList(Array("PROPERTY_CITY"=>"ASC"), $arFilter, false,  false, ['*','PROPERTY_TITLE','PROPERTY_ADDRESS','PROPERTY_PHONE','PROPERTY_TIME','PROPERTY_SITE','PROPERTY_CITY','PROPERTY_PRESET','PROPERTY_CENTER','PROPERTY_TYPE']);
+            $arFilter = ['IBLOCK_ID'=>2,'ACTIVE'=>'Y'];
+            $res = \CIBlockElement::GetList(Array(""), $arFilter, false,  false, ['*','PROPERTY_FREE_DELIVERY_SUMM']);
             $i = 0;
             while($ob = $res->Fetch())
             {
-                $city_name = trim($ob['PROPERTY_CITY_VALUE']);
+                $city_name = trim($ob['NAME']);
                 $ar[$city_name]  = $ob;
             }
             $cache->endDataCache($ar);
         }
-
-        if(!isset($ar[$BP_TEMPLATE->geo['city']])){
-            unset($BP_TEMPLATE->geo);
-            $BP_TEMPLATE->geo['city'] = 'Москва';
-        }
-    }*/
+        $_SESSION['bp_cache']['bp_user']['city_data'] = $ar[$_SESSION['bp_cache']['bp_user']['city']];
+    }
 
     public static function getInstance()
     {
@@ -106,29 +119,12 @@ class Main
         $rod = '';
         $arWords=[
             'Ж' => [
-                'люстра',
-                'ваза',
-                'картина',
-                'лампа',
-                'подсветка',
+
             ],
             'М' => [
-                'светильник',
-                'торшер',
-                'спот',
-                'прожектор',
-                'фонарик',
-                'выключатель',
-                'диммер',
-                'шнур',
-                'удлиннитель',
-                'стабилизатор',
-                'звонок',
-                'датчик движения,',
-                'патрон,',
-                'переходник,',
+                'кофе',
             ],
-            'С' => ['бра'],
+            'С' => [],
         ];
         $arExc = [
             'М' => ['комплект']

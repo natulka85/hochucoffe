@@ -1,5 +1,6 @@
 .breadcrumbs{
   margin-top: 36px;
+  margin-left: -18px;
   &__list {
     display: flex;
     flex-wrap: wrap;
@@ -9,21 +10,64 @@
     }
   }
   &__item{
-    margin-right: 18px;
+    position: relative;
+    &.is-link{
+      &:after{
+        content: '—';
+        display: inline-block;
+      }
+    }
+    &.is-list{
+      @extend .icon-1h_galka;
+      &:before{
+        color: $grayBrown;
+        font-size: 6px;
+        display: inline-block;
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        margin-top: -2px;
+        transition: .6s;
+      }
+    }
+
+    &:hover{
+      &.is-list{
+        &:before{
+          transform: rotate(-180deg);
+        }
+      }
+
+      .breadcrumbs__sec-lvl{
+        height: auto;
+        opacity: 1;
+      }
+    }
+  }
+  &__sec-lvl{
+    transition: .4s;
+    transform-origin: center top;
+    position: absolute;
+    height: 0;
+    opacity: 0;
+    min-width: 100%;
+    margin-top: 6px;
+  }
+  &__sec-lvl-cont{
+    padding: 6px 0;
+    @include Shadow();
+    border-radius: 14px;
   }
   &__link{
+    padding: 0 18px;
     text-align: left;
     color: $brownDark;
   }
   &__span{
     color: $grayBrown;
+    padding: 0 18px;
   }
   &__link{
-    &:after{
-      content: '/';
-      display: inline-block;
-      margin-left: 18px;
-    }
   }
 }
 

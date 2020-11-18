@@ -14,12 +14,15 @@ unset($arNewItems)
 ?>
 <?if (!empty($arResult['ITEMS'])):?>
     <div class="main-menu">
-        <div class="main-menu__burger">
+        <div class="main-menu__burger js-link is-menu">
             <div class="main-menu__burger-line"></div>
             <div class="main-menu__burger-line"></div>
             <div class="main-menu__burger-line"></div>
         </div>
         <div class="main-menu__list">
+            <div class="mob__mob-control">
+                <div class="mob__btn-back icon-2m_arrow-l js-link is-menu"></div>
+            </div>
             <?foreach ($arResult['ITEMS'] as $item):?>
                 <div class="main-menu__item <?=$arParams['HTML_CLASS']?>">
                     <a href="<?=$item['LINK']?>"><?=$item['TEXT']?></a>

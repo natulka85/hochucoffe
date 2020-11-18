@@ -29,6 +29,9 @@ $arLibs = [
         'js'   => $cur_templ_path.'/static/js/vendors/slick.min.js',
         'rel'  => ['jquery'],
     ],
+    'fancy' => array(
+        'js'   => $cur_templ_path.'/static/js/vendors/jquery.fancybox.js',
+    ),
     'mask' => [
         'js'   => $cur_templ_path.'/static/js/vendors/maskedinput.min.js',
         'rel'  => ['jquery'],
@@ -55,18 +58,23 @@ $arLibs = [
     'tohidelister' => ['js'   => $cur_templ_path.'/static/js/vendors/tohidelister.js',
         'rel'  => ['jquery'],
         ],
+    'mango_slider' => ['js'   => $cur_templ_path.'/static/js/minify-js/mango_slider.js',
+        'rel'  => ['jquery'],
+    ],
     'mainjs' => [
         'js'   => $cur_templ_path.'/static/js/minify-js/script.min.js',
         'rel'  => [
             'jquery',
             'jquery_ui',
             'slick',
+            'fancy',
             'mask',
             'touchSwipe',
             'nicescroll',
             'nouislider',
             'cookie',
             'actual',
+            'mango_slider',
             'tohidelister'
         ],
     ],

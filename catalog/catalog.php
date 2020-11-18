@@ -24,35 +24,23 @@ if(strpos($_SERVER['REQUEST_URI'], '/catalog/')!==false && strpos($_SERVER['REQU
     }
 }
 
-//new chpu
-//redirect old prim
-
-preg_match('/catalog\/[\w^]+/', $_SERVER['REQUEST_URI'], $match);
-
-if($match[0]!=''){
-    $match[0] = str_replace('catalog/','',$match[0]);
-    $SmartTemplate =  $match[0]."/#SMART_FILTER_PATH#/";
+//меняем шаблон для умногофильтра , если надо используем корневой каталог
+$SmartTemplate = '';
+if(strpos($_SERVER['REQUEST_URI'], '/catalog/section/')!==false)
+    $SmartTemplate =  "section/#SECTION_CODE#/filter/#SMART_FILTER_PATH#/";
+elseif(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/aktsiya-is-true/')!==false && isset($_REQUEST['SECTION_CODE']))  // action+section
+{
+    //$_SERVER['REQUEST_URI_OLD'] = $_SERVER['REQUEST_URI'];
+    $_SERVER['REQUEST_URI'] = str_replace('/catalog/filter','/catalog/section/'.$_REQUEST['SECTION_CODE'].'/filter',$_SERVER['REQUEST_URI']);
+    $SmartTemplate =  "section/#SECTION_CODE#/filter/#SMART_FILTER_PATH#/";
 }
 else
     $SmartTemplate =  "filter/#SMART_FILTER_PATH#/";
 
-if(str_replace('?'.$_SERVER['QUERY_STRING'], '',$_SERVER['REQUEST_URI']) == '/catalog/')
-{
-    $_SERVER['REQUEST_URI_OLD'] = $_SERVER['REQUEST_URI'];
-    $_REQUEST['DEPTH_LVL'] = 3;
-    $_SERVER['REQUEST_URI'] = '/catalog/';
-
-}
-elseif(str_replace('?'.$_SERVER['QUERY_STRING'], '',$_SERVER['REQUEST_URI'])=='/collections/')
-{
-    $_SERVER['REQUEST_URI_OLD'] = $_SERVER['REQUEST_URI'];
-    $_REQUEST['DEPTH_LVL'] = 2;
-    $_SERVER['REQUEST_URI'] = '/catalog/';
-}
-
+//die();
 //$_SERVER['REQUEST_URI'] = str_replace('tipy',$_REQUEST['SECTION_CODE'],$_SERVER['REQUEST_URI']);
 
-preg_match('/catalog\/[\w\-]+\//', $_SERVER['REQUEST_URI'], $output_array);
+//preg_match('/catalog\/[\w\-]+\//', $_SERVER['REQUEST_URI'], $output_array);
 
 if(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/')!==false)
 {
@@ -80,7 +68,7 @@ if(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/')!==false)
 }
 elseif($output_array[0]!=='')  //section+prim
 {
-    /*$CategoryType =  "SECTION";
+    $CategoryType =  "SECTION";
 
     if(strpos($_SERVER['REQUEST_URI'], '/filter/')!==false)
     {
@@ -107,7 +95,7 @@ elseif($output_array[0]!=='')  //section+prim
             $CategoryType =  "NEW_SECTION";
         else
             $CategoryType = "SECTION_FILTER";
-    }*/
+    }
 }
 
 

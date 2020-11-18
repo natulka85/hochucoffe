@@ -31,6 +31,8 @@ if(FOOTER_TYPE == 'type-1'){
         </div>
     </div>
 </div>
+<div class="popup" id="popup"></div>
+<div class="form-dark"></div>
 </div>
 </div>
 </body>

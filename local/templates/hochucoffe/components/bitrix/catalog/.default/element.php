@@ -1,13 +1,16 @@
 <? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();?>
+<?\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/product.min.js");?>
     <?
-global $APPLICATION; ?>
-    <div class="page-kartochka-wrap inner">
+global $APPLICATION,$BP_TEMPLATE; ?>
+    <div class="prod">
+
         <?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(
                 "START_FROM" => "0",
                 "PATH" => "",
                 "SITE_ID" => "s1"
             )
         );?>
+    <div class="prod__content">
             <?
 
             $componentElementParams = array(
@@ -138,6 +141,7 @@ global $APPLICATION; ?>
 
                 'USE_GIFTS_DETAIL' => $arParams['USE_GIFTS_DETAIL']?: 'Y',
                 'USE_GIFTS_MAIN_PR_SECTION_LIST' => $arParams['USE_GIFTS_MAIN_PR_SECTION_LIST']?: 'Y',
+                'CATEGORY_TYPE' => ($arParams['IBLOCK_ID'] == $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID) ? 'MAIN_CATALOG_ELEMENT' : $arParams['CATEGORY_TYPE'],
             );
 
             $elementId = $APPLICATION->IncludeComponent(
@@ -148,6 +152,7 @@ global $APPLICATION; ?>
             );
 
             ?>
+    </div>
 
             <?include_once($_SERVER['DOCUMENT_ROOT'].'/local/php_interface/ajax/delay_list.php');?>
     </div>

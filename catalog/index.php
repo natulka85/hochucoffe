@@ -4,7 +4,7 @@ global $APPLICATION;
 $APPLICATION->SetTitle("Каталог");
 $CategoryType = '';
 require(__DIR__."/catalog.php");
-
+\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/catalog.min.js");
 ?>
 <div class="catalog">
 
@@ -237,7 +237,7 @@ $APPLICATION->IncludeComponent("bitrix:catalog", "", Array(
     "DETAIL_SET_VIEWED_IN_COMPONENT" => "N",	// Включить сохранение информации о просмотре товара на детальной странице для старых шаблонов
     "SEF_URL_TEMPLATES" => array(
         "sections" => "",
-        "section" => "sections/#SECTION_CODE#/",
+        "section" => "section/#SECTION_CODE#/",
         "element" => "product/#ELEMENT_CODE#/",
         "compare" => "compare/",
         "smart_filter" => $SmartTemplate,
