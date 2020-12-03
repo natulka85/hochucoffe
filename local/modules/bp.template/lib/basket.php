@@ -38,6 +38,70 @@ class Basket
         return static::$instance;
     }
 
+    public function getCurBasketList()
+    {
+
+        Loader::includeModule('sale');
+
+        $arBaskets = [];
+
+        $dbBasket = BasketTable::getList(
+            [
+                'filter' => [
+                    'FUSER_ID' => Fuser::getId(true),
+                    'LID' => Context::getCurrent()->getSite(),
+                    'ORDER_ID' => null,
+                    'CAN_BUY' => 'Y',
+                    'DELAY' => 'N',
+                ],
+            ]
+        );
+        while($arBasket = $dbBasket->fetch())
+        {
+            $db_res = \CSaleBasket::GetPropsList(
+                array(),
+                array("BASKET_ID" => $arBasket['ID'])
+            );
+            while ($ar_res = $db_res->Fetch())
+            {
+                $arBasket['PROPS'][$ar_res['CODE']] = $ar_res;
+            }
+            $arBaskets[] = $arBasket;
+        }
+
+        return $arBaskets;
+    }
+    public function getDelayBasketList()
+    {
+        $result = FuserTable::getList(array(
+            'filter'  => [
+                'FUSER_ID' => \Bitrix\Sale\Fuser::getId(true),
+                'TYPE' => 'D',
+            ],
+        ));
+        if($row = $result->fetch())
+        {
+            return unserialize($row['DATA']);
+        }
+
+        return false;
+    }
+    public function getCompareBasketList()
+    {
+        $result = FuserTable::getList(array(
+            'filter'  => [
+                'FUSER_ID' => \Bitrix\Sale\Fuser::getId(true),
+                'TYPE' => 'C',
+            ],
+        ));
+        if($row = $result->fetch())
+        {
+            return unserialize($row['DATA']);
+        }
+
+        return false;
+    }
+
     public function addDelay($PRODUCT_ID)
     {
 
@@ -99,16 +163,19 @@ class Basket
             ]);
         }
     }
-    public function addProduct($PRODUCT_ID, $QUANTITY = 1, array $arProps = [])
+    public function addProduct($PRODUCT_ID, $QUANTITY = 1, $arPropsCode = [])
     {
         global $APPLICATION;
-
+        if(count($arPropsCode)>0){
+            $arProps = $this->decodeProps($arPropsCode);
+        }
         Loader::includeModule('catalog');
         Loader::includeModule('sale');
 
         if($QUANTITY<0)
             $QUANTITY = 1;
 
+        //$arProps = ["CODE" => "RAITING", "NAME" => " Рейтинг", "VALUE" => '100'];
         if($PRODUCT_ID>0)
         {
             $basket_id = \Add2BasketByProductID(
@@ -125,14 +192,13 @@ class Basket
 
         if($basket_id>0)
         {
-            if($_SESSION['bp_cache']['bp_user']['basket'][$PRODUCT_ID]['quantity']>0)
-                $QUANTITY = $QUANTITY + $_SESSION['bp_cache']['bp_user']['basket'][$PRODUCT_ID]['quantity'];
+            $_SESSION['bp_cache']['bp_user']['basket_code'][$PRODUCT_ID][$basket_id] = json_encode($arPropsCode,JSON_UNESCAPED_UNICODE);
 
-            $_SESSION['bp_cache']['bp_user']['basket'][$PRODUCT_ID] = [
+            $_SESSION['bp_cache']['bp_user']['basket'][$PRODUCT_ID][$basket_id] = [
                 'quantity' => $QUANTITY,
                 'basket_id' => $basket_id,
+                'basket_props'=>json_encode($arPropsCode,JSON_UNESCAPED_UNICODE)
             ];
-
             $arElement = Userstat::getProduct($PRODUCT_ID);
             $_SESSION['bp_cache']['bp_user']['products'][$arElement['ID']] = $arElement;
 
@@ -140,7 +206,7 @@ class Basket
             if(isset($_SESSION['bp_cache']['bp_user']['rest'][$PRODUCT_ID]))
                 unset($_SESSION['bp_cache']['bp_user']['rest'][$PRODUCT_ID]);
 
-            return $arElement;
+            return $basket_id;
         } else {
             $APPLICATION->ThrowException("basket::addProduct EMPTY BASKET ID", "EMPTY_BASKET_ID");
             return false;
@@ -148,69 +214,67 @@ class Basket
 
     }
 
-    public function updateProduct($BASKET_ID, $QUANTITY, $rest='n', $arChilds=[])
+    public function updateProduct($BASKET_ID, $QUANTITY, $arPropsCode=[])
     {
-
         global $APPLICATION;
         Loader::includeModule('sale');
         Loader::includeModule('catalog');
 
-        $dbBasketItems = \CSaleBasket::GetList(
-            [],
-            ['ID'=>$BASKET_ID,"ORDER_ID" => "NULL"],
-            false,
-            false,
-            []
-        );
-        if($arItems = $dbBasketItems->Fetch())
-        {
-            //update(del) childs
-            if(is_array($arChilds) && count($arChilds)>0)
+        if($BASKET_ID > 0){
+            $dbBasketItems = \CSaleBasket::GetList(
+                [],
+                ['ID'=>$BASKET_ID,"ORDER_ID" => "NULL"],
+                false,
+                false,
+                []
+            );
+            if($arItems = $dbBasketItems->Fetch())
             {
-                foreach($arChilds as $child_id)
-                {
-                    self::updateProduct($child_id, 0);
+                if(!empty($arPropsCode)){
+                    $arPropsDecode = $this->decodeProps($arPropsCode);
                 }
-            }
 
-            //echo $BASKET_ID.'$BASKET_ID';
-
-            if($BASKET_ID>0) {
-                \CSaleBasket::Update($BASKET_ID, array("QUANTITY" => $QUANTITY));
-
-                $PRODUCT_ID = 0;
-
-                foreach($_SESSION['bp_cache']['bp_user']['basket'] as $prod_id => &$arBasket)
+                $dbProp = \CSaleBasket::GetPropsList([],
+                    ["BASKET_ID" => $arItems["ID"]]);
+                while ($ar_res = $dbProp->Fetch())
                 {
-                    if($arBasket['basket_id'] == $BASKET_ID)
-                    {
-                        $PRODUCT_ID = $prod_id;
-                        if($QUANTITY>0)
-                            $arBasket['quantity'] = $QUANTITY;
-                        else
-                            unset($_SESSION['bp_cache']['bp_user']['basket'][$PRODUCT_ID]);
+                    if(isset($arPropsDecode[$ar_res['CODE']])){
+                       $arProps[$ar_res['CODE']] = $arPropsDecode[$ar_res['CODE']];
+                    }
+                    else{
+                        $arProps[$ar_res['CODE']] = $ar_res;
                     }
                 }
 
-                if($PRODUCT_ID==0)
+                //update(del) childs
+                if(is_array($arChilds) && count($arChilds)>0)
                 {
-                    $APPLICATION->ThrowException("basket::updateProduct EMPTY PRODUCT ID", "EMPTY_PRODUCT_ID");
-                    return false;
+                    foreach($arChilds as $child_id)
+                    {
+                        self::updateProduct($child_id, 0);
+                    }
                 }
-
-                $arElement = Userstat::getProduct($PRODUCT_ID);
-                $_SESSION['bp_cache']['bp_user']['products'][$arElement['ID']] = $arElement;
-
-                //rest
-                if($rest>0)
-                {
-                    $_SESSION['bp_cache']['bp_user']['rest'][$PRODUCT_ID] = $rest;
+                $arFields = [
+                    'QUANTITY' => $QUANTITY
+                ];
+                $arFields['PROPS'] = $arProps;
+                \CSaleBasket::Update($BASKET_ID, $arFields);
+                $element_id =$arItems['PRODUCT_ID'];
+                if($QUANTITY>0)
+                    $arBasket['quantity'] = $QUANTITY;
+                else{
+                    unset($_SESSION['bp_cache']['bp_user']['basket'][$element_id][$BASKET_ID]);
+                    unset($_SESSION['bp_cache']['bp_user']['basket_code'][$element_id][$BASKET_ID]);
+                    if(count($_SESSION['bp_cache']['bp_user']['basket'][$element_id])<=0){
+                        unset($_SESSION['bp_cache']['bp_user']['basket'][$element_id]);
+                        unset($_SESSION['bp_cache']['bp_user']['basket_code'][$element_id]);
+                    }
                 }
-
-            } else {
-                $APPLICATION->ThrowException("basket::updateProduct EMPTY BASKET ID", "EMPTY_BASKET_ID");
-                return false;
             }
+        }
+        else {
+            $APPLICATION->ThrowException("basket::updateProduct EMPTY BASKET ID", "EMPTY_BASKET_ID");
+            return false;
         }
     }
     public function createOrder($PERSON_TYPE_ID=1, $DELIVERY_ID=1, $PAY_SYSTEM_ID=1, $ordertype = '', $arProds=[], $arProps=[], $description='')
@@ -460,5 +524,17 @@ class Basket
         $arElement = Userstat::getProduct($PRODUCT_ID);
         $_SESSION['bp_cache']['bp_user']['products'][$arElement['ID']] = $arElement;
         return  $arElement;
+    }
+
+    public function decodeProps($arProps){
+        foreach ($arProps as $prop=>$val){
+            $arValues = explode('||',$val);
+            $arPropsRes[$prop] = [
+                'CODE'=>$arValues[0],
+                'NAME'=>$arValues[1],
+                'VALUE'=>$arValues[2],
+            ];
+        }
+        return $arPropsRes;
     }
 }

@@ -1,13 +1,19 @@
 <?require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die(); ?>
 <?
-
+echo "<pre>";
+   print_r($_REQUEST);
+echo "</pre>";
 $id = 0;
 if($_REQUEST['id']>0){
     $id = $_REQUEST['id'];
 }
 global $BP_TEMPLATE,$APPLICATION;
 global $arFilterCard;
+$template = 'CARD';
+if($_REQUEST['template'] !=''){
+    $template = $_REQUEST['template'];
+}
 
 if($id>0){
     $APPLICATION->RestartBuffer();
@@ -24,7 +30,7 @@ if($id>0){
         "CACHE_TIME"  =>  86400,
         "SECTION_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
         "FILTER_NAME" => 'arFilterCard',
-        'MOD_TEMPATE' => 'CARD',
+        'MOD_TEMPATE' => $template,
         'CATEGORY_TYPE'=> 'ONE_CARD',
         'REQUEST_ID' => $id
     ];
@@ -42,10 +48,15 @@ if($id>0){
     $json['error'] = 'ok';
     $json['func'] = 'var block = $(".js-prod-ajax");
                     block.animate({"opacity":0},200).replaceWith(`'.$out.'`).animate({"opacity":1},200);
-                    var url = "'.$GLOBALS['MOD_GLOBALS']['CARD_URL'].'";
-                    curState ={url:url};
-                    history.pushState(curState, document.title, url);
-                    initProductDetailPhotoGallery();';
+                    initProductDetailPhotoGallery();
+                    moreContent();';
+    if($_REQUEST['fast']==''){
+        $json['func'].= '
+        var url = "'.$GLOBALS['MOD_GLOBALS']['CARD_URL'].'";
+        console.log(url);
+        curState ={url:url};
+        history.pushState(curState, document.title, url);';
+    }
 
    /* $json['error'] = 'ok';
     $json['func'] = '$(".catg__item[data-elem='.$_REQUEST['cur_id'].']").replaceWith(`'.$out.'`);';*/

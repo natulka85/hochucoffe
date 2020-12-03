@@ -4,7 +4,7 @@ global $BP_TEMPLATE,$USER;
 
 //foreach(GetModuleEvents("sale", "OnSaleComponentOrderOneStepFinal", true) as $arEvent)
 //    ExecuteModuleEventEx($arEvent, Array($arResult['ORDER_ID'], $arOrder, $arParams));
-$arResult['ORDER_ID'] = 11;
+//$arResult['ORDER_ID'] = 11;
 if($USER->GetID())
 {
     $arFilter = [
@@ -49,7 +49,7 @@ if($USER->GetID()==38 || $orderRes->fetch()) {
 
     $arResult['payment'] = $order->getPaymentSystemId(); // массив id способов оплат
     $arResult['payment'] = \Bitrix\Sale\PaySystem\Manager::getObjectById($arResult['payment'][0]);
-    $arResult['payment_name'] = $arResult['payment']->getName();
+    $arResult['payment_name'] = $arResult['payment']->getField('NAME');
     $arResult['delivery'] = $order->getDeliverySystemId(); // массив id способов доставки
     $arResult['delivery'] = \Bitrix\Sale\Delivery\Services\Manager::getObjectById($arResult['delivery'][0]);
     $arResult['delivery_name'] = $arResult['delivery']->getName();

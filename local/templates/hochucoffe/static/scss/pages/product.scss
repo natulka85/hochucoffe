@@ -1,18 +1,110 @@
+@import "../blocks/review-form";
 .prod{
   padding: 0 34px 70px 34px;
-  .labels{
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    &__item{
-      &:not(:last-child){
-        margin-right: 10px;
-      }
+  &__name{
+    &.is-eng{
+      font-size: 22px;
+      color: #b7b3b2;
+      margin-top: 4px;
     }
   }
+  &__head{
+    margin-bottom: 20px;
+    .page-title._type-1{
+      margin-bottom: 0;
+    }
+  }
+  &__content{
+    position: relative;
+  }
+  &__labels{
+      .labels__items{
+        line-height: 1;
+        z-index: 1;
+        &.is-left{
+          position: absolute;
+          left: 0;
+          top: 0;
+          text-align: left;
+        }
+        &.is-right{
+          position: absolute;
+          right: 0;
+          top: 0;
+          text-align: left;
+        }
+      }
+      .labels__item{
 
-  &__control{
-    display: flex;
+        &.is-sale{
+          font-size: 16px;
+          padding: 0 4px;
+          height: 28px;
+          line-height: 28px;
+          display: block;
+          position: absolute;
+        }
+        &.is-new{
+          border-radius: 11px 8px 8px 0;
+          margin-bottom: 6px;
+        }
+        &.is-hit{
+          border-radius: 11px 0 8px 0;
+          display: block;
+        }
+        &.is-sca{
+          position: absolute;
+          right: 0;
+          padding: 0 8px 0 0;
+          border-radius: 4px 0 0 4px;
+          background: transparent;
+          transition: .3s;
+          min-width: 70px;
+          font-size: 24px;
+          &:before{
+            font-size: 24px;
+          }
+
+          &:after{
+            content: 'Specialty Coffee Association';
+            font-size: 14px;
+            display: block;
+            margin-top: 6px;
+            white-space: normal;
+            font-weight: 400;
+            letter-spacing: normal;
+            transform-origin: right top;
+            transition: .3s;
+            opacity: 0;
+          }
+        }
+        &.is-country{
+          background: transparent;
+          border-radius: 0 12px 0 0;
+          padding: 8px 8px 0;
+          .labels__item-wrap{
+            width: 30px;
+            height: 30px;
+            margin-bottom: 4px;
+          }
+          span{
+            font-family: IstokWeb,sans-serif;
+            padding-top: 1px;
+            font-size: 14px;
+            color: $grayBrown;
+            font-weight: 500;
+            opacity: 0;
+          }
+        }
+        &+.is-new{
+          border-radius: 0 8px 8px 0;
+          margin-top: 6px;
+        }
+        &+.is-sale{
+          margin-top: 6px;
+          border-radius: 0 8px 8px 0;
+        }
+      }
   }
   &__raiting{
     color: $bege;
@@ -39,7 +131,8 @@
     }
   }
   &__control{
-    margin-bottom: 50px;
+    display: flex;
+    margin-bottom: 10px;
   }
   &__link{
     display: flex;
@@ -56,9 +149,6 @@
     }
     .catg__like{
       opacity: 1;
-      &:before{
-        font-size: 22px;
-      }
     }
     .catg__sravn{
       opacity: 1;
@@ -70,6 +160,14 @@
       opacity: 1;
       &:before{
         font-size: 22px;
+      }
+    }
+    &.is-active{
+      .catg__like{
+        @extend .icon-1f_heart_full;
+        &:before{
+          font-size: 22px;
+        }
       }
     }
   }
@@ -89,6 +187,7 @@
   &__image-wrap{
     width: 562px;
     max-width: 100%;
+    position: relative;
     .slick-dots{
       bottom: 20px;
       height: 20px;
@@ -114,14 +213,23 @@
     max-width: 100%;
     line-height: 562px;
     border: 1px solid $grayBorder;
-    margin-bottom: 18px;
     border-radius: 10px;
     overflow: hidden;
+  }
+  &__image-img{
+    height: 560px;
+    &>a{
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
   }
   &__tmbs{
     //display: flex;
     //justify-content: center;
     height: 80px;
+    margin-top: 18px;
   }
   &__tmb{
     width: 80px;
@@ -156,13 +264,14 @@
   }
   &__tmb-img{
     display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     height: 100%;
     width: 100%;
   }
   &__bottom{
-    margin-top: 50px;
-    width: 70%;
+    width: 72%;
   }
   &__des-btn{
     cursor: pointer;
@@ -184,22 +293,62 @@
   }
   &__des-content{
     font-size: 18px;
-    line-height: 34px;
+    line-height: 32px;
     padding: 22px 32px;
+    p{
+      line-height: 32px;
+      &:first-child{
+        margin-top: 0;
+      }
+    }
+    .main-text__border{
+      margin-top: 24px;
+    }
+    .main-text__ul{
+      margin-top: -20px;
+    }
   }
   &__des-block{
     &:not(:last-child){
-      margin-bottom: 60px;
+      margin-bottom: 10px;
+    }
+  }
+  &__btn-wrap{
+    .count-block{
+      &__btn{
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        &:before{
+          font-size: 24px;
+        }
+        &:hover{
+          background: #fff;
+        }
+      }
+      &__value{
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        margin: 0 10px;
+        font-size: 24px;
+      }
     }
   }
   &__btn{
     height: 50px;
     line-height: 50px;
     border-radius: 8px;
+    &.is-buy.js-do{
+      @extend .btn.is-brown-light;
+    }
     &.is-review{
-      width: 200px;
       margin-bottom: 38px;
       margin-left: -32px;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 400;
+      width: auto;
     }
   }
   &__reviews{
@@ -271,9 +420,6 @@
     border-radius: 8px;
     padding: 34px 14px;
     font-size: 18px;
-    .catg__price-block{
-      margin: 0 0 16px 0;
-    }
     .catg__price{
       font-size: 34px;
       line-height: 44px;
@@ -281,6 +427,9 @@
     .catg__price-old{
       font-size: 30px;
     }
+  }
+  &__avail-block{
+    margin-top: 16px;
   }
   &__top{
     display: flex;
@@ -329,7 +478,7 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 26px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
   }
   &__main-bl{
     font-family: Helvetica, sans-serif;
@@ -457,7 +606,7 @@
     }
   }
   &__main-choose-bl{
-    margin-bottom: 28px;
+    margin-bottom: 22px;
     padding-right: 20px;
     &.is-weight{
       margin-top: 30px;
@@ -498,8 +647,71 @@
     line-height: 23px;
     margin-bottom: 8px;
   }
+  &__review-form{
+    display: none;
+    margin: 0 auto 50px -32px;
+  }
+  &__btn-more{
+    margin: 20px 0 60px 0;
+    font-size: 18px;
+    text-align: right;
+    padding-right: 20px;
+    &>span{
+      transition: .3s;
+      text-decoration: none;
+      color: $bege;
+      border-bottom: 1px dashed $bege;
+      cursor: pointer;
+      &:hover{
+        border-bottom-color: transparent;
+      }
+    }
+  }
+  &__r-answer{
+    display: flex;
+    padding-left: 50px;
+  }
+  &__r-man-img{
+    border-radius: 50%;
+    border: 1px dashed $grayBorder;
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+  }
+  &__r-pos{
+    color: $grayBrown;
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
+  }
+  &__r-answer-text{
+    color: $grayBrown;
+    font-size: 16px;
+    line-height: 1.4;
+    padding: 14px 16px;
+    text-align: right;
+  }
 }
-
+@media screen and (min-width: 641px){
+  .prod{
+    &__image-wrap{
+      &:hover{
+        .labels__item{
+          &.is-sca{
+            &:after{
+              opacity: 1;
+            }
+          }
+          &.is-country{
+            span{
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 @media #{$media-640} {
   .prod {
     padding: 1px 10px 30px 10px;
@@ -520,7 +732,6 @@
     }
     &__control{
       flex-wrap: wrap;
-      margin-bottom: 10px;
     }
     &__raiting{
       margin-right: 0;
@@ -531,38 +742,20 @@
     }
     &__link{
       margin-top: 10px;
-      flex-grow: 1;
+      margin-right: 18px;
       .catg__like{
         &:before {
-          font-size: 14px;
-        }
-        &.is-active,
-        &:hover{
-          &:before{
-            font-size: 14px;
-          }
+          font-size: 16px !important;
         }
       }
       .catg__sravn{
         &:before {
-          font-size: 16px;
-        }
-        &.is-active,
-        &:hover{
-          &:before{
-            font-size: 16px;
-          }
+          font-size: 16px !important;;
         }
       }
       .catg__share{
         &:before {
-          font-size: 16px;
-        }
-        &.is-active,
-        &:hover{
-          &:before{
-            font-size: 16px;
-          }
+          font-size: 16px !important;
         }
       }
     }
@@ -659,11 +852,11 @@
       margin: auto;
       &.is-review{
         margin-left: 0;
-        font-size: 16px;
+        font-size: 12px;
         height: 30px;
         line-height: 30px;
         width: 144px;
-        margin-bottom: 28px;
+        margin-bottom: 10px;
       }
     }
     &__main-choose-bl{
@@ -691,11 +884,6 @@
       width: 100%;
       margin-top: 16px;
     }
-    &__des-block{
-      &:not(:last-child) {
-        margin-bottom: 30px;
-      }
-    }
     &__des-btn{
       font-size: 16px;
       line-height: 20px;
@@ -711,8 +899,11 @@
     }
     &__des-content{
       font-size: 14px;
-      line-height: 24px;
+      line-height: 1.7;
       padding: 12px 20px;
+      p{
+        line-height: 1.7;
+      }
     }
     &__reviews-r{
       width: 180px;
@@ -770,15 +961,15 @@
         margin-right: 8px;
       }
     }
-    &__content{
-      position: relative;
+
+    &__btn-more {
+      margin: 20px 0 30px 0;
+      font-size: 14px;
+    }
+    &__review-form{
+      margin-left: -8px;
+      margin-bottom: 10px;
     }
   }
-  .pers-info{
-    box-shadow: none;
-    border: none;
-  }
-  .footer._type-2 {
-    margin-bottom: 123px;}
 }
 

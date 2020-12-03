@@ -1,11 +1,35 @@
 .catg{
   &__list{
-    display: flex;
-    flex-wrap: wrap;
+    &:not(.slick-initialized){
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &.slick-initialized{
+      .catg__item{
+        width: auto;
+        margin-left: 20px !important;
+        margin-right: 0 !important;
+      }
+      .slick-list{
+        margin-left: -20px;
+        width: calc(100% + 20px);
+      }
+    }
+    .slick-arrow{
+      top: -70px;
+      margin: 0;
+      &.slick-prev{
+        left: auto;
+        right: 60px;
+      }
+      &.slick-next{
+        right: 0;
+      }
+    }
+
     //justify-content: space-between;
   }
   &__item{
-    max-width: 346px;
     width: 32%;
     border-radius: 12px;
     border: 1px solid transparent;
@@ -35,7 +59,8 @@
           color: $brownDark;
         }
       }
-      .catg__btn.is-brown-light{
+      .catg__btn.js-do{
+        @extend .is-brown-light;
         @include gradient('brown');
         &:hover{
           background: linear-gradient(180deg,#81402a 0,#3b2620 100%);
@@ -64,7 +89,7 @@
   &__name{
     font-size: 20px;
     line-height: 22px;
-    margin-top: 18px;
+    margin-top: 10px;
     display: block;
     &.is-rus{
     }
@@ -80,6 +105,9 @@
   }
   &__content{
     padding: 0 14px 14px 14px;
+    .catg__price-block{
+      margin-top: 30px;
+    }
   }
   &__price{
     font-weight: bold;
@@ -95,7 +123,6 @@
   }
   &__price-block{
     display: flex;
-    margin-top: 30px;
   }
   &__avail-block{
     margin-top: 12px;
@@ -205,17 +232,26 @@
     justify-content: flex-end;
     align-items: center;
   }
-  &__btn.is-brown-light{
-    height: 38px;
-    line-height: 38px;
-    display: inline-block;
-    padding: 0 18px;
-    font-size: 18px;
-    border-radius: 8px;
-    background: transparent;
-    span{
-      border-bottom: 1px dashed $brownDark;
-      color: $brownDark;
+  &__btn{
+    &.js-do{
+      height: 38px;
+      line-height: 38px;
+      display: inline-block;
+      padding: 0 18px;
+      font-size: 18px;
+      border-radius: 8px;
+      background: transparent;
+      span{
+        border-bottom: 1px dashed $brownDark;
+        color: $brownDark;
+      }
+    }
+    .count-block__btn{
+      border-color: $grayBorder;
+      &:hover{
+        @include gradient('brown-light');
+        color: #fff;
+      }
     }
   }
   &__sravn{
@@ -301,6 +337,12 @@
         top: 0;
         text-align: left;
       }
+      &.is-right{
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: left;
+      }
     }
     .labels__item{
       &.is-sale{
@@ -324,6 +366,69 @@
           margin-top: 6px;
         }
       }
+      &.is-sca{
+        position: absolute;
+        right: 0;
+        padding: 4px 2px 4px 2px;
+        border-radius: 4px 0 0 4px;
+        background: transparent;
+        transition: .3s;
+        min-width: 70px;
+
+        &:after{
+          content: 'Specialty Coffee Association';
+          font-size: 12px;
+          display: block;
+          margin-top: 2px;
+          white-space: normal;
+          font-weight: 400;
+          letter-spacing: normal;
+          height: 0;
+          opacity: 0;
+          transform-origin: right top;
+          transition: .3s;
+        }
+      }
+      &.is-country{
+        background: transparent;
+        border-radius: 0 12px 0 0;
+        padding: 4px 8px;
+        margin-bottom: 4px;
+        filter: grayscale(1);
+        span{
+          font-family: IstokWeb,sans-serif;
+          padding-top: 1px;
+          font-size: 13px;
+          opacity: 0;
+        }
+      }
+    }
+  }
+  &__price-block-gr{
+    //font-family: Helvetica, sans-serif;
+    font-weight: 300;
+    color: $green;
+    margin-top: 4px;
+  }
+  &__fast{
+    height: 28px;
+    line-height: 28px;
+    background: rgba(241, 241, 241, 0.75);
+    color: #492C23;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+    border-radius: 16px;
+    padding: 0 14px;
+    transition: .3s;
+    &:hover{
+      background: rgba(241, 241, 241, 1);
     }
   }
 }
@@ -369,8 +474,6 @@
     line-height: 1;
     color: $grayBrown;
   }
-
-
 }
 .cst-select{
   background: $white;
@@ -383,7 +486,7 @@
   transition: height .6s, opacity .7s;
   transform-origin: top;
   position: absolute;
-  width: 100%;
+  min-width: 100%;
   margin-top: 4px;
   display: none;
   z-index: 1;
@@ -391,6 +494,7 @@
 .cst-select-option{
   transition: .3s;
   line-height: 22px;
+  white-space: nowrap;
   &:hover{
     color: $bege;
   }
@@ -492,8 +596,40 @@
     }
 }
 
+ @media screen and (min-width: 641px){
+    .catg{
+      &__item{
+        &:hover{
+          .labels__item{
+            &.is-sca{
+              color: #333333;
+              background: rgba(241,241,241,.4);
+              &:after{
+                opacity: 1;
+                height: auto;
+              }
+            }
+            &.is-country{
+              background: rgba(241,241,241,.4);
+              filter: grayscale(0);
+              span{
+                opacity: 1;
+              }
+            }
+          }
+          .catg__fast{
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+      }
+    }
+ }
  @media #{$media-640} {
    .catg {
+     &__content{
+       padding: 0 10px 10px 10px;
+     }
      &__list-control{
        position: fixed;
        z-index: 1000;
@@ -516,11 +652,22 @@
        margin-top: 16px;
        display: inline-block;
      }
-
+      &__list{
+        &.slick-initialized{
+          .catg__item{
+            margin-left: 0!important;
+          }
+          .slick-list{
+            margin-left: 0;
+          }
+        }
+      }
      &__item {
        width: 50%;
        border-radius: 0;
        border: none;
+       margin-left: 0 !important;
+       margin-right: 0 !important;
 
        &:nth-child(odd) {
          border-right: 1px solid $grayBorder;
@@ -536,7 +683,7 @@
          }
 
          &:before {
-           font-size: 8px;
+           font-size: 10px;
          }
        }
      }
@@ -544,18 +691,25 @@
      &__img {
        height: 116px;
      }
+     &__name-bl{
+       height: 50px;
+     }
 
      &__name {
        font-size: 14px;
-       margin-top: 8px;
+       line-height: 16px;
+       margin-top: 6px;
+       &.is-eng{
+         font-size: 12px;
+       }
      }
 
      &__avail-block {
-       margin-top: 4px;
+       margin-top: 6px;
      }
 
      &__avail {
-       font-size: 10px;
+       font-size: 12px;
      }
 
      &__price-block {
@@ -563,17 +717,19 @@
      }
 
      &__price {
-       font-size: 14px;
+       font-size: 16px;
      }
 
      &__price-old {
        font-size: 12px;
        margin-left: 6px;
+       top: 0;
      }
 
      &__short {
-       font-size: 10px;
+       font-size: 12px;
        margin-top: 8px;
+       height: 24px;
      }
 
      &__labels {
@@ -584,6 +740,16 @@
            line-height: 20px;
            right: 32px;
            bottom: -8px;
+         }
+         &.is-sca{
+           font-size: 14px;
+           padding: 4px 0;
+           &:before{
+             font-size: 20px;
+           }
+         }
+         &.is-hit{
+           border-radius: 0 0 8px 0;
          }
        }
      }
@@ -626,8 +792,8 @@
      font-size: 10px;
    }
    .cst-select-current {
-     height: 16px;
-     padding: 2px 14px 2px 4px;
+     height: 20px;
+     padding: 4px 14px 4px 4px;
 
      &:before {
        font-size: 4px;

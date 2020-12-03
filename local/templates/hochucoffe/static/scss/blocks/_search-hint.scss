@@ -96,13 +96,21 @@
   &__main-btn{
     text-align: center;
     margin-top: 16px;
+    max-width: 100%;
     .btn{
       height: 40px;
       line-height: 40px;
       font-size: 16px;
       border-radius: 16px;
-      display: inline-block;
-      padding: 0 20px;
+      padding: 4px 20px;
+      white-space: normal;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &>span{
+        line-height: 1;
+        display: inline-block;
+      }
       &:hover{
         text-decoration: none;
       }
@@ -127,5 +135,33 @@
   &__name{
     font-size: 16px;
     padding-right: 130px;
+  }
+}
+
+@media #{$media-640} {
+  .search-hint{
+    &__wrap{
+      padding: 20px 10px;
+      width: calc(100% + 80px);
+      margin-left: -40px;
+      top: 40px;
+    }
+    .catg__labels .labels__items.is-left{
+      display: none;
+    }
+    &__buy-info{
+      position: static;
+    }
+    &__prods-name{
+      font-size: 12px;
+    }
+    &__prods-img{
+      width: 60px;
+    }
+    &__main-btn{
+      .btn{
+        padding: 4px 10px;
+      }
+    }
   }
 }

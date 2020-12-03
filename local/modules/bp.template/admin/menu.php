@@ -86,6 +86,15 @@ $menu = array(
                 ),
             ),
             array(
+                'text' => 'Отзывы на товары',
+                'url' => \Bp\Template\Tools\AdminInterface\ReviewsListHelper::getUrl(),
+                'more_url' => [
+                    \Bp\Template\Tools\AdminInterface\ReviewsEditHelper::getUrl(),
+                ],
+                'title' => 'Отзывы на товары',
+                'items_id' => 'menu_bp_template_reviewsgoods',
+            ),
+            array(
                 'text' => Loc::getMessage('BP_TEMPLATE_SORT_TITLE'),
                 'url' => 'bp_template_index.php?file=sort.php&lang=' . LANGUAGE_ID,
                 'more_url' => array('bp_template_index.php?file=sort.php&lang=' . LANGUAGE_ID),

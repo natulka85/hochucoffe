@@ -1,8 +1,15 @@
 <?php
 namespace Bp\Template;
 
-use Bitrix\Main\Entity;
-use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Localization\Loc,
+    Bitrix\Main\ORM\Data\DataManager,
+    Bitrix\Main\ORM\Fields\DatetimeField,
+    Bitrix\Main\ORM\Fields\IntegerField,
+    Bitrix\Main\ORM\Fields\StringField,
+    Bitrix\Main\ORM\Fields\TextField,
+    Bitrix\Main\ORM\Fields\Validators\LengthValidator,
+    Bitrix\Main\Type\DateTime;
+
 Loc::loadMessages(__FILE__);
 
 /**
@@ -19,7 +26,7 @@ Loc::loadMessages(__FILE__);
  * @package Bitrix\Fuser
  **/
 
-class FuserTable extends Entity\DataManager
+class FuserTable extends DataManager
 {
     /**
      * Returns DB table name for entity.
@@ -38,28 +45,46 @@ class FuserTable extends Entity\DataManager
      */
     public static function getMap()
     {
-        return array(
-            'ID' => array(
-                'data_type' => 'integer',
-                'primary' => true,
-                'autocomplete' => true,
-                'title' => Loc::getMessage('DATA_ENTITY_ID_FIELD'),
+        return [
+            new IntegerField(
+                'ID',
+                [
+                    'primary' => true,
+                    'autocomplete' => true,
+                    'title' => Loc::getMessage('DATA_ENTITY_ID_FIELD')
+                ]
             ),
-            'FUSER_ID' => array(
-                'data_type' => 'integer',
-                'required' => true,
-                'title' => Loc::getMessage('DATA_ENTITY_FUSER_ID_FIELD'),
+            new DatetimeField(
+                'DATE',
+                [
+                    'default' => function()
+                    {
+                        return new DateTime();
+                    },
+                    'title' => Loc::getMessage('DATA_ENTITY_DATE_FIELD')
+                ]
             ),
-            'TYPE' => array(
-                'data_type' => 'string',
-                'validation' => array(__CLASS__, 'validateType'),
-                'title' => Loc::getMessage('DATA_ENTITY_TYPE_FIELD'),
+            new IntegerField(
+                'FUSER_ID',
+                [
+                    'required' => true,
+                    'title' => Loc::getMessage('DATA_ENTITY_FUSER_ID_FIELD')
+                ]
             ),
-            'DATA' => array(
-                'data_type' => 'text',
-                'title' => Loc::getMessage('DATA_ENTITY_DATA_FIELD'),
+            new StringField(
+                'TYPE',
+                [
+                    'validation' => [__CLASS__, 'validateType'],
+                    'title' => Loc::getMessage('DATA_ENTITY_TYPE_FIELD')
+                ]
             ),
-        );
+            new TextField(
+                'DATA',
+                [
+                    'title' => Loc::getMessage('DATA_ENTITY_DATA_FIELD')
+                ]
+            ),
+        ];
     }
     /**
      * Returns validators for TYPE field.
@@ -68,8 +93,8 @@ class FuserTable extends Entity\DataManager
      */
     public static function validateType()
     {
-        return array(
-            new Entity\Validator\Length(null, 1),
-        );
+        return [
+            new LengthValidator(null, 1),
+        ];
     }
 }

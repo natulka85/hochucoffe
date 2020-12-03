@@ -3,12 +3,21 @@
 if(empty($arResult))
     return '';
 
+if(isset($arResult['FILTERS'])){
+    $arFilters = $arResult['FILTERS'];
+    unset($arResult['FILTERS']);
+}
+
+if(count($arFilters)>0){
+    $arResult = array_merge($arResult,$arFilters);
+}
+
 $strReturn = '<div class="breadcrumbs"><div class="breadcrumbs__list">';
 
 for($index = 0, $itemSize = count($arResult); $index < $itemSize; $index++)
 {
     $list = '';
-    if(count($arResult[$index]["ADDITIONAL"])>0 && $index != $itemSize-1){
+    if(count($arResult[$index]["ADDITIONAL"])>0){
         $list = ' is-list';
     }
     $strReturn .= '<div class="breadcrumbs__item'.$list;
@@ -37,6 +46,19 @@ for($index = 0, $itemSize = count($arResult); $index < $itemSize; $index++)
     }
     else
         $strReturn .= '<span class="breadcrumbs__span">'.$title.'</span>';
+    if(count($arResult[$index]["ADDITIONAL"])>0){
+        $strReturn .= '<div class="breadcrumbs__sec-lvl">';
+        $strReturn .= '<div class="breadcrumbs__sec-lvl-cont">';
+        foreach ($arResult[$index]["ADDITIONAL"] as $ad){
+            if($ad['TITLE']!=$title){
+                $strReturn .= '<div class="breadcrumbs__item">';
+                $strReturn .= '<a class="breadcrumbs__link" href="'.$ad["LINK"].'">'.$ad['TITLE'].'</a>';
+                $strReturn .= '</div>';
+            }
+        }
+        $strReturn .= '</div>';
+        $strReturn .= '</div>';
+    }
 
     $strReturn .= '</div>';
 }

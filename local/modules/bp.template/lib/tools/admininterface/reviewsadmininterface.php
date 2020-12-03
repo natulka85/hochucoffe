@@ -62,24 +62,17 @@ class ReviewsAdminInterface extends AdminInterface
                     'TEXT' => array(
                         'WIDGET' => new TextAreaWidget(),
                     ),
-                    'ADVANTAGES' => array(
-                        'WIDGET' => new TextAreaWidget(),
-                    ),
-                    'DISADVANTAGES' => array(
-                        'WIDGET' => new TextAreaWidget(),
-                    ),
-                    'PICTURES' => array(
-                        'WIDGET' => new TextAreaWidget(),
-                    ),
-                    'LIKE_YES' => array(
-                        'WIDGET' => new NumberWidget(),
-                    ),
-                    'LIKE_NO' => array(
-                        'WIDGET' => new NumberWidget(),
-                    ),
                     'AUTHOR_NAME' => array(
                         'WIDGET' => new StringWidget(),
                         'SIZE' => '80'
+                    ),
+                    'ANSWER' => array(
+                        'WIDGET' => new TextAreaWidget(),
+                    ),
+                    'USER_ID' => array(
+                        'WIDGET' => new IblockElementWidget(),
+                        'FILTER' => true,
+                        'IBLOCK_ID' => 6
                     ),
                 )
             )

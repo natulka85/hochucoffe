@@ -183,7 +183,7 @@
   line-height: 50px;
   border-radius: 10px;
   background: rgba(255,255,255,0.9);
-  border: 1px solid $grayBorder;
+  border: 1px solid $bege;
   transition: .2s;
   opacity: 0;
 
@@ -193,18 +193,21 @@
     cursor: pointer;
     display: inline-block;
     @extend .icon-1r_arrow;
-    color: #C4C4C4;
+    color: $bege;
     font-size: 10px;
 
   }
   &:hover{
-    border-color: #C4C4C4;
+    border-color: $grayBrown;
+    &:before{
+      color: $grayBrown;
+    }
   }
   &.slick-next{
-    right: 0;
+    right: 20px;
   }
   &.slick-prev{
-    left: 0;
+    left: 20px;
     &:before{
       transform: rotate(180deg);
     }

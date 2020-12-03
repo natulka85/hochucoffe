@@ -4,7 +4,8 @@ if(FOOTER_TYPE == 'type-1'){
     $footer_class = '_type-1';
 }
 ?>
-</div>
+</div> <?//inner?>
+</div> <?//page?>
 <div class="footer <?=$footer_class?>">
     <div class="footer__content inner">
         <div class="footer__menu">

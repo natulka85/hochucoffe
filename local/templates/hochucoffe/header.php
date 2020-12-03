@@ -11,7 +11,7 @@
     <?$APPLICATION->IncludeFile('/includes/refferer.php');?>
 </head>
 <body><!--script(type='text/javascript', src='/js/vendor/plyr.min.js')-->
-<div class="wrapper">
+<div class="wrapper <?if(CONTENT_STYLE!=''):?><?=CONTENT_STYLE?><?endif;?>">
     <?
     if($USER->IsAdmin()) $APPLICATION->ShowPanel();?>
     <div class="content">
@@ -50,6 +50,7 @@
                     </div>
                 </div>
                 <div class="header__right">
+                    <div class="pers-info">
                     <?$APPLICATION->IncludeComponent(
                         "mango:cache.set",
                         "smallbasket",
@@ -66,6 +67,7 @@
                         ),
                         false
                     );?>
+                    </div>
                     <div class="search">
                         <span class="search__form-section" data-section_id=""></span>
                         <form class="search__form" action="/search/">
@@ -79,7 +81,9 @@
                 </div>
             </div>
         </div>
-        <div class="page inner">
+        <div class="inner">
+            <div class="page">
+
             <?$APPLICATION->IncludeComponent("bitrix:menu","sections",
                 Array(
                     "ROOT_MENU_TYPE" => "left",
@@ -95,11 +99,14 @@
                 )
             );?>
 
-            <div class="menu-catalog">
-                <div class="menu-catalog__list">
-                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
-                                    class="icon-2l_sort">Сортировка</span></a></div>
-                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
-                                    class="icon-2k_filter">Фильтр</span></a></div>
+            <?if(CATALOG_PAGE=='Y'):?>
+                <div class="menu-catalog">
+                    <div class="menu-catalog__list">
+                        <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
+                                        class="icon-2l_sort">Сортировка</span></a></div>
+                        <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
+                                        class="icon-2k_filter">Фильтр</span></a></div>
+                    </div>
                 </div>
-            </div>
+            <?endif;?>
+

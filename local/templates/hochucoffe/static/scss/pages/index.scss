@@ -16,18 +16,23 @@
     transform: scale(1);
   }
   .slick-dots{
-    bottom: 34px;
+    bottom: 24px;
+  }
+  .slick-dots li{
+    margin: 0 10px;
+    width: 40px;
+    line-height: 18px;
   }
   .slick-dots li:after{
-    width: 50px;
-    height: 4px;
+    width: 100%;
+    height: 2px;
     background: $white;
     border-color: $white;
     border-radius: 0;
   }
   .slick-dots li.slick-active:after{
-    background: $blue;
-    border-color: $blue;
+    background: $bege;
+    border-color: $bege;
   }
   .slick-arrow{
     &.slick-prev{
@@ -37,13 +42,12 @@
       right: 20px;
     }
     &:before{
-      color: $blue;
+      //color: $blue;
     }
   }
 }
 .utp{
-  margin: 30px 0;
-  padding: 0 38px;
+  margin: 20px 0;
   .slick-track{
     display: flex;
   }
@@ -81,7 +85,7 @@
   }
 }
 .hits{
-  padding: 0 20px;
+  //padding: 0 20px;
   margin-top: 50px;
   .page-block-head{
     padding-left: 40px;
@@ -126,11 +130,25 @@
   &__country-top{
     display: flex;
     justify-content: space-between;
+    position: relative;
   }
   &__flag{
-    display: inline-block;
-    margin-left: 30px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    right: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid $grayBorder;
+    top: 50%;
+    margin-top: -15px;
+    img{
+      max-width: 150%;
+      min-height: 100%;
+    }
   }
   &__content{
     display: flex;
@@ -156,7 +174,7 @@
     width: 51%;
   }
   &__country-list{
-    column-count: 2;
+    //column-count: 2;
     padding-left: 150px;
     margin: auto;
   }
@@ -168,6 +186,9 @@
     margin-bottom: 20px;
     cursor: pointer;
     width: 200px;
+    position: relative;
+    float: left;
+    margin-right: 80px;
     &:hover{
       color: $brownDark;
       text-decoration: none;
@@ -175,7 +196,7 @@
   }
   &__country-info{
     display: none;
-    max-width: 400px;
+    max-width: 500px;
   }
   &__text{
     position: absolute;
@@ -277,6 +298,8 @@
   }
 }
 .index-form{
+  position: relative;
+  z-index: 1;
   &__quest{
     font-family: IstokWeb,sans-serif;
     font-weight: bold;
@@ -310,6 +333,11 @@
         opacity: 1;
         visibility: visible;
       }
+    }
+    &.disabled{
+      opacity: .3;
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
   &__note{
@@ -409,6 +437,14 @@
     margin-bottom: 20px;
     display: block;
     padding-top: 8px;
+    &>span{
+      transition: .3s;
+    }
+    &:hover{
+      &>span{
+        color: $grayBrown;
+      }
+    }
   }
   &__stat{
     line-height: 16px;
@@ -435,6 +471,8 @@
   &__text{
     font-size: 16px;
     line-height: 22px;
+    height: 90px;
+    overflow: hidden;
   }
   &__link-wrap{
     text-align: center;
@@ -555,8 +593,18 @@
   }
   .slick-arrow{
     top: 100px;
+    border-color: $blue;
+    &:before{
+      color: $blue;
+    }
+    &:hover{
+      border-color: $grayBrown;
+      &:before{
+        color: $grayBrown;
+      }
+    }
     &.slick-prev{
-      right: 136px;
+      right: 126px;
       left: auto;
     }
     &.slick-next{
@@ -574,14 +622,18 @@
 }
 
 .subscribe{
-  margin-top: 60px;
+  //margin-top: 60px;
   background: $grayLight;
-  border-top: 1px solid $grayBorder;
-  border-bottom: 1px solid $grayBorder;
+
   padding: 52px 48px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &__wrap{
+    background: $grayLight;
+    border-top: 1px solid $grayBorder;
+    border-bottom: 1px solid $grayBorder;
+  }
   &__title{
     font-family: IstokWeb, sans-serif;
     font-weight: bold;
@@ -611,6 +663,13 @@
       color: #c4c4c4;
       font-size: 18px;
     }
+    &+.error{
+      top: 100%;
+      bottom: auto;
+    }
+  }
+  &__field{
+    position: relative;
   }
   &__fields{
     display: flex;
@@ -664,8 +723,9 @@
   }
   .hits{
     padding: 0;
+    margin-top: 30px;
     .page-block-head{
-      padding-left: 16px;
+      padding-left: 0;
       margin-bottom: 20px;
     }
   }
@@ -673,7 +733,7 @@
     margin-top: 30px;
     padding: 0;
     .page-block-head{
-      padding-left: 16px;
+      padding-left: 0;
       margin-bottom: 20px;
     }
     &__note{
@@ -684,7 +744,7 @@
   .sale{
     padding: 0;
     .page-block-head{
-      padding-left: 16px;
+      padding-left: 0;
       margin-bottom: 20px;
     }
   }
@@ -692,7 +752,7 @@
     margin-top: 30px;
     padding: 0;
     .page-block-head{
-      padding-left: 16px;
+      padding-left: 0;
       margin-bottom: 20px;
     }
     &__left{
@@ -704,14 +764,20 @@
     &__country-list{
       padding-left: 0;
     }
+    &__flag{
+      width: 20px;
+      height: 20px;
+    }
     &__country-link{
       font-size: 14px;
       line-height: 18px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       width: 150px;
+      margin-right: 5%;
     }
   }
   .form{
+    margin-top: 30px;
     &__note{
       font-size: 10px;
       line-height: 10px;
@@ -761,7 +827,7 @@
     }
   }
   .reviews{
-    margin-top: 38px;
+    margin-top: 30px;
     padding: 0;
     .page-block-head{
       padding-left: 16px;
@@ -819,7 +885,7 @@
     }
   }
   .view{
-    margin-top: 38px;
+    margin-top: 30px;
     padding: 0;
     width: calc(100% + 20px);
     margin-left: -10px;
@@ -893,8 +959,6 @@
     flex-wrap: wrap;
     justify-content: center;
     width: calc(100% + 20px);
-    margin-left: -10px;
-    margin-top: 40px;
     &__title{
       font-size: 14px;
       line-height: 20px;
@@ -937,8 +1001,9 @@
   }
   .index-banner-bottom{
     margin-top: 20px;
+    margin-bottom: 100px;
     .page-block-head{
-      padding-left: 16px;
+      padding-left: 10px;
       margin-bottom: 20px;
     }
     &__img{

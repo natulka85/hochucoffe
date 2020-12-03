@@ -1,0 +1,8 @@
+.third-news-in-line {
+  grid-template-columns: repeat(2, auto);
+}
+
+.highest-new {
+  padding-left: 49px;
+  padding-right: 41px;
+}

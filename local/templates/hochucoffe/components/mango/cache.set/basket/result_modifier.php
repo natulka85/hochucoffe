@@ -10,10 +10,12 @@ $basket = \Bitrix\Sale\Basket::loadItemsForFUser(
     $siteId
 );
 
-if(!$_REQUEST['is_ajax_post'])
-    unset($_SESSION['bp_cache']['bp_user']['rest']);
+//if(!$_REQUEST['is_ajax_post'])
+    //unset($_SESSION['bp_cache']['bp_user']['rest']);
 
 $arResult = [];
+
+$arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;
 $disc = 0;
 foreach ($basket as $item) {
     if($item->canBuy() && !$item->isDelay())
@@ -29,15 +31,41 @@ foreach ($basket as $item) {
         ];
 
 		$pId = $item->getField('PRODUCT_ID');
-        $arResult['ITEMS'][$pId] = $el;
-        if($_SESSION['bp_cache']['bp_user']['products'][$pId]['PRICE_2']> $item->getField('PRICE'))
-            $arResult['ITEMS'][$pId]['PRICE_2'] = $_SESSION['bp_cache']['bp_user']['products'][$pId]['PRICE_2'];
+		$bID = $el['BASKET_ID'];
+		$ArElement = $_SESSION['bp_cache']['bp_user']['products'][$pId];
+        $arResult['ITEMS'][$bID] = $el;
+        if($ArElement['PRICE_2']> $item->getField('PRICE'))
+            $arResult['ITEMS'][$bID]['PRICE_2'] = $ArElement['PRICE_2'];
 
-        if($arResult['ITEMS'][$pId]['PRICE_2'] - $arResult['ITEMS'][$pId]['PRICE']>0){
-            $disc+= ($arResult['ITEMS'][$pId]['PRICE_2'] - $arResult['ITEMS'][$pId]['PRICE']) * $arResult['ITEMS'][$pId]['QUANTITY'];
+        if($arResult['ITEMS'][$bID]['PRICE_2'] - $arResult['ITEMS'][$bID]['PRICE']>0){
+            $disc+= ($arResult['ITEMS'][$bID]['PRICE_2'] - $arResult['ITEMS'][$bID]['PRICE']) * $arResult['ITEMS'][$bID]['QUANTITY'];
         }
 
-        $arResult['CURRENT']['QUANTITY'] += $arResult['ITEMS'][$pId]['QUANTITY'];
+        $arResult['CURRENT']['QUANTITY'] += $arResult['ITEMS'][$bID]['QUANTITY'];
+
+        $arFile = CFile::ResizeImageGet(
+            $ArElement['PREVIEW_PICTURE_ID'],
+            array("width" => 102, "height" => 102),
+            BX_RESIZE_IMAGE_PROPORTIONAL ,
+            true
+        );
+
+        $arResult['ITEMS'][$bID]['PREVIEW_PICTURE'] = $arFile['src'];
+        $arResult['ITEMS'][$bID]['IBLOCK_ID'] = $ArElement['IBLOCK_ID'];
+
+        $arResult['ITEMS'][$bID]['LABLES'] = $BP_TEMPLATE->Catalog()->lables(
+            $arResult['ITEMS'][$bID]["IBLOCK_ID"],
+            $arResult['ITEMS'][$bID]['PRICE_2'],
+            $arResult['ITEMS'][$bID]['PRICE_1'],
+            $arResult['ITEMS'][$bID]["_NOVINKA"],
+            $arResult['ITEMS'][$bID]["ARTICLE"],
+            $arResult['ITEMS'][$bID]["HIT"],
+            $arResult['ITEMS'][$bID]["OCENKA"],
+            false
+        );
+        $arResult['ITEMS'][$bID]['PROPERTIES']['POMOL'] = $ArElement['POMOL'];
+        $arResult['ITEMS'][$bID]['PROPERTIES']['STEPEN_OBJARKI'] = $ArElement['STEPEN_OBJARKI'];
+
     }
 }
 
@@ -158,42 +186,6 @@ elseif(isset($arResult['ITEMS']) && count($arResult['ITEMS'])>0)
     $arResult['PRICE'] = $sum; //$basket->getPrice();
     $arResult['DISCOUNT'] = $discount;
 
-    //get PREVIEW_PICTURE   and PROPS
-    $arProdIds = array_keys($arResult['ITEMS']);
-    $dbElement = \CIBlockElement::GetList(
-        [],
-        ['ID' => $arProdIds,],
-        false,
-        false,
-        [
-            'IBLOCK_ID',
-            'ID',
-            'PREVIEW_PICTURE',
-            //'PROPERTY__PROIZVODITEL',
-            //'PROPERTY_STRANA',
-        ]
-    );
-    while($arElement = $dbElement->GetNextElement())
-    {
-        $ar_res = $arElement->GetFields();
-        $arFile = CFile::ResizeImageGet(
-            $ar_res['PREVIEW_PICTURE'],
-            array("width" => 102, "height" => 102),
-            BX_RESIZE_IMAGE_PROPORTIONAL ,
-            true
-        );
-        $arResult['ITEMS'][$ar_res['ID']]['PREVIEW_PICTURE'] = $arFile['src'];
-        $arResult['ITEMS'][$ar_res['ID']]['IBLOCK_ID'] = $ar_res['IBLOCK_ID'];
-        $arResult['ITEMS'][$ar_res['ID']]['PROPERTIES'] = $arElement->GetProperties();
-
-        $arResult['ITEMS'][$ar_res['ID']]['LABLES'] = $BP_TEMPLATE->Catalog()->lables(
-            $arResult['ITEMS'][$ar_res['ID']]["IBLOCK_ID"],
-            $arResult['ITEMS'][$ar_res['ID']]["PRICE_2"],
-            $arResult['ITEMS'][$ar_res['ID']]["PRICE"],
-            $arResult['ITEMS'][$ar_res['ID']]['PROPERTIES']["_NOVINKA"]["VALUE"],
-            false
-        );
-    }
     //ищем детей и родителей по свойcтву корзины CODE - PARENT, VALUE - id родителя
     foreach ($arResult['ITEMS'] as $k=>&$arItem) {
         if(count($arItem["PROPS"])>0) {
@@ -207,10 +199,6 @@ elseif(isset($arResult['ITEMS']) && count($arResult['ITEMS'])>0)
                             $c++;
                         }
                     }
-                   /* if($c == 0) { //если дете есть, но нет родителя - такое дите надо удалить из корзины
-                        CSaleBasket::Delete($arData["id"]);
-                        unset($arResult["GRID"]["ROWS"][$k]);
-                    }*/
                 }
             }
         }
@@ -254,16 +242,6 @@ elseif(isset($arResult['ITEMS']) && count($arResult['ITEMS'])>0)
         $arNewYouLike[$arItem['PRODUCT_ID']]++;
     }
     $arResult['YLIKE'] =  array_keys($arNewYouLike);
-
-    if($arOtherAll)
-    {
-        foreach($arOtherAll as $id)
-        {
-            $arResult['LAMPS'][$id]["CATALOG_PRICE_1"] = 1;
-        }
-    }
-
-    //pre($arResult['ITEMS']);
 
     //virtual order
     $order = \Bitrix\Sale\Order::create(

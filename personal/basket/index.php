@@ -2,6 +2,10 @@
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Корзина");
 \Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/basket.min.js");
+/*echo "<pre>";
+   print_r($_SESSION['bp_cache']['bp_user']);
+echo "</pre>";*/
+//unset($_SESSION['bp_cache']['bp_user']);
 ?>
 <div class="basket">
     <?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(

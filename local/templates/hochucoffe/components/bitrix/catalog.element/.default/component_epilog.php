@@ -97,3 +97,51 @@ if($arParams['CATEGORY_TYPE'] == 'MAIN_CATALOG_ELEMENT'){
     }
 }
 
+//check delay
+$arDelay = [];
+if(isset($_SESSION['bp_cache']['bp_user']['delay']))
+{
+    foreach($_SESSION['bp_cache']['bp_user']['delay'] as $delay_id=>$value)
+    {
+        if(in_array($delay_id,$arResult['ID']))
+            $arDelay[] = $delay_id;
+    }
+}
+if(count($arDelay)>0)
+{
+    echo '<script>inDelayList('.\Bitrix\Main\Web\Json::encode($arDelay).');</script>';
+}
+
+$bid = 0;
+$arProps = [];
+/*
+foreach ($arResult['STATE']['DATA'] as $data_key=>$data){
+    if(strpos($data_key,'data-dop_')!==false){
+        $ar=explode('data-dop_',$data_key);
+        if($ar[1]!=''){
+            $arProps[strtoupper($ar[1])] = $data;
+        }
+        $html_element .= "[".$data_key."='".$data."']";
+    }
+}
+foreach ($_SESSION['bp_cache']['bp_user']['basket_code'][$arResult['ID']] as $basket_id => $prop){
+    if(json_encode($arProps) == $prop){
+        $bid = $basket_id;
+    }
+}
+if($bid>0){
+    $qunatity = round($_SESSION['bp_cache']['bp_user']['basket'][$arResult['ID']][$bid]['quantity'],0);
+//echo '<script>inBasket($("[data-id='.$arResult['ID'].']'.$html_element.'"),'.$qunatity.','.$bid.')</script>';
+echo '<script>inBasket($(".btn[data-id='.$arResult['ID'].']'.$html_element.'"),'.$qunatity.','.$bid.')</script>';
+}*/
+
+foreach ($_SESSION['bp_cache']['bp_user']['basket_code'][$arResult['ID']] as $basket_id => $prop){
+    $decode_prop = json_decode($prop);
+    foreach ($decode_prop as $propCode => $val){
+        $html_element .= "[data-dop_".$propCode."='".$val."']";
+    }
+    $qunatity = round($_SESSION['bp_cache']['bp_user']['basket'][$arResult['ID']][$basket_id]['quantity'],0);
+    $bid = $basket_id;
+    echo '<script>inBasket("[data-id='.$arResult['ID'].']'.$html_element.'",'.$qunatity.','.$bid.','.$arResult['ID'].');</script>';
+}
+

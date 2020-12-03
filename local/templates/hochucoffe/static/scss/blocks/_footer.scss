@@ -14,7 +14,7 @@
     margin: auto;
     border-radius: 50px 50px 0 0 ;
     height: 216px;
-    margin-top: -40px;
+    //margin-top: -40px;
     position: relative;
     z-index: 1;
   }
@@ -97,7 +97,8 @@
       margin-bottom: 60px;
       max-width: 100%;
       min-width: 376px;
-      height: 160px;
+      height: 124px;
+      border-radius: 10px 10px 0 0;
     }
     &__menu-link{
       font-size: 10px;

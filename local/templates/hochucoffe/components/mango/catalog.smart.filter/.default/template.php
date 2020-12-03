@@ -17,27 +17,22 @@ global $BP_TEMPLATE;?>
     <div class="mob__mob-control">
         <div class="mob__btn-back icon-2m_arrow-l js-link is-filter"></div>
     </div>
-    <?if(count($arResult["ACTIVE_FORMATED"])>0):?>
+    <?if(count($arResult["ACTIVE"])>0):?>
     <div class="filter__info">
         <div class="filter__control-block">
             <div class="filter__info-title">Выбранные фильтры</div>
-            <div class="filter__info-btn">Cбросить все</div>
+            <div class="filter__info-btn" data-all="Y">Cбросить все</div>
         </div>
-        <div class="filter__info-params">
-            <div class="filter__info-params-name">Страна происхождения:</div>
-            <div class="filter__info-params-value"><span>Бразилия</span>
-                <div class="filter__remove icon-1o_krest"></div>
+        <?foreach ($arResult["ACTIVE"] as $name => $val):?>
+            <div class="filter__info-params">
+                <div class="filter__info-params-name"><?=$name?>:</div>
+                <?foreach ($val as $k=>$v):?>
+                    <div class="filter__info-params-value" data-id="<?=$k?>"><span><?=$v?></span>
+                        <div class="filter__remove icon-1o_krest"></div>
+                    </div>
+                <?endforeach;?>
             </div>
-            <div class="filter__info-params-value"><span>Эквадор<div
-                            class="filter__remove icon-1o_krest"></div></span></div>
-        </div>
-        <div class="filter__info-params">
-            <div class="filter__info-params-name">Регион обжарки:</div>
-            <div class="filter__info-params-value"><span>Бразилия</span>
-                <div class="filter__remove icon-1o_krest"></div>
-            </div>
-            <div class="filter__info-params-value"></div>
-        </div>
+        <?endforeach;?>
     </div>
     <?endif?>
     <form class="filter__choose" name="smartfilter" id="smartfilter" action="<?echo $BP_TEMPLATE->ChpuFilter()->convertOldToNew($arResult["FORM_ACTION"])?>" method="get" >
@@ -55,7 +50,7 @@ global $BP_TEMPLATE;?>
                         <?endforeach;?>
                      </div>
             <?else:?>
-                <div class="filter__choose-block">
+                <div class="filter__choose-block <?if($arResult["ITEMS"][$key]['CHECKED']):?> _is-checked<?endif;?>">
                     <?if(count($arResult["ITEMS"][$key]["VALUES"])>0):?>
                     <div class="filter__control-block">
                         <div class="filter__info-title"><?=$struct?></div>

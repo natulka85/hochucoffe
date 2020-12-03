@@ -154,10 +154,6 @@
 @mixin standardP(){
     p {
         line-height: 1.86;
-
-            &:not(:last-child){
-                margin-bottom: 2rem;
-            }
         @media screen and(max-width: 640px){
             font-size: 14px;
             line-height: 1.23;
@@ -250,5 +246,14 @@
 }
 @mixin Shadow(){
     border: 1px solid $grayBorder;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.10);
+}
+@mixin niceScroll(){
+    &::-webkit-scrollbar { width: 4px; height: 4px;}
+    &::-webkit-scrollbar-button {  background-color: $bege; }
+    &::-webkit-scrollbar-track {  background-color: $bege;}
+    &::-webkit-scrollbar-track-piece { background-color: #F1F1F1;}
+    &::-webkit-scrollbar-thumb { height: 16px; background-color: $bege; border-radius: 2px;}
+    &::-webkit-scrollbar-corner { background-color: #999;}
+    &::-webkit-resizer { background-color: #666;}
 }

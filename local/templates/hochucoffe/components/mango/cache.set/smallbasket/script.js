@@ -20,4 +20,11 @@ $(function(){
                 });
         }, 500);
     })
+    $(document).on('mouseenter','.pers-info__item',function(){
+        $(this).parents('.pers-info').attr('data-opened', $(this).attr('data-opened'))
+
+    })
+    $(document).on('mouseleave','.pers-info__item',function(){
+        $(this).parents('.pers-info').attr('data-opened', '')
+    })
 })

@@ -13,14 +13,18 @@
 $this->setFrameMode(true);
 CModule::IncludeModule("sale");
 global $BP_TEMPLATE;
+$arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;
 $arData = $_SESSION['bp_cache']['bp_user'];
 ?>
 <?
 $count = 0;
 if(is_array($arData['basket']))
 {
-    foreach($arData['basket'] as $prod_id=>$arBasket)
-        $count = $count + $arBasket['quantity'];
+    foreach($arData['basket'] as $prod_id=>$arBaskets){
+        foreach ($arBaskets as $bas_id=>$arBasket)
+            $count = $count + $arBasket['quantity'];
+    }
+
 }
 $delay = false;
 $compare =false;
@@ -31,7 +35,7 @@ if(count($arData['compare'])>0){
     $compare = true;
 }
 ?>
-    <div class="pers-info">
+    <div class="pers-info__ajax-wrap">
         <a class="sbasket-refresh" style="display:none;" rel="nofollow" href="<?=$APPLICATION->GetCurPage()?>">Обновить</a>
         <div class="pers-info__list">
             <div class="pers-info__item is-main"><a class="pers-info__link" href="/">
@@ -45,21 +49,23 @@ if(count($arData['compare'])>0){
             <div class="pers-info__item is-compare"><a class="pers-info__link" href="/personal/compare/">
                     <div class="pers-info__icon icon-1c_sravnn"></div>
                     <div class="pers-info__text">В сравнении</div>
-                    <div class="pers-info__num"><span>5</span></div>
+                    <div class="pers-info__num"><span></span></div>
                     <? //include (__DIR__.'/compare-template.php');?>
                 </a></div>
             <div class="pers-info__item is-delay"><a class="pers-info__link" href="/personal/delay/">
                     <div class="pers-info__icon icon-1e_heart"></div>
                     <div class="pers-info__text">Отложенные</div>
-                    <div class="pers-info__num"><span>5</span></div>
+                    <div class="pers-info__num"><span></span></div>
                     <? //include (__DIR__.'/delay-template.php');?>
                 </a></div>
-            <div class="pers-info__item is-basket"><a class="pers-info__link" href="/personal/basket/">
+            <div class="pers-info__item is-basket" data-opened="basket">
+                <a class="pers-info__link" href="/personal/basket/">
                     <div class="pers-info__icon icon-1g_coffecapn"></div>
                     <div class="pers-info__text">Корзина</div>
-                    <div class="pers-info__num"><span>5</span></div>
-                    <? //include (__DIR__.'/basket-template.php');?>
-                </a></div>
+                    <div class="pers-info__num"><span></span></div>
+                </a>
+                <? include (__DIR__.'/basket-template.php');?>
+            </div>
         </div>
     </div>
 <script>

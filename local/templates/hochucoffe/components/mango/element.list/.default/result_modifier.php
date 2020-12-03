@@ -1,6 +1,7 @@
 <? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 global $BP_TEMPLATE;
+$arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;
 
 if(isset($arResult['ITEMS'])) {
 
@@ -25,7 +26,6 @@ if(isset($arResult['ITEMS'])) {
     $pic_height = 220;
 
     foreach ($arResult['ITEMS'] as $key => $arItem) {
-
         //default
         $arItemsAdditional = array(
             'DEFAULT_IMAGE' => array(  //по умолчанию - нет картинки
@@ -87,8 +87,20 @@ if(isset($arResult['ITEMS'])) {
             $arItem['PRICES']['min'],//$arItem['PRICES']['Акция на сайте']['VALUE'],
             $arItem["PROPERTIES"]["_NOVINKA"]["VALUE"],
             $arItem["PROPERTIES"]["ARTICLE_COMP"]["VALUE"],
-            $arItem['PROPERTIES']['_HIT_PRODAZH']['VALUE']
+            $arItem['PROPERTIES']['_HIT_PRODAZH']['VALUE'],
+            $arItem['PROPERTIES']['OCENKA_SCA']['VALUE'],
+            $arItem['PROPERTIES']['_STRANA']['VALUE']
         );
+
+        if($arItemsAdditional['LABLES']['COUNTRY']['IMG']!=''){
+            $arFile = CFile::ResizeImageGet(
+                $arItemsAdditional['LABLES']['COUNTRY']['IMG'],
+                array("width" => 60, "height" => 60),
+                BX_RESIZE_IMAGE_PROPORTIONAL_ALT ,
+                true
+            );
+            $arItemsAdditional['LABLES']['COUNTRY']['IMG_AR'] = $arFile;
+        }
 
         //state
         $arItemsAdditional['STATE'] = $BP_TEMPLATE->Catalog()->state(
@@ -109,6 +121,9 @@ if(isset($arResult['ITEMS'])) {
         if($arItem['PROPERTIES']['WEIGHT_VAR']['~VALUE']!=''){
             $arResult['ITEMS'][$key]['PROPERTIES']['WEIGHT_VAR_AR'] = json_decode($arItem['PROPERTIES']['WEIGHT_VAR']['~VALUE'],TRUE);
             asort($arResult['ITEMS'][$key]['PROPERTIES']['WEIGHT_VAR_AR'],SORT_NUMERIC);
+        }
+        if($arResult['ITEMS'][$key]['PROPERTIES']['WEIGHT']['VALUE']!=''){
+            $arResult['ITEMS'][$key]['MOD_PRICE_100_G'] = round($arResult['ITEMS'][$key]['STATE']['PRICE'] / $arResult['ITEMS'][$key]['PROPERTIES']['WEIGHT']['VALUE']  * 100,0);
         }
     }
 
@@ -172,7 +187,11 @@ if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
     $rsParentSection = CIBlockSection::GetByID(1);
     if ($arParentSection = $rsParentSection->GetNext())
     {
-        $parent_sec_id = 0;
+        $parent_sec_id = 1;
+        $arAddChainSec1[$parent_sec_id] = [
+            'NAME' =>  $BP_TEMPLATE->str_fst_upper($BP_TEMPLATE->SeoSection()->getSeoConst('secname',$parent_sec_id)),
+            'SECTION_PAGE_URL' =>  '/catalog/',
+        ];
         $arFilter = array('IBLOCK_ID' => $arParentSection['IBLOCK_ID'],'>LEFT_MARGIN' => $arParentSection['LEFT_MARGIN'],'<RIGHT_MARGIN' => $arParentSection['RIGHT_MARGIN'],'>DEPTH_LEVEL' => $arParentSection['DEPTH_LEVEL']); // выберет потомков без учета активности
         $rsSect = CIBlockSection::GetList(array('left_margin' => 'asc'),$arFilter);
         while ($arSect = $rsSect->GetNext())
@@ -182,12 +201,12 @@ if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
             {
                 if($arSect['DEPTH_LEVEL']==2)
                     $arAddChainSec1[$arSect['ID']] = [
-                        'NAME' =>  $arSect['NAME'],
+                        'NAME' =>  $BP_TEMPLATE->str_fst_upper($BP_TEMPLATE->SeoSection()->getSeoConst('secname',$arSect['ID'])),
                         'SECTION_PAGE_URL' =>  $arSect['SECTION_PAGE_URL'],
                     ];
                 if($arSect['DEPTH_LEVEL']==3)
                     $arAddChainSec2[$arSect['IBLOCK_SECTION_ID']][$arSect['ID']] = [
-                        'NAME' =>  $arSect['NAME'],
+                        'NAME' =>  $BP_TEMPLATE->str_fst_upper($arSect['NAME']),
                         'SECTION_PAGE_URL' =>  $arSect['SECTION_PAGE_URL'],
                     ];
                 if($arSect['DEPTH_LEVEL']==3 && $arSect['ID']==$arParams['SECTION_ID'])
@@ -199,19 +218,17 @@ if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
     }
     $arResult['LABLES_TEMPLATE'] = [
         'LEFT' => ['HIT','NEW'],
-        'RIGHT' => ['STRANA','OBJARK'],
+        'RIGHT' => ['COUNTRY','SCA'],
         'CENTER' => ['ACTION'],
     ];
 
 
-
     $cp = $this->__component; // объект компонента
     if (is_object($cp)) {
-        $cp->arResult['NavRecordCount'] = $arResult["NAV_RESULT"]->nSelect;
-        $cp->arResult['CHAIN'] = $arAddChainSec1;edCount;
+        $cp->arResult['NavRecordCount'] = $arResult["NAV_RESULT"]->nSelectedCount;
+        $cp->arResult['CHAIN'] = $arAddChainSec1;
         $cp->arResult['ITEMS_ID'] = array_keys($arResult['ITEMS']);
         $cp->SetResultCacheKeys(Array('CHAIN','ITEMS_ID','NavRecordCount'));
     }
-
 }
 

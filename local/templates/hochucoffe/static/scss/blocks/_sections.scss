@@ -1,24 +1,46 @@
 .sections{
+  margin-top: 10px;
   &__list{
-    border-bottom: 1px solid $grayBorder;
     display: flex;
+    margin-left: -10px;
+    padding-right: 2px;
   }
   &__item{
     position: relative;
     width: 30%;
-    height: 440px;
+    //height: 440px;
     background: $grayLight;
-    border-right: 1px solid $grayBorder;
-    padding: 50px 36px;
+    border-radius: 10px;
+    border: 1px solid $grayBorder;
     top: 0;
     left: 0;
     cursor: pointer;
     transition: .3s;
+    overflow: hidden;
+    margin-left: 10px;
     &:hover{
-      @include Shadow();
-      z-index: 1;
-      left: 6px;
-      top: -6px;
+      .sections__content{
+        transform: scale(1.1);
+      }
+      .sections__btn{
+        border-color: $brownDeep;
+      }
+    }
+  }
+  &__btn{
+    font-size: 14px;
+    text-transform: uppercase;
+    //letter-spacing: 1;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: .3s;
+    border: 1px solid transparent;
+    position: absolute;
+    bottom: 16px;
+    right: 22px;
+    &.is-left{
+      left: 16px;
+      right: auto;
     }
   }
   &__link{
@@ -28,6 +50,7 @@
   }
   &__img{
     margin: auto;
+    height: 200px;
   }
   &__title{
     font-family: "Istok Web",sans-serif;
@@ -36,6 +59,9 @@
     margin-bottom: 20px;
   }
   &__content{
+    transform-origin: center;
+    transform: scale(1);
+    transition: .3s;
     p{
       font-size: 16px;
       color: $grayBrown;
@@ -51,29 +77,15 @@
 
 @media #{$media-640}{
   .sections{
-    &__item{
-      padding: 20px 12px;
-      height: 134px;
-    }
-    &__title{
-      font-size: 16px;
-      margin-bottom: 16px;
-    }
-    &__content{
-      padding-right: 40px;
-      p{
-        font-size: 10px;
+    &__btn{
+      font-size: 10px;
+      padding: 4px 6px;
+      border-color: $brownDeep;
+      bottom: 10px;
+      right: 6px;
+      &.is-left{
+        left: 6px;
       }
-    }
-    &__link{
-      display: flex;
-      align-content: center;
-      justify-content: space-between;
-    }
-    &__img{
-      max-width: 74px;
-      max-height: 90px;
-      text-align: center;
     }
   }
 }

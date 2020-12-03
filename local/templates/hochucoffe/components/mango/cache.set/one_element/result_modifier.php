@@ -15,6 +15,7 @@ $arSelect = Array(
     "XML_ID",
     "NAME",
     "DETAIL_PICTURE",
+    "DETAIL_TEXT",
     'DETAIL_PAGE_URL',
     "CATALOG_GROUP_1",
     "CATALOG_GROUP_2",
@@ -60,6 +61,19 @@ if(count($arResult['ITEMS'])==1){
 }
 include ($_SERVER['DOCUMENT_ROOT'].'/local/templates/hochucoffe/components/bitrix/catalog.element/.default/result_modifier.php');
 
-if($arParams['MOD_TEMPATE']=='CARD'){
-    $GLOBALS['MOD_GLOBALS']['CARD_URL'] = $arResult['DETAIL_PAGE_URL'];
+$arResult['LABLES_TEMPLATE'] = [
+    'LEFT' => ['HIT','NEW','ACTION'],
+    'RIGHT' => ['COUNTRY','SCA'],
+];
+
+if($arParams['MOD_TEMPATE']=='FAST_VIEW'){
+    $arResult['DETAIL_TEXT_SHORT'] = stristr($arResult['~DETAIL_TEXT'],'</p>',TRUE);
 }
+
+$cp = $this->__component; // объект компонента
+if (is_object($cp)) {
+    $cp->arResult['DETAIL_PAGE_URL'] = $arResult['DETAIL_PAGE_URL'];
+    $cp->SetResultCacheKeys(Array('DETAIL_PAGE_URL'));
+}
+
+

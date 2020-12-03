@@ -12,7 +12,14 @@ $(function(){
         $(document).on('click','.catg__list-control-value', function(){
             $('.catg__list-control').toggle(300);
         })
+        $(document).on('click','.filter__choose-block',function(){
+            $(this).toggleClass('is-closed');
+        })
+        $('.filter__choose-block').addClass('is-closed');
+    }
+    if(window.outerWidth > 640){
+        StickyMy($('.page'), $('.menu-catalog'),0);
+        //StickyMy($('.page'), $('.filter'),0);
     }
 
-    StickyMy($('.page'), $('.menu-catalog'),0);
 })

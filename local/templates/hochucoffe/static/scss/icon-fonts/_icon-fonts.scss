@@ -143,6 +143,9 @@
 	@if $filename == 2m_arrow-l {
 	$char: "\E026";
 }
+	@if $filename == 2n_sca {
+	$char: "\E027";
+}
 
 @return $char;
 }
@@ -271,4 +274,7 @@
 }
 .icon-2m_arrow-l {
 	@include icon(2m_arrow-l);
+}
+.icon-2n_sca {
+	@include icon(2n_sca);
 }

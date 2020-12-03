@@ -2,6 +2,8 @@
 @import "../blocks/menu-catalog";
 .catalog{
   padding: 0 34px;
+  padding-bottom: 100px;
+  position: relative;
   .cloud__list{
     margin-bottom: 40px;
   }
@@ -11,6 +13,16 @@
   &__main-wrap{
     width: 100%;
     overflow: hidden;
+  }
+  .page__ears{
+    &.is-left{
+      background: url(/local/templates/hochucoffe/static/images/bg/vet.png) no-repeat right 100px;
+      background-size: 552px auto;
+    }
+    &.is-right{
+      background: url(/local/templates/hochucoffe/static/images/bg/vet_r.png) no-repeat  -22px 2%;
+      background-size: 82% auto;
+    }
   }
 }
 
@@ -37,7 +49,6 @@
   }
 }
 .your-viewed{
-  padding: 0 20px;
   margin-top: 100px;
   .page-block-head{
     margin-bottom: 40px;
@@ -53,21 +64,16 @@
 
 @media #{$media-640} {
   .catalog {
-    padding: 0 10px;
+    padding: 0;
 
     .catg {
       &__item {
         margin-bottom: 0;
       }
-
-      &__list {
-        width: calc(100% + 20px);
-        margin-left: -10px;
-      }
     }
 
     .your-interests {
-      margin-top: 40px;
+      margin-top: 30px;
       width: calc(100% + 20px);
       margin-left: -10px;
       .slick-list{
@@ -75,13 +81,6 @@
       }
       .slick-dots {
         bottom: -22px;
-      }
-      .catg__list{
-        width: 100%;
-        margin-left: 0;
-      }
-      .catg__item{
-        margin-right: 0;
       }
     }
 
@@ -108,6 +107,9 @@
         margin-right: 0;
       }
     }
+  }
+  .menu-catalog{
+    display: block;
   }
 }
 

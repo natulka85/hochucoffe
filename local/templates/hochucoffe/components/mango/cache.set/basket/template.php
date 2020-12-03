@@ -1,10 +1,6 @@
 <?if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 $this->setFrameMode(false);
 global $BP_TEMPLATE,$APPLICATION;
-
-/*echo "<pre>";
-   print_r($arResult);
-echo "</pre>";*/
 ?>
 <?if($_POST["is_ajax_post"] != "Y"): ?>
 <form action="<?=$APPLICATION->GetCurPage();?>" method="POST" name="ORDER_FORM" id="ORDER_FORM" enctype="multipart/form-data">
@@ -26,7 +22,7 @@ echo "</pre>";*/
             die();?>
     <?elseif(
         !isset($arResult['ITEMS'])
-        && !isset($_SESSION['bp_cache']['bp_user']['rest'])
+        /*&& !isset($_SESSION['bp_cache']['bp_user']['rest'])*/
     ):?>
         <?
         include($_SERVER["DOCUMENT_ROOT"].$templateFolder."/empty.php");
@@ -45,15 +41,20 @@ echo "</pre>";*/
                             </div>
                             <div class="basket__el-name-wrap">
                                 <div class="basket__el-name"><?=$arItem['NAME']?></div>
-                                <div class="basket__gram">
-                                    <div class="cst-select-list js-sort-list"><span
-                                                class="cst-select-current icon-1h_galka">300 г</span>
-                                        <div class="cst-select" name="gr">
-                                            <div class="cst-select-option" value="300">300 г</div>
-                                            <div class="cst-select-option" value="1000">1000 г</div>
-                                            <div class="cst-select-option" value="1500">1500 г</div>
+                                <div class="basket__elem-props">
+                                    <?foreach ($arResult['TMPL_PROPS_DOP_OPTIONS'] as $dopProp=>$dopValue):?>
+                                        <div class="basket__gram">
+                                            <div class="cst-select-list js-sort-list">
+                                            <span class="cst-select-current icon-1h_galka"><?=$arItem['PROPS'][$dopProp]['VALUE']?></span>
+                                                <div class="cst-select" name="op_<?=$dopProp?>">
+                                                    <?foreach ($arItem['PROPERTIES'][$dopProp]['VALUE'] as $keyVal=>$value):?>
+                                                        <div class="cst-select-option js-do" data-action="basket_change" data-dop_<?=$dopProp?>="<?=$dopProp.'||'.$dopValue['NAME_PROP'].'||'.$value?>"
+                                                        data-bid="<?=$arItem['BASKET_ID']?>" data-q="<?=$arItem['QUANTITY']?>"><?=$value?><?=$dopValue['NAME']?></div>
+                                                    <?endforeach;?>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?endforeach;?>
                                 </div>
                             </div>
                             <div class="basket__price">
@@ -67,13 +68,13 @@ echo "</pre>";*/
                             <div class="basket__cnt">
                                 <div class="count-block js-counter">
                                     <div class="count-block__btn js-minus icon-2b_minus"></div>
-                                    <input class="count-block__value" value="<?=$arItem['QUANTITY']?>" data-id="<?=$arItem['PRODUCT_ID']?>" data-action="basket_change">
+                                    <input class="count-block__value" value="<?=$arItem['QUANTITY']?>" data-bid="<?=$arItem['BASKET_ID']?>" data-action="basket_change">
                                     <div class="count-block__btn js-plus icon-2a_plus"></div>
                                 </div>
                             </div>
                             <div class="basket__cont-btn-wrap">
-                                <div class="basket__cont-btn btn-like"><span>Отложить</span></div>
-                                <div class="basket__cont-btn btn-remove js-do" data-action="basket_change" data-q="0" data-id="<?=$arItem['PRODUCT_ID']?>"><span>Удалить</span></div>
+                                <div class="basket__cont-btn btn-like js-do" data-state="N" data-img="<?=$arItem['PREVIEW_PICTURE']?>" data-action="delay_change" data-id="<?=$arItem['PRODUCT_ID']?>"><span class="_text">Отложить</span></div>
+                                <div class="basket__cont-btn btn-remove js-do" data-action="basket_change" data-default_q="<?=$arItem['QUANTITY']?>" data-q="0" data-bid="<?=$arItem['BASKET_ID']?>"><span>Удалить</span></div>
                             </div>
                         </div>
                     </div>
@@ -224,6 +225,7 @@ echo "</pre>";*/
 </div>
     <?if($_POST["is_ajax_post"] != "Y"):?>
     <input type="hidden" name="is_ajax_post" id="is_ajax_post" value="Y">
+    </div>
 </form>
 </div>
 <?endif?>
@@ -238,3 +240,4 @@ echo "</pre>";*/
 {
     die();
 }?>
+

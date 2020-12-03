@@ -24,8 +24,13 @@ unset($arNewItems)
                 <div class="mob__btn-back icon-2m_arrow-l js-link is-menu"></div>
             </div>
             <?foreach ($arResult['ITEMS'] as $item):?>
-                <div class="main-menu__item <?=$arParams['HTML_CLASS']?>">
-                    <a href="<?=$item['LINK']?>"><?=$item['TEXT']?></a>
+                <div class="main-menu__item-wrap">
+                    <div class="main-menu__item <?=$arParams['HTML_CLASS']?>">
+                        <a href="<?=$item['LINK']?>"><?=$item['TEXT']?></a>
+                        <?if(count($item['CHILDREN'])>0):?>
+                            <div class="main-menu__item-btn"></div>
+                        <?endif;?>
+                    </div>
                     <?if(count($item['CHILDREN'])>0):?>
                         <div class="main-menu__submenu">
                             <div class="main-menu__submenu-cont">
@@ -34,9 +39,9 @@ unset($arNewItems)
                                 <?endforeach;?>
                             </div>
                         </div>
-
                     <?endif;?>
                 </div>
+
             <?endforeach;?>
         </div>
     </div>

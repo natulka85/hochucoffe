@@ -1,4 +1,10 @@
 <?
+if(strpos($_SERVER['REQUEST_URI'], 'product') === false){
+    @define("CATALOG_PAGE", "Y");
+}
+else{
+    @define('CONTENT_STYLE','is-product-page');
+}
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 global $APPLICATION;
 $APPLICATION->SetTitle("Каталог");
@@ -7,7 +13,8 @@ require(__DIR__."/catalog.php");
 \Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/catalog.min.js");
 ?>
 <div class="catalog">
-
+    <div class="page__ears is-left"></div>
+    <div class="page__ears is-right"></div>
 <?
 
 global $arrFilter,$BP_TEMPLATE;
@@ -49,6 +56,7 @@ $APPLICATION->IncludeComponent("bitrix:catalog", "", Array(
     ),
     "FILTER_PRICE_CODE" => array(	// Тип цены
         0 => "rozn",
+        1 => "akciya",
     ),
     "FILTER_VIEW_MODE" => "VERTICAL",	// Вид отображения умного фильтра
     "USE_REVIEW" => "Y",
@@ -63,7 +71,7 @@ $APPLICATION->IncludeComponent("bitrix:catalog", "", Array(
     "USE_COMPARE" => "N",	// Разрешить сравнение товаров
     "PRICE_CODE" => array(	// Тип цены
         0 => "rozn",
-        1 => "Акция на сайте",
+        1 => "akciya",
     ),
     "USE_PRICE_COUNT" => "N",	// Использовать вывод цен с диапазонами
     "SHOW_PRICE_COUNT" => "1",	// Выводить цены для количества

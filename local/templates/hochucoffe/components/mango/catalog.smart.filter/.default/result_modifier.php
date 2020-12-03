@@ -18,7 +18,7 @@ foreach($arResult["ITEMS"] as $k=>&$arItem){
                     $v["VALUE"] = 'Да';
                 }
 
-                $arResult["ACTIVE"][$v["CONTROL_ID"]] = $arItem["NAME"].':'.$v["VALUE"];
+                $arResult["ACTIVE"][$arItem["NAME"]][$v["CONTROL_ID"]] = $v["VALUE"];
                 $arResult["CHEKED_FILT"][$arItem['ID']][$v["CONTROL_ID"]] = $v;
                 $arItem['CHECKED'] = true;
             }
@@ -30,20 +30,20 @@ unset($arItem);
 
 
 //set404
+if($arParams['MOD_404']!='N'){
+    $arCurUrl = explode('?',$arResult['FORM_ACTION']);
 
-$arCurUrl = explode('?',$arResult['FORM_ACTION']);
-
-if(strpos($arResult['SEF_SET_FILTER_URL'],'filter/clear/')!==false)
-{
-    $filter_url = str_replace('filter/clear/', '', $arResult['SEF_SET_FILTER_URL']);
-} else {
-    $filter_url = $arResult['SEF_SET_FILTER_URL'];
+    if(strpos($arResult['SEF_SET_FILTER_URL'],'filter/clear/')!==false)
+    {
+        $filter_url = str_replace('filter/clear/', '', $arResult['SEF_SET_FILTER_URL']);
+    } else {
+        $filter_url = $arResult['SEF_SET_FILTER_URL'];
+    }
+    if($arCurUrl[0]!=$filter_url && $_REQUEST['ajax']!='y')
+    {
+        CHTTP::SetStatus("404 Not Found");
+    }
 }
-if($arCurUrl[0]!=$filter_url && $_REQUEST['ajax']!='y')
-{
-    CHTTP::SetStatus("404 Not Found");
-}
-
 
 $curUrlLink = $APPLICATION->GetCurDir();
 //чпу -  начало
@@ -167,6 +167,49 @@ function item_tmpl($tmpl, $arItem,$quant,$struct=false) {
             </div>
             <?
             break;
+        case 'O':?>
+            <?if($arItem['CODE']=='VKUS'){
+                $arValidValues = [
+                    'Амаретто',
+                    'Бэйлис',
+                    'Вишня',
+                    'Цитрус',
+                    'Шоколад',
+                    'Орех',
+                    'Ягоды',
+                    'Фруктовые нотки',
+                    'Сливочный',
+                    'Карамельный',
+                    'Классические ароматизаторы',
+                    'Экзотические ароматизаторы',
+                ];
+                foreach($arItem['VALUES'] as $val){
+                    if(in_array($val['VALUE'],$arValidValues)){
+                        $arValues[] =  $val;
+                    }
+                }
+            }
+            else{
+                $arValues = $arItem['VALUES'];
+            }?>
+            <?foreach ($arValues as $val=>$ar):?>
+                <div class="index-form__field">
+                    <label class="index-form__label">
+                        <input class="index-form__checkbox main-checkbox__checkbox" type="checkbox" name="<?=$ar["CONTROL_NAME"]?>"
+                                id="<?=$ar["CONTROL_NAME"]?>"
+                                value="<?=$ar["HTML_VALUE"]?>"
+                            <?=($ar["CHECKED"]? 'checked="checked"': '')?>
+                                onclick="smartFilter.click(this);"
+                        >
+                        <?
+                        $value_param = $ar['VALUE'];
+                        if($ar['VALUE_ALT']!=''){
+                            $value_param = $ar['VALUE_ALT'];
+                        }?>
+                        <span class="main-checkbox__span index-form__span"><?=$value_param?></span></label>
+                </div>
+        <?endforeach;?>
+            <?break;
         default:?>
             <?$c = 0; ?>
             <?if(count($arItem["VALUES"])>$quant):?>
@@ -207,7 +250,7 @@ function item_tmpl($tmpl, $arItem,$quant,$struct=false) {
 }
 
 //виды светильника
-$PAR_SEC_ID = $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_SEC;
+$PAR_SEC_ID = $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE;
 //pre($arResult['SECTION']);
 if($arResult['SECTION']['ID'])
     $ar_res = CIBlockSection::GetByID($arResult['SECTION']['ID'])->GetNext();
@@ -352,9 +395,30 @@ global $GLOBAL_CUSTOM;
 $GLOBAL_CUSTOM['SECTIONS'] = $arResult["ITEMS"]['SECTION'];
 $GLOBAL_CUSTOM['SUBSECTION'] = $arResult["ITEMS"]['SUBSECTION'];
 
+
 function form_empty_url() {
     global $APPLICATION;
     $FORM_ACTION = $APPLICATION->GetCurPage();
     $val = substr($FORM_ACTION, 0, strpos($FORM_ACTION, 'filter/'));
     return $val;
+}
+
+if(!empty($arResult['CHEKED_FILT'])){
+    if(count($arResult['CHEKED_FILT']) <= 2){
+        foreach ($arResult['CHEKED_FILT'] as $checked_filt_id=>$checked_filt_val) {
+            $check_el = current($checked_filt_val);
+
+            $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['TITLE'] = $check_el['VALUE'];
+            $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['LINK'] = $BP_TEMPLATE->ChpuFilter()->convertOldToNew(form_empty_url().'filter/'.strtolower($arResult['ITEMS'][$checked_filt_id]["CODE"]).'-is-'.$check_el["URL_ID"].'/');
+
+            foreach($arResult['ITEMS'][$checked_filt_id]['VALUES'] as $value){
+                $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['ADDITIONAL'][] = array(
+                    'TITLE' => $value['VALUE'],
+                    'LINK' => $BP_TEMPLATE->ChpuFilter()->convertOldToNew(form_empty_url().'filter/'.strtolower($arResult['ITEMS'][$checked_filt_id]["CODE"]).'-is-'.$value["URL_ID"].'/')
+                );
+            }
+            //}
+        }
+
+    }
 }

@@ -86,15 +86,20 @@ if ((!empty($save) || !empty($restore)) && $request->isPost() && check_bitrix_se
 require_once $_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/include/prolog_admin_after.php';
 
 $tabControl = new CAdminTabControl("tabControl", array(
-    /*array(
+    array(
         "DIV" => "edit1",
         "TAB" => 'Переменные разделов',
         "TITLE" => 'Переменные разделов для шаблона',
-    ),*/
+    ),
     array(
-        "DIV" => "edit4",
+        "DIV" => "edit2",
         "TAB" => 'Переменные Фильтра',
         "TITLE" => 'Переменные Фильтра для шаблона',
+    ),
+    array(
+        "DIV" => "edit3",
+        "TAB" => 'Переменные Свойства Фильтра',
+        "TITLE" => 'Переменные Свойства Фильтра для шаблона',
     ),
 
 ));
@@ -107,7 +112,7 @@ $tabControl->begin();
 
     global $BP_TEMPLATE;
 
-    /*$rsParentSection = CIBlockSection::GetByID($BP_TEMPLATE->getConstants()->IBLOCK_MAIN_SEC);
+    $rsParentSection = CIBlockSection::GetByID($BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE);
     if ($arParentSection = $rsParentSection->GetNext())
     {
         $arSects[$arParentSection['CODE']] = [
@@ -123,7 +128,7 @@ $tabControl->begin();
         {
             if($arSect['SORT']<600)
             {
-                $arSects[$arSect['CODE']] = [
+                $arSects[$arSect['ID']] = [
                     'NAME' => $arSect['NAME'],
                     'ID' => $arSect['ID'],
                     'CODE' => $arSect['CODE'],
@@ -136,41 +141,36 @@ $tabControl->begin();
     usort($arSects,
         function ($a, $b){
             return ($a['NAME'] < $b['NAME']) ? -1 : 1;
-        });*/
+        });
     //pre($arSects);
 
 
 
 
     ?>
-    <!--<tr><td>
+    <tr><td>
             <table>
-                <tr><td>Название раздела</td><td>secname</td><td>secname_lonely</td><td>secname_parent</td><td>props_tags</td><td>secname_tvar</td></tr>
-                <?/*
+                <tr><td>Название раздела</td><td>secname</td><td>sec_search_tags</td><td>sec_rod</td></tr>
+                <?
                 $arSecname = json_decode($arConsts['SEO_secname']['VALUE'],TRUE);
-                $arSecname_lonely = json_decode($arConsts['SEO_secname_lonely']['VALUE'],TRUE);
-                $arSecname_parent = json_decode($arConsts['SEO_secname_parent']['VALUE'],TRUE);
-                $arSecTags = json_decode($arConsts['SEO_props_tags']['VALUE'],TRUE);
-                $arSecTags_tvar = json_decode($arConsts['SEO_secname_tvar']['VALUE'],TRUE);
+                $arSecname_lonely = json_decode($arConsts['SEO_sec_search_tags']['VALUE'],TRUE);
+                $arSecname_Rod = json_decode($arConsts['SEO_sec_rod']['VALUE'],TRUE);
 
-                foreach($arSects as $code=>$arSect):*/?>
-                    <tr  <?/*if($arSect['SORT']>=500 || $arSect['ACTIVE']!='Y'):*/?>style="background: #e0dfdf;opacity: 0.5;"<?/*endif;*/?>>
-                        <td><?/*=$arSect['NAME']*/?>(<?/*=$arSect['CODE']*/?>)</td>
-                        <td><input type="text" name="SEO[secname][<?/*=$arSect['CODE']*/?>]" value="<?/*=$arSecname[$arSect['CODE']]*/?>" /></td>
-                        <td><input type="text" name="SEO[secname_lonely][<?/*=$arSect['CODE']*/?>]" value="<?/*=$arSecname_lonely[$arSect['CODE']]*/?>" /></td>
-                        <td><input type="text" name="SEO[secname_parent][<?/*=$arSect['CODE']*/?>]" value="<?/*=$arSecname_parent[$arSect['CODE']]*/?>" /></td>
-                        <td><input type="text" name="SEO[props_tags][<?/*=$arSect['CODE']*/?>]" value="<?/*=$arSecTags[$arSect['CODE']]*/?>" /></td>
-                        <td><input type="text" name="SEO[secname_tvar][<?/*=$arSect['CODE']*/?>]" value="<?/*=$arSecTags_tvar[$arSect['CODE']]*/?>" /></td>
+                foreach($arSects as $code=>$arSect):?>
+                    <tr  <?if($arSect['SORT']>=500 || $arSect['ACTIVE']!='Y'):?>style="background: #e0dfdf;opacity: 0.5;"<?endif;?>>
+                        <td><?=$arSect['NAME']?>(<?=$arSect['ID']?>)</td>
+                        <td><input type="text" name="SEO[secname][<?=$arSect['ID']?>]" value="<?=$arSecname[$arSect['ID']]?>" /></td>
+                        <td><input type="text" name="SEO[sec_search_tags][<?=$arSect['ID']?>]" value="<?=$arSecname_lonely[$arSect['ID']]?>" /></td>
+                        <td><input type="text" name="SEO[sec_rod][<?=$arSect['ID']?>]" value="<?=$arSecname_Rod[$arSect['ID']]?>" /></td>
                     </tr>
-                <?/*endforeach*/?>
+                <?endforeach?>
             </table>
-        </td></tr>-->
+        </td></tr>
 
-    <?//$tabControl->beginNextTab();
+    <?$tabControl->beginNextTab();
 
-    //global $BP_TEMPLATE;
     $arSects = [];
-    foreach(CIBlockSectionPropertyLink::GetArray(2) as $PID => $arLink)
+    foreach(CIBlockSectionPropertyLink::GetArray(1) as $PID => $arLink)
     {
         if($arLink["SMART_FILTER"] !== "Y")
             continue;
@@ -178,32 +178,66 @@ $tabControl->begin();
         $arProperty = $rsProperty->Fetch();
         if($arProperty)
         {
-            /*  if($arProperty['ID'] == 63){//акция
-                  $arSects[] = [
-                      'NAME' => $arProperty["NAME"].' - '.$enum_fields["VALUE"],
-                      'ID' => $enum_fields["XML_ID"],
-                  ];
-              }*/
 
             $arVals = array();
-            $property_enums = CIBlockPropertyEnum::GetList(
-                Array("DEF"=>"DESC", "SORT"=>"ASC"),
-                Array("IBLOCK_ID"=>$arProperty["IBLOCK_ID"], "CODE"=>$arProperty["CODE"])
-            );
-            while($enum_fields = $property_enums->GetNext())
-            {
-                $arVals[$enum_fields['XML_ID']] = $enum_fields['VALUE'];
-                $arSects[] = [
-                    'NAME' => $arProperty["NAME"].' - '.$enum_fields["VALUE"],
-                    'ID' => $enum_fields["XML_ID"],
-                ];
+            if($arProperty['PROPERTY_TYPE']=='S'){
+                $arSProperty[$arProperty['CODE']] = $arProperty;
+            }
+            else{
+                $property_enums = CIBlockPropertyEnum::GetList(
+                    Array("DEF"=>"DESC", "SORT"=>"ASC"),
+                    Array("IBLOCK_ID"=>$arProperty["IBLOCK_ID"], "CODE"=>$arProperty["CODE"])
+                );
+                while($enum_fields = $property_enums->GetNext())
+                {
+                    $arVals[$enum_fields['XML_ID']] = $enum_fields['VALUE'];
+                    $arSects[] = [
+                        'NAME' => $arProperty["NAME"].' - '.$enum_fields["VALUE"],
+                        'ID' => $enum_fields["XML_ID"],
+                        'CODE' => $arProperty['CODE'],
+                    ];
+                }
             }
         }
     }
+
+    //global $BP_TEMPLATE;
+    $obCache = new CPHPCache();
+    //BXClearCache(true, "/iblock/brandslider"); // Если надо вручную очистить
+    $arValsDop = [];
+    if( $obCache->InitCache(86400, serialize('iblock/module_dop_setup'), "/iblock/module_dop_setup")) // Если кэш валиден
+    {
+        $arValsDop = $obCache->GetVars();// Извлечение переменных из кэша
+    }
+    elseif( $obCache->StartDataCache())// Если кэш невалиден
+    {
+        $ar = [];
+        $arFilter = Array("IBLOCK_ID" => 1);
+        $arSelect = Array("ID", 'IBLOCK_ID',"NAME", "ACTIVE");
+        $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+        while($ob = $res->getNextElement()) {
+            $arProperties = $ob->getProperties();
+            foreach(array_keys($arSProperty) as $codeProp){
+                $cust_xml = $codeProp.'__'.$arProperties[$codeProp]['VALUE'];
+                $name = $arProperties[$codeProp]['NAME'].' - '.$arProperties[$codeProp]['VALUE'];
+                if(!$arValsDop[$cust_xml]){
+                    $arValsDop[$cust_xml] = [
+                        'NAME' => $name,
+                        'ID' => $cust_xml,
+                        'CODE' => $codeProp,
+                    ];
+                }
+            }
+        }
+    }
+    if(count($arValsDop)>0){
+        $arSects = array_merge($arSects,$arValsDop);
+    }
+
     ?>
     <tr><td>
             <table>
-                <tr><td>Название Свойства</td><td>x</td><td>y</td><td>x_alt</td><td>y_alt</td><td>y_alt1</td><td>props_tags</td></tr>
+                <tr><td>Название Свойства</td><td>x</td><td>y</td><td>x_alt</td><td>y_alt</td><td>y_alt1</td><td>props_mr</td><td>props_pp</td><td>props_tags</td></tr>
                 <!--<input type="hidden" name="save" value="Сохранить">-->
                 <?
                 $arPropsX = json_decode($arConsts['SEO_props_x']['VALUE'],TRUE);
@@ -211,6 +245,8 @@ $tabControl->begin();
                 $arPropsXAlt = json_decode($arConsts['SEO_props_xalt']['VALUE'],TRUE);
                 $arPropsYAlt = json_decode($arConsts['SEO_props_yalt']['VALUE'],TRUE);
                 $arPropsYAlt1 = json_decode($arConsts['SEO_props_yalt1']['VALUE'],TRUE);
+                $arProps_pp = json_decode($arConsts['SEO_props_pp']['VALUE'],TRUE);
+                $arProps_mr = json_decode($arConsts['SEO_props_mr']['VALUE'],TRUE);
                 $arPropsTags = json_decode($arConsts['SEO_props_tags']['VALUE'],TRUE);
 
                 usort($arSects, function($b1,$b2){
@@ -239,22 +275,45 @@ $tabControl->begin();
                         <td><input type="text" name="SEO[props_xalt][<?=$arSect['ID']?>]" value="<?=$arPropsXAlt[$arSect['ID']]?>" /></td>
                         <td><input type="text" name="SEO[props_yalt][<?=$arSect['ID']?>]" value="<?=$arPropsYAlt[$arSect['ID']]?>" /></td>
                         <td><input type="text" name="SEO[props_yalt1][<?=$arSect['ID']?>]" value="<?=$arPropsYAlt1[$arSect['ID']]?>" /></td>
-                        <td><input type="text" name="SEO[props_tags][<?=$arSect['ID']?>]" value="<?=$arPropsTags[$arSect['ID']]?>" /></td>
+                        <td><input type="text" name="SEO[props_mr][<?=$arSect['ID']?>]" value="<?=$arProps_mr[$arSect['ID']]?>" /></td>
+                        <td><input type="text" name="SEO[props_pp][<?=$arSect['ID']?>]" value="<?=$arProps_pp[$arSect['ID']]?>" /></td>
+                        <td><input type="text" name="SEO[props_tags][<?=$arSect['ID']?>]" value="<?=$arPropsTags[$arSect['ID']]?>" style="width: 600px"/></td>
                     </tr>
                 <?endforeach?>
-                <tr><td colspan="7"><h2>Цветовая температура(СТАТИЧНО)</h2></td></tr>
-                <?/*$arCTMatrix=array('warm'=>'Теплый','white'=>'Белый','cold'=>'Холодный');
-                foreach($arCTMatrix as $code=>$name):*/?><!--
-                    <tr>
-                        <td><?/*=$name*/?>:</td>
-                        <td><input type="text" name="SEO[props_x][ColorT<?/*=$code*/?>]" value="<?/*=$arPropsX['ColorT'.$code]*/?>" /></td>
-                        <td><input type="text" name="SEO[props_y][ColorT<?/*=$code*/?>]" value="<?/*=$arPropsY['ColorT'.$code]*/?>" /></td>
-                        <td><input type="text" name="SEO[props_xalt][ColorT<?/*=$code*/?>]" value="<?/*=$arPropsXAlt['ColorT'.$code]*/?>" /></td>
-                        <td><input type="text" name="SEO[props_yalt][ColorT<?/*=$code*/?>]" value="<?/*=$arPropsYAlt['ColorT'.$code]*/?>" /></td>
-                        <td><input type="text" name="SEO[props_yalt1][ColorT<?/*=$code*/?>]" value="<?/*=$arPropsYAlt1['ColorT'.$code]*/?>" /></td>
-                    </tr>
-                --><?/*endforeach;*/?>
+            </table>
+        </td></tr>
+    <?$tabControl->beginNextTab();?>
+    <tr><td>
+            <table>
+                <tr><td>Название Свойства</td><td>Предложение_1</td><td>1ое в списке</td></tr>
+                <!--<input type="hidden" name="save" value="Сохранить">-->
+                <?
+                $arPropsPredlog_1 = json_decode($arConsts['SEO_predlog_1']['VALUE'],TRUE);
+                $arPropsList_1 = json_decode($arConsts['SEO_list_1']['VALUE'],TRUE);
 
+                usort($arSects, function($b1,$b2){
+                    if(trim($b1['NAME'])==trim($b2['NAME'])){
+                        return 0;
+                    }
+                    else
+                        return (trim($b1['NAME'])>trim($b2['NAME'])) ? 1 : -1;
+                });
+                foreach ($arSects as $xml_id=>$arSect){
+                    $name = explode(' - ',$arSect['NAME']);
+                    $arProps[$arSect['CODE']] = $name[0];
+                }
+                foreach($arProps as $propCode=>$prop):?>
+                    <?
+                    if($sec_name!=$sec_name2[0]):?>
+                        <?$sec_name=$sec_name2[0];?>
+                        <tr><td colspan="7"><h2><?=$sec_name?></h2></td></tr>
+                    <?endif?>
+                    <tr>
+                        <td><?=$prop?><br><span style="font-size: 8px;">(<?=$propCode?>)</span></td>
+                        <td><textarea type="text" name="SEO[predlog_1][<?=$propCode?>]" value="<?=$arPropsPredlog_1[$propCode]?>" style="height: 100px;"><?=$arPropsPredlog_1[$propCode]?></textarea></td>
+                        <td><textarea type="text" name="SEO[list_1][<?=$propCode?>]" value="<?=$arPropsList_1[$propCode]?>" style="height: 100px;"><?=$arPropsList_1[$propCode]?></textarea></td>
+                    </tr>
+                <?endforeach?>
             </table>
         </td></tr>
     <?

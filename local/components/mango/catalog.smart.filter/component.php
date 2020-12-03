@@ -856,7 +856,6 @@ else
 		"encode" => true,
 	)));
 }
-
 if(isset($_REQUEST["ajax"]) && $_REQUEST["ajax"] === "y")
 {
 	$arFilter = $this->makeFilter($FILTER_NAME);

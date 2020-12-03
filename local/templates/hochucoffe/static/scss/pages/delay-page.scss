@@ -1,0 +1,23 @@
+.delay-page{
+  padding: 0 34px;
+  .page-block-head{
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__btn{
+    color: $grayBrown;
+    font-weight: 300;
+    border-bottom: 1px dashed $grayBrown;
+    cursor: pointer;
+    transition: .3s;
+    font-size: 16px;
+    &:hover{
+      border-bottom-color: transparent;
+    }
+  }
+}
+@media screen and (min-width: 641px) {
+  .delay-page{
+
+  }
+}

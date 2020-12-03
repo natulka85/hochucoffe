@@ -11,7 +11,7 @@ class Catalog
 {
 
     protected static $instance = null;
-
+    //public $arCountries = [];
     public static function getInstance()
     {
         if (!isset(static::$instance)) self::$instance = new Catalog();
@@ -26,9 +26,24 @@ class Catalog
         while ($arConst = $dbConst->Fetch())
             $this->arConsts[$arConst['CODE']] = $arConst;
 
+        $this->arCountries = $this->getCountriesInfo();
+
     }
 
     public $arCount = 36;
+
+    public $dopProperties = [
+        'POMOL'=>[
+            'DEFAULT_VALUE' => 'Не молоть',
+            'NAME_OPT' => ' помол',
+            'NAME_PROP' => 'Помол'
+        ],
+        'STEPEN_OBJARKI'=>[
+            'DEFAULT_VALUE' => 'Слабая',
+            'NAME_OPT' => ' помол',
+            'NAME_PROP' => 'Степень обжарки'
+        ]
+    ];
     static private $arSortVariants = array(
         'popul',
         'prise_max',
@@ -180,9 +195,15 @@ class Catalog
 
             $arResult['NAME'] = 'STATE_INSTOCK';
             $arResult['BUTTON_TEXT'] = 'В корзину';
-            $arResult['BUTTON_CLASS'] = 'is-brown-light';
+            $arResult['BUTTON_CLASS'] = '';
             $arResult['TEXT_CARD'] = $CATALOG_QUANTITY.' шт'; //$this->STATE_INSTOCK_TEXT;
             $arResult['TEXT'] = 'В наличии'; //$this->STATE_INSTOCK_TEXT;
+
+            foreach ($this->dopProperties as $propCode=>$propValue){
+                $resString = $propCode.'||'.$propValue['NAME_PROP'].'||'.$propValue['DEFAULT_VALUE'];
+
+                $arResult['DATA']['data-dop_'.$propCode] = $resString ;
+            }
 
 
             if($PRICE2>0 && $PRICE2<$PRICE1)
@@ -226,7 +247,7 @@ class Catalog
             return false;
     }
 
-    public function lables($IBLOCK_ID, $PRICE1, $PRICE2, $NOVINKA, $ARTICLE=false,$HIT=false)
+    public function lables($IBLOCK_ID, $PRICE1, $PRICE2, $NOVINKA, $ARTICLE=false,$HIT=false,$OCENKA_SCA=false,$STRANA=false)
     {
         \CModule::IncludeModule("sale");
 
@@ -262,6 +283,28 @@ class Catalog
             $arResult['NEW']['COUNT'] = false;
             $arResult['NEW']['CLASS'] = 'is-new';
             $arResult['NEW']['TEXT'] = '';
+            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/images/minified-svg/ico-label-03.svg" alt="">';
+        }
+
+        if(
+            $OCENKA_SCA != ''
+        )
+        {
+            $arResult['SCA']['COUNT'] = false;
+            $arResult['SCA']['CLASS'] = 'is-sca';
+            $arResult['SCA']['TEXT'] = $OCENKA_SCA;
+            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/images/minified-svg/ico-label-03.svg" alt="">';
+        }
+        //страна флаг
+        if(
+            $STRANA != ''
+        )
+        {
+            $arCountry = $this->arCountries[$STRANA];
+            $arResult['COUNTRY']['COUNT'] = false;
+            $arResult['COUNTRY']['CLASS'] = 'is-country';
+            $arResult['COUNTRY']['IMG'] = $arCountry['DETAIL_PICTURE'];
+            $arResult['COUNTRY']['TEXT'] = $STRANA;
             //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/images/minified-svg/ico-label-03.svg" alt="">';
         }
 
@@ -384,5 +427,21 @@ class Catalog
         $arData[$code]['code'] = $code;
 
         return $arData[$code];
+    }
+    public function getCountriesInfo(){
+        $cache = \Bitrix\Main\Data\Cache::createInstance();
+        if ($cache->initCache(86400, 'arcountries', "hochucoffe")) // Если кэш валиден
+        {
+            $arResult = $cache->getVars();// Извлечение переменных из кэша
+        }
+        else{
+            $res = \CIBlockElement::GetList(Array('ID'=>'asc'), ['IBLOCK_ID'=>3],false, false, ['ID','NAME','PROPERTY_URL','PROPERTY_ID_ON_MAP','DETAIL_PICTURE','DETAIL_TEXT']);
+            while($ob = $res->FETCH()){
+                $arResult[$ob['NAME']] = $ob;
+            }
+            $cache->endDataCache($arResult);
+        }
+
+        return $arResult;
     }
 }

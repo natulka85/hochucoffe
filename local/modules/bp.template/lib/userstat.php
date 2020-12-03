@@ -49,6 +49,10 @@ class Userstat
 
         $arElement['PREVIEW_PICTURE_ID'] = $arElement['PREVIEW_PICTURE'];
         $arElement['PREVIEW_PICTURE'] = \CFile::GetPath($arElement['PREVIEW_PICTURE']);
+        if($arElement['IBLOCK_ID']==1)
+        {
+            $arElement['DETAIL_PAGE_URL'] = '/catalog/product/'.$arElement['CODE'].'/';
+        }
 
         //свойства
         //по id нельзя так как разные инфоблоки могут быть
@@ -65,6 +69,81 @@ class Userstat
             while($ar_props = $db_props->Fetch())
             {
                 $arElement[$ar_props['CODE']] = $ar_props['VALUE'];
+            }
+        }
+        if($arElement['IBLOCK_ID']>0 && $arElement['ID']>0)
+        {
+            $db_props = \CIBlockElement::GetProperty(
+                $arElement['IBLOCK_ID'],
+                $arElement['ID'],
+                [],
+                [
+                    'CODE' => 'OCENKA_SCA',
+                ]
+            );
+            while($ar_props = $db_props->Fetch())
+            {
+                $arElement[$ar_props['CODE']] = $ar_props['VALUE'];
+            }
+        }
+        if($arElement['IBLOCK_ID']>0 && $arElement['ID']>0)
+        {
+            $db_props = \CIBlockElement::GetProperty(
+                $arElement['IBLOCK_ID'],
+                $arElement['ID'],
+                [],
+                [
+                    'CODE' => '_NOVINKA',
+                ]
+            );
+            while($ar_props = $db_props->Fetch())
+            {
+                $arElement[$ar_props['CODE']] = $ar_props['VALUE'];
+            }
+        }
+        if($arElement['IBLOCK_ID']>0 && $arElement['ID']>0)
+        {
+            $db_props = \CIBlockElement::GetProperty(
+                $arElement['IBLOCK_ID'],
+                $arElement['ID'],
+                [],
+                [
+                    'CODE' => '_HIT_PRODAZH',
+                ]
+            );
+            while($ar_props = $db_props->Fetch())
+            {
+                $arElement[$ar_props['CODE']] = $ar_props['VALUE'];
+            }
+        }
+        if($arElement['IBLOCK_ID']>0 && $arElement['ID']>0)
+        {
+            $db_props = \CIBlockElement::GetProperty(
+                $arElement['IBLOCK_ID'],
+                $arElement['ID'],
+                [],
+                [
+                    'CODE' => 'POMOL',
+                ]
+            );
+            while($ar_props = $db_props->Fetch())
+            {
+                $arElement[$ar_props['CODE']]['VALUE'][] = $ar_props['VALUE_ENUM'];
+            }
+        }
+        if($arElement['IBLOCK_ID']>0 && $arElement['ID']>0)
+        {
+            $db_props = \CIBlockElement::GetProperty(
+                $arElement['IBLOCK_ID'],
+                $arElement['ID'],
+                [],
+                [
+                    'CODE' => 'STEPEN_OBJARKI',
+                ]
+            );
+            while($ar_props = $db_props->Fetch())
+            {
+                $arElement[$ar_props['CODE']]['VALUE'][] = $ar_props['VALUE_ENUM'];
             }
         }
         //цены
@@ -86,5 +165,7 @@ class Userstat
         $arElement['PRICE_2'] =  $arPrices[1];
 
         return $arElement;
+
+
     }
 }

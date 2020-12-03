@@ -4,20 +4,21 @@ use \Bitrix\Main\Localization\Loc;
 $this->setFrameMode(true);
 ?>
 <div class="js-prod-ajax">
-<div class="page-block-head"><h1 class="page-title _type-1"><?=$arResult['NAME']?></h1></div>
+<div class="prod__head">
+    <h1 class="page-title _type-1"><?=$arResult['NAME']?></h1>
+    <div class="prod__name is-eng"><?=$arResult['PROPERTIES']['NAME_ENG']['VALUE']?></div>
+</div>
 <div class="prod__control">
     <div class="prod__raiting">
         <div class="catg__stars">
-            <div class="catg__star icon-1b_star_full"></div>
-            <div class="catg__star icon-1b_star_full"></div>
-            <div class="catg__star icon-1b_star_full"></div>
-            <div class="catg__star icon-1b_star_full"></div>
-            <div class="catg__star icon-1b_star_full"></div>
+            <?for($i=1;$i<=5;$i++):?>
+                <div class="catg__star<?if($i<=$arResult['MOD_REVIEW_AVERAGE']):?> icon-1b_star_full<?else:?> icon-1a_star<?endif;?>"></div>
+            <?endfor;?>
         </div>
-        <a href="#">10 отзывов</a></div>
-    <div class="prod__link">
+        <a href="#reviews" class="js-anchor">отзывов <?=$arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']?></a></div>
+    <div class="prod__link js-do" data-state="N" data-img="<?=$arResult['PREVIEW_PICTURE']['SRC']?>" data-action="delay_change" data-id="<?=$arResult['ID']?>">
         <div class="prod__link-btn catg__like btn-like"></div>
-        <div class="prod__link-text">В избранное</div>
+        <div class="prod__link-text _text">Отложить</div>
     </div>
     <div class="prod__link">
         <div class="prod__link-btn catg__sravn btn-sravn"></div>
@@ -31,9 +32,40 @@ $this->setFrameMode(true);
 <div class="prod__wrap">
     <div class="prod__top">
         <div class="prod__image-wrap">
+            <?
+            $arTempLables = $arResult['LABLES_TEMPLATE'];?>
+            <?foreach ($arTempLables as $pos=>$arVal){
+                $cnt=0;
+                foreach ($arVal as $k=>$v){
+                    if(isset($arResult['LABLES'][$v])){
+                        $cnt++;
+                    }
+                }
+                if($cnt==0) unset($arTempLables[$pos]);
+            }?>
+            <?if(count($arTempLables)>0):?>
+                <div class="prod__labels labels">
+                    <?foreach ($arTempLables as $pos=>$arVal):?>
+                        <div class="labels__items is-<?=mb_strtolower($pos)?>">
+                            <?foreach ($arVal as $lKey):?>
+                                <?if(isset($arResult['LABLES'][$lKey])):?>
+                                    <div class="labels__item <?=$arResult['LABLES'][$lKey]['CLASS']?>">
+                                        <?if($arResult['LABLES'][$lKey]['IMG_AR']['src']!=''):?>
+                                            <div class="labels__item-wrap">
+                                                <img src="<?=$arResult['LABLES'][$lKey]['IMG_AR']['src']?>" alt="">
+                                            </div>
+                                        <?endif;?>
+                                        <span><?=$arResult['LABLES'][$lKey]['TEXT']?></span>
+                                    </div>
+                                <?endif;?>
+                            <?endforeach;?>
+                        </div>
+                    <?endforeach;?>
+                </div>
+            <?endif;?>
             <div class="prod__image js-slick-3">
                 <?foreach ($arResult['DEFAULT_IMAGE'] as $defImg):?>
-                    <div class="prod__image__img">
+                    <div class="prod__image-img">
                         <a href="<?=$defImg['HREF']?>" data-fancybox="element">
                             <img src="<?=$defImg['SRC']?>" alt="<?=$defImg['ALT']?>">
                         </a>
@@ -51,12 +83,6 @@ $this->setFrameMode(true);
             </div>
         </div>
         <div class="prod__main">
-            <div class="labels">
-                <div class="labels__item is-new"></div>
-                <div class="labels__item is-coffe is-three"></div>
-                <div class="labels__item is-country"><img src="../../images/develop/country.png">
-                </div>
-            </div>
             <div class="prod__main-char">
                 <div class="prod__main-title">Основные характеристики:</div>
                 <? foreach ($arResult['TMPL_PROPS'] as $TMPL_PROP):?>
@@ -96,20 +122,20 @@ $this->setFrameMode(true);
                     <?endforeach;?>
                 </div>
             </div>
-            <div class="prod__main-choose-bl is-fri">
-                <div class="prod__main-title">Степень обжарки:</div>
-                <div class="prod__fields">
-                    <div class="prod__field">
-                        <div class="prod__form-btn-choose is-active">Малая</div>
-                    </div>
-                    <div class="prod__field">
-                        <div class="prod__form-btn-choose">Средняя</div>
-                    </div>
-                    <div class="prod__field">
-                        <div class="prod__form-btn-choose">Сильная</div>
+            <?foreach ($arResult['TMPL_PROPS_DOP_OPTIONS'] as $dopProp=>$dopValue):?>
+                <div class="prod__main-choose-bl is-fri">
+                    <div class="prod__main-title"><?=$arResult['PROPERTIES'][$dopProp]['NAME']?>:</div>
+                    <div class="prod__fields">
+                        <?foreach ($arResult['PROPERTIES'][$dopProp]['VALUE'] as $keyVal=>$value):?>
+                        <div class="prod__field">
+                            <div class="prod__form-btn-choose js-do<?if($arResult['STATE']['DATA_AR'][$dopProp][2] == $value):?> is-active
+                            <?elseif ($value == $dopValue['DEFAULT_VALUE']):?> is-active<?endif;?>" data-action="card_params"  data-cur_id="<?=$arResult['ID']?>" data-code="<?=$dopProp?>" data-name="<?=$dopValue['NAME_PROP']?>" data-value="<?=$value?>">
+                                <?=$value?></div>
+                        </div>
+                        <?endforeach;?>
                     </div>
                 </div>
-            </div>
+            <?endforeach;?>
         </div>
         <div class="prod__check-wrap">
             <div class="prod__check is-st-shadow">
@@ -121,6 +147,9 @@ $this->setFrameMode(true);
                         <div class="catg__price-old"><?=\SaleFormatCurrency($arResult['STATE']['PRICE_OLD'], 'RUB')?></div>
                     <?endif;?>
                 </div>
+                <div class="catg__price-block-gr">
+                    <?=\SaleFormatCurrency($arResult['MOD_PRICE_100_G'], 'RUB');?>/100 г
+                </div>
                 <div class="prod__avail-block">
                     <div class="prod__avail"><?=$arResult['STATE']['TEXT']?></div>
                 </div>
@@ -128,7 +157,7 @@ $this->setFrameMode(true);
                 <div class="prod__link-bl">Хочу дешевле!</div>
                 <div class="prod__deliv-info"><span>Доставка на:</span> 26.12.2020</div>
                 <div class="prod__btn-wrap">
-                    <div class="prod__btn btn is-brown-light is-buy js-do" data-id="<?=$arResult['ID']?>" data-action="basket_change">В корзину</div>
+                    <div class="prod__btn btn is-buy js-do" data-id="<?=$arResult['ID']?>" data-action="basket_change" <?foreach ($arResult['STATE']['DATA'] as $data=>$dataVal):?><?=$data?>="<?=$dataVal?>"<?endforeach;?>>В корзину</div>
                 </div>
             </div>
         </div>
@@ -136,170 +165,151 @@ $this->setFrameMode(true);
     <div class="prod__bottom">
         <div class="prod__des-block">
             <div class="prod__des-btn js-slide-btn icon-1h_galka">Описание</div>
-            <div class="prod__des-content js-slide-content"><?=$arResult['DETAIL_TEXT']?></div>
+            <div class="js-slide-content" data-show_more="block" data-show_more_height="400">
+                <div class="prod__des-content" data-show_more="content"><?=$arResult['~DETAIL_TEXT']?></div>
+                <div class="prod__btn-more">
+                    <span class="js-show-more-btn" data-show_more_btnshow="Подробнее" data-show_more_btnhide="Свернуть">Подробнее</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="prod__des-block">
+            <div class="prod__des-btn js-slide-btn icon-1h_galka">Важное про кофе</div>
+            <div class="prod__des-content js-slide-content" style="display: none;">
+                <div class="main-text__h">
+                    Как хранить кофе...
+                </div>
+                <p>
+                    Хранить зерновое кофе можно в обычном кухонном шкафу, но температура не должна превышать 25 градусов. Избегайте попадание тепла и прямых солнечных лучей, ограничьте попадание воздуха в упаковку, за исключением специального клапана на самой пачке.<br>
+                    При соблюдении этих простых правил, кофе будет радовать Вас теми неповторимыми вкусовыми нотами и ароматами, которые позволит раскрыть выбранный Вами способ приготовления.
+                </p>
+
+                <div class="main-text__border">
+                    <div class="main-text__border-name">ВАЖНО!</div>
+
+                    Кофе, после помола, может терять свою свежесть.  Необходимо тщательно соблюдать условия хранения и молоть только нужное вам количество зерен для приготовления напитка.
+                    При соблюдении этих простых правил, кофе будет радовать Вас теми неповторимыми вкусовыми нотами и ароматами, которые позволит раскрыть выбранный Вами способ приготовления.
+                </div>
+            </div>
         </div>
         <div class="prod__des-block">
             <div class="prod__des-btn js-slide-btn icon-1h_galka">Отзывы:</div>
             <div class="prod__des-content js-slide-content">
-                <div class="prod__reviews">
+                <div class="prod__reviews" id="reviews">
                     <div class="prod__reviews-l">
-                        <div class="prod__btn is-review btn is-brown-light">Написать отзыв</div>
-                        <div class="prod__reviews-item">
-                            <div class="prod__reviews-name">
-                                <div class="prod__reviews-name-m">Сергей Чураков</div>
-                                <div class="prod__reviews-date">14.10.2020 18:34</div>
-                            </div>
-                            <div class="catg__stars">
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                            </div>
-                            <div class="prod__reviews-text">Разнообразный и богатый опыт укрепление
-                                и развитие структуры способствует подготовки и реализации системы
-                                обучения кадров, соответствует насущным потребностям. Товарищи!
-                                постоянное информационно-пропагандистское обеспечение нашей
-                                деятельности играет важную роль в формировании позиций, занимаемых
-                                участниками в отношении поставленных задач. Разнообразный и богатый
-                                опыт новая модель организационной деятельности способствует
-                                подготовки и реализации новых предложений.
-                            </div>
+                        <?
+                        $display = 'none';
+                        if(count($arResult['MOD_REVIEWS'])==0) {$display='block';}?>
+                        <div class="prod__btn is-review btn is-white-bege js-toggle-rf">Написать отзыв</div>
+                        <div class="prod__review-form" style="display:<?=$display;?>">
+                            <form action="" class="review-form">
+                                <div class="review-form__title">Отзыв о <?=$arResult['NAME']?></div>
+                                <input type="hidden" name="action" value="review_card"/>
+                                <input type="hidden" name="elid" value="<?=$arResult['ID']?>"/>
+                                <div class="review-form__fields">
+                                    <div class="review-form__field is-stars">
+                                        <input type="hidden" name="grade" value="5"/>
+                                        <span class="review-form__label">Ваша оценка</span>
+                                        <div class="catg__stars">
+                                            <div class="catg__star is-on"></div>
+                                            <div class="catg__star is-on"></div>
+                                            <div class="catg__star is-on"></div>
+                                            <div class="catg__star is-on"></div>
+                                            <div class="catg__star is-on"></div>
+                                        </div>
+                                    </div>
+                                    <div class="review-form__field">
+                                        <input class="review-form__input" placeholder="Ваше имя" value="" name="name">
+                                        <div class="error">Некорректное имя</div>
+                                    </div>
+                                    <div class="review-form__field">
+                                        <textarea class="review-form__textarea" placeholder="Оставить отзыв" value="" name="review"></textarea>
+                                        <span class="review-form__label"></span>
+                                        <div class="error"><?=$arResult['ERRORS']['email']?></div>
+                                    </div>
+                                    <div class="review-form__btn-wrap">
+                                        <button class="review-form__btn btn is-bege">Отправить отзыв</button>
+                                        <div class="review-form__btn btn is-white-bege js-toggle-rf">Отмена</div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                        <div class="prod__reviews-item">
-                            <div class="prod__reviews-name">
-                                <div class="prod__reviews-name-m">Сергей Чураков</div>
-                                <div class="prod__reviews-date">14.10.2020 18:34</div>
-                            </div>
-                            <div class="catg__stars">
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                            </div>
-                            <div class="prod__reviews-text">Разнообразный и богатый опыт укрепление
-                                и развитие структуры способствует подготовки и реализации системы
-                                обучения кадров, соответствует насущным потребностям. Товарищи!
-                                постоянное информационно-пропагандистское обеспечение нашей
-                                деятельности играет важную роль в формировании позиций, занимаемых
-                                участниками в отношении поставленных задач. Разнообразный и богатый
-                                опыт новая модель организационной деятельности способствует
-                                подготовки и реализации новых предложений.
-                            </div>
-                        </div>
-                        <div class="prod__reviews-item">
-                            <div class="prod__reviews-name">
-                                <div class="prod__reviews-name-m">Сергей Чураков</div>
-                                <div class="prod__reviews-date">14.10.2020 18:34</div>
-                            </div>
-                            <div class="catg__stars">
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                            </div>
-                            <div class="prod__reviews-text">Разнообразный и богатый опыт укрепление
-                                и развитие структуры способствует подготовки и реализации системы
-                                обучения кадров, соответствует насущным потребностям. Товарищи!
-                                постоянное информационно-пропагандистское обеспечение нашей
-                                деятельности играет важную роль в формировании позиций, занимаемых
-                                участниками в отношении поставленных задач. Разнообразный и богатый
-                                опыт новая модель организационной деятельности способствует
-                                подготовки и реализации новых предложений.
-                            </div>
-                        </div>
+                        <?if(count($arResult['MOD_REVIEWS'])>0):?>
+                            <?foreach ($arResult['MOD_REVIEWS'] as $reviw):?>
+                                <div class="prod__reviews-item">
+                                    <div class="prod__reviews-name">
+                                        <div class="prod__reviews-name-m"><?=$reviw['AUTHOR_NAME']?></div>
+                                        <div class="prod__reviews-date"><?=$reviw['DATE']?></div>
+                                    </div>
+                                    <div class="catg__stars">
+                                        <?for($i=1;$i<=5;$i++):?>
+                                            <div class="catg__star<?if($i<=$reviw['GRADE']):?> icon-1b_star_full<?else:?> icon-1a_star<?endif;?>"></div>
+                                        <?endfor;?>
+                                    </div>
+                                    <div class="prod__reviews-text"><?=$reviw['TEXT']?>
+                                    </div>
+                                    <?if($reviw['ANSWER']!=''):?>
+                                        <div class="prod__r-answer">
+                                            <div class="prod__r-answer-text">
+                                                <?=$reviw['ANSWER']?>
+                                            </div>
+                                            <div class="prod__r-man">
+                                                <div class="prod__r-man-img">
+                                                    <img src="<?=$reviw['MANAGER']['PICTURE']['src']?>" alt="<?=$reviw['MANAGER']['PROPERTY_POSITION_VALUE']?>">
+                                                </div>
+                                                <div class="prod__r-pos"><?=$reviw['MANAGER']['PROPERTY_POSITION_VALUE']?></div>
+                                            </div>
+                                        </div>
+                                    <?endif;?>
+                                </div>
+                            <?endforeach;?>
+                        <?endif;?>
                     </div>
                     <div class="prod__reviews-r">
-                        <div class="prod__reviews-res">
-                            <div class="prod__reviews-mark">5.0</div>
-                            <div class="catg__stars">
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
-                                <div class="catg__star icon-1b_star_full"></div>
+                        <?if($arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']>0):?>
+                            <div class="prod__reviews-res">
+                                <div class="prod__reviews-mark"><?=number_format($arResult['PROPERTIES']['ASKARON_REVIEWS_AVERAGE']['VALUE'],2)?></div>
+                                <div class="catg__stars">
+                                    <?for($i=1;$i<=5;$i++):?>
+                                        <div class="catg__star<?if($i<=$arResult['MOD_REVIEW_AVERAGE']):?> icon-1b_star_full<?else:?> icon-1a_star<?endif;?>"></div>
+                                    <?endfor;?>
+                                </div>
+                                <div class="prod__reviews-inf">На основании оценок<br><?=$arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']?> покупателей
+                                </div>
+                                <div class="prod__reviews-cnt">
+                                    <?$gradeSum = array_sum($arResult['MOD_REVIEWS_RES']);?>
+                                    <?foreach ($arResult['MOD_REVIEWS_RES'] as $grade=>$gradeCnt):?>
+                                        <div class="prod__reviews-cnt-item"><span><?=$grade?></span>
+                                            <div class="prod__reviews-cnt-points">
+                                                <?
+                                                    $procCnt = round($gradeCnt * 10 / $gradeSum,0);
+                                                ?>
+                                                <?for($i=1;$i<=10;$i++):?>
+                                                    <div class="prod__reviews-cnt-point<?if($i<=$procCnt):?> is-active<?endif;?>"></div>
+                                                <?endfor;?>
+                                            </div>
+                                            <span><?=round($gradeCnt * 10 / $gradeSum*10,2)?>%</span></div>
+                                    <?endforeach;?>
+                                </div>
                             </div>
-                            <div class="prod__reviews-inf">На основании оценок<br>10 покупателей
-                            </div>
-                            <div class="prod__reviews-cnt">
-                                <div class="prod__reviews-cnt-item"><span>5</span>
-                                    <div class="prod__reviews-cnt-points">
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                    </div>
-                                    <span>100%</span></div>
-                                <div class="prod__reviews-cnt-item"><span>4</span>
-                                    <div class="prod__reviews-cnt-points">
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point is-active"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                    </div>
-                                    <span>50%</span></div>
-                                <div class="prod__reviews-cnt-item"><span>3</span>
-                                    <div class="prod__reviews-cnt-points">
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                    </div>
-                                    <span>0%</span></div>
-                                <div class="prod__reviews-cnt-item"><span>2</span>
-                                    <div class="prod__reviews-cnt-points">
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                    </div>
-                                    <span>0%</span></div>
-                                <div class="prod__reviews-cnt-item"><span>1</span>
-                                    <div class="prod__reviews-cnt-points">
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                        <div class="prod__reviews-cnt-point"></div>
-                                    </div>
-                                    <span>0%</span></div>
-                            </div>
-                        </div>
+                        <?endif;?>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="prod__des-block">
+            <div class="prod__des-btn js-slide-btn icon-1h_galka">Доставка и оплата</div>
+            <div class="prod__des-content js-slide-content" style="display: none;">
+                <p>
+                    Мы доставляем кофе прямо до вашего дома бережно и в короткие сроки.
+                    Подробнее о способах и сроках доставки вы можете узнать ЗДЕСЬ (ссылка на страницу Доставка и Оплата)
+                </p>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
 

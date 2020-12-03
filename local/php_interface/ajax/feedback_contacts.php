@@ -38,7 +38,7 @@ if($valid['phone'] && $valid['name']  && $valid['email'])
             \Bitrix\Main\UserConsent\Consent::addByContext($_REQUEST['ag_id'], 'main/feddback_contactts', $arFields['PHONE'], array('URL' => $_SERVER['HTTP_REFERER']));
         }
 
-        $send_id = CEvent::Send("FEEDBACK_FORM", SITE_ID, $arFields, "N", 50);
+        $send_id = CEvent::Send("FEEDBACK_FORM", SITE_ID, $arFields, "N", 7);
 
         if($send_id>0){
             $out .= '<div class=\"popup__box\">';

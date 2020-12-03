@@ -86,11 +86,11 @@ $arResult['LABLES_TEMPLATE'] = [
 <?endif;?>
     <?if(!empty($arResult['BUTTON'])):?>
         <div class="search-hint__main-btn">
-            <a href="<?=$arResult['BUTTON']['LINK']?>" class="btn is-white" onclick="<?=$arResult['EVENTS']['btn_click'][$arResult['CUR_SECT']]?>"><?=$arResult['BUTTON']['TITLE']?></a>
+            <a href="<?=$arResult['BUTTON']['LINK']?>" class="btn is-white" onclick="<?=$arResult['EVENTS']['btn_click'][$arResult['CUR_SECT']]?>"><span><?=$arResult['BUTTON']['TITLE']?></span></a>
         </div>
     <?else:?>
         <div class="search-hint__main-btn">
-            <a href="<?=$arParams['SEARCH_PAGE']?>?q=<?=$arParams['REQUEST']?>" class="btn is-white">Перейти ко всем результатам поиска</a>
+            <a href="<?=$arParams['SEARCH_PAGE']?>?q=<?=$arParams['REQUEST']?>" class="btn is-white"><span>Перейти ко всем результатам поиска</span></a>
         </div>
     <?endif;?>
 </div>

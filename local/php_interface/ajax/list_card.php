@@ -25,7 +25,8 @@ if($id>0){
         "SECTION_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
         "FILTER_NAME" => 'arFilterCard',
         'MOD_TEMPATE' => 'CARD',
-        'CATEGORY_TYPE'=> 'ONE_CARD'
+        'CATEGORY_TYPE'=> 'ONE_CARD',
+        'MOD_AJAX' => 'true'
     ];
 
     $APPLICATION->IncludeComponent(

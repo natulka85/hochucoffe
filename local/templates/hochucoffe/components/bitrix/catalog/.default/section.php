@@ -1,4 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
+use Bitrix\Sale;
+use Bitrix\Catalog\CatalogViewedProductTable;
 use Bitrix\Main\Loader;
 use Bitrix\Main\ModuleManager;
 global $BP_TEMPLATE,$APPLICATION;
@@ -66,8 +68,18 @@ if (!isset($arCurSection))
         )
     );?>
 
-<div class="page-block-head"><h1 class="page-title _type-1">Каталог</h1>
-    <span class="page-title-note">100 товаров</span>
+
+<div class="page-block-head"><h1 class="page-title _type-1"><?=$APPLICATION->ShowProperty('h1');?></h1>
+    <span class="page-title-note">товаров <?=$APPLICATION->ShowProperty('NavRecordCount')?></span>
+</div>
+<div class="catalog__text">
+    <div class="page-text">
+        <?
+        if($_REQUEST['PAGEN_1']<=1) {
+            $APPLICATION->ShowProperty("text");
+        }
+        ?>
+    </div>
 </div>
 <section class="cloud">
                     <div class="cloud__list">
@@ -196,6 +208,11 @@ if (!isset($arCurSection))
                 false
             );
             ?>
+            <?
+            if($_REQUEST['PAGEN_1']<=1){
+                $text = $BP_TEMPLATE->SeoSection()->getDetailText($arCurSection['ID'], $arResult["VARIABLES"]["SECTION_CODE"],$arParams['CATEGORY_TYPE'],$arCurSection['NAME']);
+            }
+            ?>
         </div>
         <?
         if ($_REQUEST["catalog_ajax_call"] == "Y")
@@ -206,26 +223,73 @@ if (!isset($arCurSection))
 
         ?>
     </div>
+    <div class="inner">
+        <?
+        $F_USER = Sale\Fuser::getId();
+
+        $bd_viewed = CatalogViewedProductTable::GetList(
+            ['filter'=>[
+                'FUSER_ID' => $F_USER
+            ]
+            ]);
+
+        while($ob_view = $bd_viewed->Fetch()){
+            $arElements[] = $ob_view['ELEMENT_ID'];
+        }
+        global $arrFilter;
+        $arrFilter['ID'] =  $arElements;
+
+        if(count($arrFilter['ID']) > 0){?>
+            <section class="your-viewed">
+            <div class="page-block-head"><h2 class="page-title _type-2">Вы недавно смотрели</h2>
+                <a class="page-title-link" href="/personal/viewed/" target="_blank">Смотреть все</a>
+            </div>
+                <?}
+                $APPLICATION->IncludeComponent(
+                    "mango:element.list",
+                    "",
+                    [
+                        "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
+                        "IBLOCK_ID" => array(1),
+                        "COUNT_ON_PAGE" => 150,
+                        "CACHE_TIME"  =>  3600,
+
+                        "" => 5,
+                        "FILTER_NAME" => "arrFilter",
+                        "SORT_FIELD" => "",
+                        "SORT_ORDER" => "",
+
+                        "DISPLAY_TOP_PAGER" => "N",
+                        "DISPLAY_BOTTOM_PAGER" => "N",
+                        "PAGER_TEMPLATE" => "",
+                        'PAGE_TYPE' => 'VIEWED',
+                    ],
+                    false
+                );
+                ?>
+            </section>
+        <div class="catalog__text-box">
+        </div>
+    </div>
 </div>
 
 
 
 <?
-
-
 $BP_TEMPLATE->SeoSection()->getRobots();
 
-$h1 = $BP_TEMPLATE->SeoSection()->generateH1($arResult['SECTION_INPUT'],$arParams['CATEGORY_TYPE']);
-$title = $BP_TEMPLATE->SeoSection()->getTitle($arResult['SECTION_INPUT'],$arParams['CATEGORY_TYPE']);
-$desc = $BP_TEMPLATE->SeoSection()->getDesc($arResult['SECTION_INPUT'],$arParams['CATEGORY_TYPE']);
+$h1 = $BP_TEMPLATE->SeoSection()->getH1($arCurSection['ID'],$arParams['CATEGORY_TYPE']);
+$title = $BP_TEMPLATE->SeoSection()->getTitle($arCurSection['ID'],$arParams['CATEGORY_TYPE']);
+$desc = $BP_TEMPLATE->SeoSection()->getDesc($arCurSection['ID'],$arParams['CATEGORY_TYPE']);
 
 if($APPLICATION->GetPageProperty("withoutmeta")!='Y')
 {
     $APPLICATION->SetPageProperty("title", $title);
     $APPLICATION->SetPageProperty("description", $desc);
     $APPLICATION->SetPageProperty("h1", $h1);
+    $APPLICATION->SetPageProperty("text", $text);
 }
-$strAjaxBreadcrumbs = $APPLICATION->GetNavChain(array('s1', false), 0, '/local/templates/veleluce/components/bitrix/breadcrumb/simple/template.php', true, false);
+$strAjaxBreadcrumbs = $APPLICATION->GetNavChain(array('s1', false), 0, '/local/templates/hochucoffe/components/bitrix/breadcrumb/simple/template.php', true, false);
 
 if ($_REQUEST["catalog_ajax_call"] == "Y")
 {
@@ -235,13 +299,14 @@ if ($_REQUEST["catalog_ajax_call"] == "Y")
         'items'=>$strAjaxItems,
         'breadcrumbs' =>$strAjaxBreadcrumbs,
         'h1' =>$h1,
+        'nav_cnt' => 'товаров '.$APPLICATION->GetPageProperty("NavRecordCount"),
         'title' =>$title,
-        'description' =>$desc
+        'description' =>$desc,
+        'text' =>$text
 
     ]);
     die();
 }
-
 
 ?>
 

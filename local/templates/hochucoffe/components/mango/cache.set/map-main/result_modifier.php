@@ -6,20 +6,22 @@ CModule::IncludeModule("catalog");
 
 $arFilter ['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
 $arFilter ['IBLOCK_TYPE'] = $arParams['IBLOCK_TYPE'];
-global ${$arParams['FILTER_NAME']};
-$arFilter = array_merge($arFilter,${$arParams['FILTER_NAME']});
 $arTopCount = [];
 
 if($arParams['COUNT_ON_PAGE']!=''){
     $arTopCount['nTopCount'] = $arParams['COUNT_ON_PAGE'];
 }
 
-$res = CIBlockElement::GetList(Array('ID'=>'asc'), $arFilter,false, $arTopCount, ['*']);
-$i = 0;
-while($ob = $res->GetNextElement()){
-    $arResult['ITEMS'][$i] = $ob->GetFields();
-    $arResult['ITEMS'][$i]['PROPERTIES'] = $ob->getProperties();
-    $arResult['ITEMS'][$i]['DETAIL_PICTURE'] = CFile::GetFileArray($arResult['ITEMS'][$i]['DETAIL_PICTURE']);
+$res = CIBlockElement::GetList(Array('ID'=>'asc'), $arFilter,false, $arTopCount, ['ID','NAME','PROPERTY_URL','PROPERTY_ID_ON_MAP','DETAIL_PICTURE','DETAIL_TEXT']);
+while($ob = $res->FETCH()){
+    $value = CFile::GetFileArray($ob['DETAIL_PICTURE']);
 
-    $i++;
+    $arFile = CFile::ResizeImageGet(
+        $value,
+        array("width" => 80, "height" => 80),
+        BX_RESIZE_IMAGE_PROPORTIONAL ,
+        true
+    );
+    $ob['PICTURE'] = $arFile;
+    $arResult['ITEMS'][] = $ob;
 }

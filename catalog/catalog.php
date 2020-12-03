@@ -41,8 +41,10 @@ else
 //$_SERVER['REQUEST_URI'] = str_replace('tipy',$_REQUEST['SECTION_CODE'],$_SERVER['REQUEST_URI']);
 
 //preg_match('/catalog\/[\w\-]+\//', $_SERVER['REQUEST_URI'], $output_array);
-
-if(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/')!==false)
+if($_SERVER['REQUEST_URI']=='/catalog/'){
+    $CategoryType = "ALL_CAT";
+}
+elseif(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/')!==false)
 {
     $CategoryType = "ALL_CAT_FILTER";
     $arUrl = explode('?',$_SERVER['REQUEST_URI']);

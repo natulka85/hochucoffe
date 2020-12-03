@@ -1,66 +1,55 @@
 <?php
 global $BP_TEMPLATE;
+$basket_id = 0;
+$arProps = [];
+$element_id = $_REQUEST['id'];
+foreach ($_REQUEST as $data_key=>$data){
+    if(strpos($data_key,'dop_')!==false){
+        $ar=explode('dop_',$data_key);
+        if($ar[1]!=''){
+            $arProps[strtoupper($ar[1])] = $data;
+        }
+    }
+}
+if($_REQUEST['q']==''){
+    $_REQUEST['q'] = 1;
+}
 
 if(!$_REQUEST['rest'] && $_REQUEST['q']==0)
 {
     $_REQUEST['rest'] = $_REQUEST['default_q'];
 }
-$PRODUCT_ID = 0;
 
-foreach($_SESSION['bp_cache']['bp_user']['basket'] as $prod_id => $arBasket)
-{
-    if($prod_id == $_REQUEST['id'])
-    {
-        $basket_id = $arBasket['basket_id'];
-    }
-}
-if($basket_id >0){
-    if($_REQUEST['childs'])
-        $BP_TEMPLATE->Basket()->updateProduct($basket_id, $_REQUEST['q'], $_REQUEST['rest'], explode(',',$_REQUEST['childs']));
-    else
-        $BP_TEMPLATE->basket()->updateProduct($basket_id, $_REQUEST['q'], $_REQUEST['rest']);
-
-
+if($_REQUEST['bid']>0){//когда из корзины
+    $basket_id = $_REQUEST['bid'];
+    $BP_TEMPLATE->basket()->updateProduct($basket_id, $_REQUEST['q'], $arProps);
     $json['error'] = 'ok';
     $json['func'] = '
     $(".sbasket-refresh").click();
     $("#basket-refresh").click();';
-
 }
-else{
-    \Bitrix\Main\Loader::includeModule('iblock');
-    $res = \CIBlockElement::GetByID($_REQUEST["id"]);
-    if($ar_res = $res->GetNext())
-    {
-        $popup_opened = false;
-        if($_REQUEST['from'] == 'popup_basket'){
-            $popup_opened = true;
+elseif($element_id>0){
+    $popup_opened = false;
+    $basket_id = 0;
+
+    foreach ($_SESSION['bp_cache']['bp_user']['basket_code'][$element_id] as $b_id=>$props){
+        if($props == json_encode($arProps,JSON_UNESCAPED_UNICODE)){
+            //echo $props.'---'.json_encode($arProps,JSON_UNESCAPED_UNICODE).'<br>';
+            //echo 'sss';
+            $basket_id = $b_id;
         }
-
-        $arId = explode(',',$_REQUEST["id"]);
-        $quantity = 1;
-        $img = [];
-
-        if($_REQUEST["q"])
-            $quantity = $_REQUEST["q"];
-
-        $arProps = [];
-
-        if($_REQUEST["parent"]!='')
-        {
-            $arProps =
-                [
-                    [
-                        "NAME" => "Parent",
-                        "CODE" => "PARENT",
-                        "VALUE" => intVal($_REQUEST["parent"]) //PRODUCT_ID
-                    ]
-                ];
-        }
-
-        foreach ($arId as $id){
-            $arElement = $BP_TEMPLATE->basket()->addProduct($id, $quantity, $arProps);
-        }
+    }
+    if($basket_id>0){ //значит меняем просто кол-во
+        //echo $basket_id.'обновляем';
+        $BP_TEMPLATE->basket()->updateProduct($basket_id, $_REQUEST['q']);
+        $json['error'] = 'ok';
+        $json['func'] = '
+            $(".sbasket-refresh").click();
+            $("#basket-refresh").click();';
+    }
+    else{//значит добавляем новый товар
+        $basket_id = $BP_TEMPLATE->basket()->addProduct($element_id, $_REQUEST['q'], $arProps);
+        $arElement = $_SESSION['bp_cache']['bp_user']['products'][$element_id];
 
         $sum = 0;
         foreach($_SESSION['bp_cache']['bp_user']['basket'] as $prod_id=>$arBasket)
@@ -75,7 +64,7 @@ else{
             'М' => 'добавлен',
             'С' => 'добавлено',
         ];
-        if(count($arId)>1){
+        if(count($element_id)>1){
             $w = $_REQUEST['name'];
             //$img = explode(',',$_REQUEST['img']);
             $quant = 1;
@@ -83,7 +72,7 @@ else{
         else{
             $w = 'кофе';
             $img[] = $arElement["PREVIEW_PICTURE"];
-            $quant = $_SESSION['bp_cache']['bp_user']['basket'][$arId[0]]['quantity'];
+            $quant = $_SESSION['bp_cache']['bp_user']['basket'][$element_id][$basket_id]['quantity'];
         }
 
         $rod = $BP_TEMPLATE->InsRod($w);
@@ -98,12 +87,8 @@ else{
             ['nTopCount' => 1],
             [
                 'NAME',
-                'PROPERTY_RECOMMEND',
+                'PROPERTY_ANALOGS',
                 'PROPERTY__RAZDEL_NA_SAYTE',
-                'PROPERTY__TIP_TSOKOLYA',
-                'PROPERTY__STIL',
-                'PROPERTY__VIDY_MATERIALOV',
-                'PROPERTY__NALICHIE_DIMMERA',
             ]
         );
         while ($el = $res->Fetch()) {
@@ -116,7 +101,6 @@ else{
                 '_NALICHIE_DIMMERA'  => ['VALUE' => $el['PROPERTY__NALICHIE_DIMMERA_VALUE']],
             ];
         }
-
 
         $arRecomendIDs = [];
         $arRecomend = array_slice($arRecomend, 0, 12);
@@ -179,7 +163,7 @@ else{
             $out .= '<div class="popup-ajax-content">';
             $out .= '<div class="popup__content">';
             $out .= '<div class="popup__text _type-1">';
-            $out .= '<strong>'.$ar_res['NAME'].'</strong><br>'.$part.' в корзину';
+            $out .= '<strong>'.$arElement['NAME'].'</strong><br>'.$part.' в корзину';
             $out .= '</div>';
             if($img !=''){
                 $out .= '<div class="popup__img">';
@@ -248,7 +232,7 @@ else{
         $out .= 'showPopup($(".popup"),{cssAuto:"true"});';
         $out .= '$(".sbasket-refresh").click();';
         $out .= '$("#basket-refresh").click();';
-        $out .= 'inBasket($(\'.js-do[data-id="'.$_REQUEST['id'].'"][data-action=basket_change]\'),'.$quant.');';
+        $out .= 'inBasket($(\'.js-do[data-id="'.$element_id.'"][data-action=basket_change]\'),'.$quant.','.$basket_id.','.$element_id.');';
 
         $out .= '</script>';
 
@@ -272,7 +256,5 @@ else{
             $json['error'] = 'ok';
         }
     }
-
 }
-
 

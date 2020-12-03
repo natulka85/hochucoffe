@@ -26,6 +26,7 @@
 @import "blocks/pagination";
 @import "blocks/popup";
 @import "blocks/search-hint";
+@import "blocks/fast-card";
 
 @import "pages/index";
 @import "pages/catalog";
@@ -33,3 +34,8 @@
 @import "pages/basket";
 @import "pages/product";
 @import "pages/search-page";
+@import "pages/delay-page";
+@import "pages/akcii";
+@import "pages/viewed-page";
+
+@import "wraps";

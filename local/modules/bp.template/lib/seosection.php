@@ -1,28 +1,239 @@
-<?
+<?php
 namespace Bp\Template;
 
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\Loader;
+use Bp\Template\SettingsTable;
+
 
 Loc::loadMessages(__FILE__);
 
 class SeoSection
 {
     protected static $instance = null;
+    public $stringProperties = [
+        '_HIT_PRODAZH','AKCIYA','WEIGHT',
+    ];
 
-    public static function getInstance()
-    {
-        if (!isset(static::$instance)) self::$instance = new SeoSection();
-        return static::$instance;
-    }
     protected function __construct()
     {
         $dbConst = SettingsTable::getList(array(
             'select' => array('ID','NAME','CODE','VALUE'),
             'filter' => array('CODE' => 'SEO_%')
         ));
-        while ($arConst = $dbConst->Fetch())
+        while ($arConst = $dbConst->Fetch()){
             $this->arConsts[$arConst['CODE']] = $arConst;
+        }
+    }
+
+    public static function getInstance()
+    {
+        if (!isset(static::$instance)) self::$instance = new SeoSection();
+        return static::$instance;
+    }
+
+    public function getSeoConst($name, $value)
+    {
+        if(is_array($name)){
+          foreach($name as $name_v){
+              if($this->arConsts['SEO_'.$name_v]['VALUE']!=''){
+                  $arValues = json_decode($this->arConsts['SEO_'.$name_v]['VALUE'], TRUE);
+                  $res[] = $arValues[$value];
+              }
+          }
+        }
+        else{
+            if($this->arConsts['SEO_'.$name]['VALUE']!=''){
+                $arValues = json_decode($this->arConsts['SEO_'.$name]['VALUE'], TRUE);
+                $res = $arValues[$value];
+            }
+        }
+
+        return  $res;
+    }
+
+    public function getDetailText($id, $code, $type='SECTION',$name=false)
+    {
+        global $APPLICATION,$BP_TEMPLATE;
+        $page_url = $APPLICATION->getCurPage();
+
+        $arTextOff = json_decode($this->arConsts['SEO_text_off']['VALUE'], TRUE);
+
+        if(in_array($page_url,$arTextOff))
+            return '';
+
+        //echo $type.'$type';
+
+        switch ($type) {
+            case 'ALL_CAT':
+                $text = '<p>На нашем сайте вы можете выбрать для себя любимые и самые лучшие сорта кофе,  которые будут радовать Вас с каждым новым глотком!</p>
+                        <p>Для того, чтобы было проще ориентироваться во всем ассортименте нашего интернет-магазина, мы подготовили:</p>
+                            <ul>
+                                <li>Качественное описание каждого товара;</li>
+                                <li>Оценки SCA;</li>
+                                <li>Страну и регион происхождения;</li>
+                                <li>Год урожая;</li>
+                                <li>Состав;</li>
+                                <li>Вкусовые и ароматические оттенки;</li>
+                                <li>Вес каждой пачки;</li>
+                            </ul>
+                          
+                                У нас вы можете выбрать необходимую вам степень обжарки, а также помол для вашего способа приготовления совершенно БЕСПЛАТНО!
+                          
+                        <p>Мы работаем напрямую с лучшими обжарщиками кофе, которые имеют все необходимые сертификаты.<br>
+                            Мы выбираем только надежных и самых быстрых партнеров по доставке, ведь,  чем свежее обжарка, тем насыщеннее вкус.<br>
+                            Подробнее о способах и сроках доставки вы можете почитать здесь.
+                        </p>
+                            Менеджеры в нашем Контакт-центре знают о кофе все и с удовольствием помогут Вам определиться с выбором. Позвоните нам:
+                            <ul>
+                                <li>8(495)220-20-20 (для Москвы и МО)</li>
+                                <li>8(800)220-20-20(бесплатно по РФ)</li>
+                            </ul>
+                        или просто закажите обратный звонок на сайте, и с Вами свяжутся в кратчайшие сроки.
+                        <p>Кстати, наш контакт-центр работает 24/7</p>
+                        <p>Почему покупают у нас:
+                            <ul>
+                                <li>Выбираем продукцию с высокими оценками SCA от 80+</li>
+                                <li>100% арабика класса specialty</li>
+                                <li>Все ТОПовые обжарщики на одном сайте</li>
+                                <li>Всегда свежая обжарка на оборудовании признанных брендов</li>
+                                <li>Выбор любой степени обжарки и помола</li>
+                                <li>Быстрая и бережная доставка</li>
+                                <li>Скидки и приятные подарки</li>
+                                <li>Более 10 лет кропотливой работы с разными сортами кофе</li>
+                            </ul>
+                        </p>
+                         <strong>Будем рады возможности побаловать Вас свежим и вкусным Кофе!</strong>';
+                return $text;
+            case 'SECTION':
+                break;
+            case 'ALL_CAT_FILTER' || 'SECTION_FILTER':
+                $arProps = self::convertUrlToCheck($page_url);
+                $text = '';
+                $arPredlog = json_decode($this->arConsts['SEO_predlog_1']['VALUE'], TRUE);
+                $arPredList = json_decode($this->arConsts['SEO_list_1']['VALUE'], TRUE);
+                foreach ($arProps['PROPS'] as $propCode=>$val){
+                    $ar = [];
+                    $ar['PROPS'][$propCode] = $val;
+
+                    $arVars['predlog_1'][] = str_replace('[prop_value]',$BP_TEMPLATE->str_fst_lower(self::getFullName($ar, $id)),$arPredlog[$propCode]);
+                    $arVars['list_1'][] = $arPredList[$propCode];
+                }
+                foreach ($arVars['predlog_1'] as $pred){
+                    if($pred!=''){
+                        $text .= '<p>'.$pred.'</p>';
+                    }
+                }
+                $text .= '<p>Для того, чтобы было проще ориентироваться во всем ассортименте нашего интернет-магазина, мы подготовили:</p>';
+                $text .= '<ul>';
+
+                foreach ($arVars['list_1'] as $list){
+                    if($list!=''){
+                        $text .= '<li>'.$list.'</li>';
+                    }
+                }
+                $text .= '<li>Качественное описание каждого товара;</li>
+                                <li>Оценки SCA;</li>
+                                <li>Страну и регион происхождения;</li>
+                                <li>Год урожая;</li>
+                                <li>Состав;</li>
+                                <li>Вкусовые и ароматические оттенки;</li>
+                                <li>Вес каждой пачки;</li>
+                            </ul>
+                          
+                                У нас вы можете выбрать необходимую вам степень обжарки, а также помол для вашего способа приготовления совершенно БЕСПЛАТНО!
+                          
+                        <p>Мы работаем напрямую с лучшими обжарщиками кофе, которые имеют все необходимые сертификаты.<br>
+                            Мы выбираем только надежных и самых быстрых партнеров по доставке, ведь,  чем свежее обжарка, тем насыщеннее вкус.<br>
+                            Подробнее о способах и сроках доставки вы можете почитать здесь.
+                        </p>
+                            Менеджеры в нашем Контакт-центре знают о кофе все и с удовольствием помогут Вам определиться с выбором. Позвоните нам:
+                            <ul>
+                                <li>8(495)220-20-20 (для Москвы и МО)</li>
+                                <li>8(800)220-20-20(бесплатно по РФ)</li>
+                            </ul>
+                        или просто закажите обратный звонок на сайте, и с Вами свяжутся в кратчайшие сроки.
+                        <p>Кстати, наш контакт-центр работает 24/7</p>
+                        <p>Почему покупают у нас:
+                            <ul>
+                                <li>Выбираем продукцию с высокими оценками SCA от 80+</li>
+                                <li>100% арабика класса specialty</li>
+                                <li>Все ТОПовые обжарщики на одном сайте</li>
+                                <li>Всегда свежая обжарка на оборудовании признанных брендов</li>
+                                <li>Выбор любой степени обжарки и помола</li>
+                                <li>Быстрая и бережная доставка</li>
+                                <li>Скидки и приятные подарки</li>
+                                <li>Более 10 лет кропотливой работы с разными сортами кофе</li>
+                            </ul>
+                        </p>
+                         <strong>Будем рады возможности побаловать Вас свежим и вкусным Кофе!</strong>';
+                return $text;
+            default:
+                return '';
+        }
+    }
+
+    public function getTitle($id, $type='SECTION')
+    {
+        global $APPLICATION;
+        $page_url = $APPLICATION->getCurPage();
+
+        switch ($type) {}
+
+    }
+
+    public function getDesc($id, $type='SECTION')
+    {
+        global $APPLICATION;
+        $page_url = $APPLICATION->getCurPage();
+        switch ($type) {
+        }
+    }
+
+    public function getH1($id, $type='SECTION', $page_url = '')
+    {
+        global $APPLICATION,$BP_TEMPLATE;
+        if(!$page_url)
+            $page_url = $APPLICATION->getCurPage();
+
+        switch ($type) {
+            case 'ALL_CAT':
+                return 'Каталог зернового кофе свежей обжарки';
+            case 'SECTION':
+                return mb_ucfirst(self::getSeoConst('secname', $id));
+            case 'ALL_CAT_FILTER' || 'SECTION_FILTER':
+                $arProps = self::convertUrlToCheck($page_url);
+                if(is_array($arProps['PROPS']))
+                {
+                    return $FullName = $BP_TEMPLATE->str_fst_upper(self::getFullName($arProps, $id));
+                }  else
+                    return '';
+            default:
+                return '';
+        }
+    }
+    public function NavRecordCount()
+    {
+        global $APPLICATION;
+        return $APPLICATION->GetPageProperty("NavRecordCount");
+    }
+
+    public function getCanonical($curDir)
+    {
+        /*global $APPLICATION;
+        $page_url = $APPLICATION->getCurPage();
+
+        $dbConst = \Bp\Template\CanonicalTable::getList(array(
+            'select' => array('VALUE'),
+            'filter' => array('URL' => $page_url)
+        ));
+        if($arConst = $dbConst->Fetch())
+        {
+            if($arConst['VALUE']!='')
+                \Bitrix\Main\Page\Asset::getInstance()->addString('<link rel="canonical" href="https://www.vamsvet.ru'.$arConst['VALUE'].'">');
+        }*/
+        if($curDir!='')
+            \Bitrix\Main\Page\Asset::getInstance()->addString('<link rel="canonical" href="http://hochucoffe.ru'.$curDir.'">');
     }
 
     public function getRobots()
@@ -32,243 +243,20 @@ class SeoSection
 
         $arProps = self::convertUrlToCheck($page_url);
 
-        $arValidFilt['CNT_PROP'] = count($arProps['PROPS']);
-        foreach($arProps['PROPS'] as $prop_code=>$arValue)
-        {
-            $arValidFilt['CNT_VALUES'] += count($arValue);
-        }
-
         $one_value = true;
         if(isset($arProps['PROPS']))
         {
-            if($arValidFilt['CNT_PROP']>3 ||
-                ($arValidFilt['CNT_VALUES'] > $arValidFilt['CNT_PROP'])){
-                \Bitrix\Main\Page\Asset::getInstance()->addString('<meta name="robots" content="noindex, nofollow">');
-            }
-        }
-    }
-
-    public function generateH1($code,$type='SECTION'){
-        global $APPLICATION;
-        $page_url = $APPLICATION->getCurPage();
-
-        switch ($type) {
-            case 'SECTION':
-                if(self::getSeoConst('secname', $code)!='')
-                    return mb_ucfirst(self::getSeoConst('secname', $code));
-                else
-                    return '';
-            case 'ALL_CAT_FILTER' || 'SECTION_FILTER':
-                $arProps = self::convertUrlToCheck($page_url);
-
-                if(is_array($arProps['PROPS']))
-                {
-                    $one_value = true;
-                    foreach($arProps['PROPS'] as $prop_code=>$arValue)
-                    {
-                        if(count($arValue)>1)
-                            $one_value = false;
-                    }
-                    if(
-                        count($arProps['PROPS'])>0
-                        && count($arProps['PROPS'])<4
-                        && $one_value
-                        && self::NavRecordCount()>0
-                    )
-                    {
-                        if(count($arProps['PROPS']) == 2 && $arProps['PROPS']['AKTSIYA'][0] == 'true' && count($arProps['PROPS']['_STIL']) == 1){ //каталог+распродажа+1стиль
-                            $FullName = self::getFullName($arProps, $code,true);
-                            $FullName = trim(str_replace('осветительные приборы','освещения',$FullName));
-
-                            if($arProps['PROPS']['_STIL'][0] == 'ef9c992b-2de0-11e4-a463-d4ae52a11316'){
-                                return 'Распродажа освещения в классическом стиле';
-                            }
-                            elseif($arProps['PROPS']['_STIL'][0] == 'ef9c992c-2de0-11e4-a463-d4ae52a11316'){
-                                return 'Распродажа освещения в современном стиле';
-                            }
-                            elseif($arProps['PROPS']['_STIL'][0] == '1eb5dfae-3f03-11e4-a463-d4ae52a11316'){
-                                return 'Распродажа освещения в стиле лофт';
-                            }
-                            else{
-                                return 'Распродажа '.strtolower($FullName);
-                            }
-                        } elseif($arProps['PROPS']['_STEPEN_ZASHCHITY_IP'])
-                        {
-                            $FullNameAlt = self::getFullNameAlt($arProps, $code);
-                            return mb_ucfirst($FullNameAlt);
-                        }
-                        else{
-                            $FullName = self::getFullName($arProps, $code);
-
-                            if(count($arProps['PROPS'])==1) //selected one prop
-                            {
-                                return mb_ucfirst($FullName);
-                            }
-                            elseif(count($arProps['PROPS'])==2) //selected two props
-                            {
-                                return mb_ucfirst($FullName);
-                            }
-                            elseif(count($arProps['PROPS'])==3) //selected two props
-                            {
-                                return mb_ucfirst($FullName);
-                            }
-                        }
-
-                    }  else
-                        return '';
-                }  else
-                    return '';
-            default:
-                return '';
-        }
-    }
-    public function getFullName($arProps, $code,$anyResult=false)
-    {
-        global $BP_TEMPLATE;
-        if(count($arProps['PROPS'])>0)
-        {
-            //pre($arProps);
-            $arX = [];
-            $arY = [];
-            $good = true;
-            if($arProps['PROPS']['TYPE']!=''){
-                $TYPE = $arProps['PROPS']['TYPE'];
-                unset($arProps['PROPS']['TYPE']);
-                $arProps['PROPS']['TYPE'] = $TYPE;
-            }
-
-
-            $arPropsCodes = array_keys($arProps['PROPS']);
             foreach($arProps['PROPS'] as $prop_code=>$arValue)
             {
-                foreach($arValue as $value)
-                {
-                    //if($prop_code=='_STEPEN_ZASHCHITY_IP')
-                    //    $value = 'IP'.$value;
-                    $good_value = false;
-                    $x = $y = $xalt = $yalt = $yalt1 = '';
-                    $x = self::getSeoConst('props_x', $value);
-                    if($x!='')
-                    {
-                        $arX[] = $x;
-                        $good_value = true;
-                    }
-
-                    //additional rules for  props_yalt1
-                    if(
-                        in_array('_FORMA_PLAFONA',$arPropsCodes)
-                        && ($prop_code=='TSVET_PLAFONOV' || $prop_code=='_MATERIAL_PLAFONOV')
-                    )
-                        $getfrom = 'props_yalt1';
-                    elseif(
-                        in_array('TSVET_ARMATURY',$arPropsCodes)
-                        && $prop_code=='_MATERIAL_ARMATURY'
-                    )
-                        $getfrom = 'props_yalt1';
-                    else
-                        $getfrom = 'props_y';
-
-                    $y = self::getSeoConst($getfrom, $value);
-
-                    if($y!='' && $prop_code!='_PROIZVODITEL') $y;
-                    if($y!='')
-                    {
-                        $arY[] = $y;
-                        $good_value = true;
-                    }
-
-                }
-                if(!$good_value)
-                    $good = false;
-
-                if($anyResult){
-                    $good = true;
-                }
+                if(count($arValue)>1)
+                    $one_value = false;
             }
-
-            if($good)
-            {
-                $secname = 'светильники';
-
-                $out_x = implode(' ', $arX);
-                $out_y = implode(' ', $arY);
-                $out = $BP_TEMPLATE->str_fst_lower($out_x).' '.$BP_TEMPLATE->str_fst_lower($secname).' '.$out_y;
-
-                return trim($out);
-            } else
-                return '';
-        } else {
-            return '';
-        }
-    }
-
-    public function getFullNameAlt($arProps, $code)
-    {
-        if(count($arProps['PROPS'])>0)
-        {
-            $arX = [];
-            $arY = [];
-            $good = true;
-            $arPropsCodes = array_keys($arProps['PROPS']);
-
-            foreach($arProps['PROPS'] as $prop_code=>$arValue)
-            {
-                foreach($arValue as $value)
-                {
-                    //if($prop_code=='_STEPEN_ZASHCHITY_IP')
-                    //    $value = 'IP'.$value;
-                    $good_value = false;
-                    $x = $y = $xalt = $yalt = $yalt1 = '';
-                    $x = self::getSeoConst('props_xalt', $value);
-                    if($x!='')
-                    {
-                        $arX[] = $x;
-                        $good_value = true;
-                    }
-
-                    //additional rules for  props_yalt1
-                    if(
-                        in_array('_FORMA_PLAFONA',$arPropsCodes)
-                        && ($prop_code=='TSVET_PLAFONOV' || $prop_code=='_MATERIAL_PLAFONOV')
-                    )
-                        $getfrom = 'props_yalt1';
-                    elseif(
-                        in_array('_MATERIAL_PLAFONOV',$arPropsCodes)
-                        && $prop_code=='TSVET_PLAFONOV'
-                    )
-                        $getfrom = 'props_yalt1';
-                    elseif(
-                        in_array('TSVET_ARMATURY',$arPropsCodes)
-                        && $prop_code=='_MATERIAL_ARMATURY'
-                    )
-                        $getfrom = 'props_yalt1';
-                    else
-                        $getfrom = 'props_yalt';
-
-
-                    $y = self::getSeoConst($getfrom, $value);
-                    if($y!='' && $prop_code!='_PROIZVODITEL') $y;
-                    if($y!='')
-                    {
-                        $arY[] = $y;
-                        $good_value = true;
-                    }
-
-                }
-                if(!$good_value)
-                    $good = false;
-            }
-            if($good)
-            {
-                $secname = 'светильники';
-                $out_x = implode(' ', $arX);
-                $out_y = implode(' ', $arY);
-                $out = mb_ucfirst(strtolower($out_x)).' '.strtolower($secname).' '.$out_y;
-                return trim($out);
-            } else
-                return '';
-        } else {
-            return '';
+            if(
+                !$one_value
+                ||
+                count($arProps['PROPS'])>2
+            )
+                \Bitrix\Main\Page\Asset::getInstance()->addString('<meta name="robots" content="noindex, follow">');
         }
     }
 
@@ -302,145 +290,219 @@ class SeoSection
                 }
                 elseif ($smartElement === "is" || $smartElement === "or")
                 {
-                    $result['PROPS'][$control_name][] = $smartPart[$i+1];
+                        $result['PROPS'][$control_name][] = $smartPart[$i+1];
                 }
             }
             unset($item);
 
-            //color temperature
-            if(isset($result['DIAP']['_TEMPERATURA_SVETA_K']))
-            {
-                unset($result['PROPS']['_TEMPERATURA_SVETA_K']);
-                if($result['DIAP']['_TEMPERATURA_SVETA_K']["MIN"]==3500 && $result['DIAP']['_TEMPERATURA_SVETA_K']["MAX"]==5000)
-                {
-                    $result['PROPS']['_TEMPERATURA_SVETA_K'][] = 'ColorTwhite';
-                } elseif($result['DIAP']['_TEMPERATURA_SVETA_K']["MAX"]==3500) {
-                    $result['PROPS']['_TEMPERATURA_SVETA_K'][] = 'ColorTwarm';
-                } elseif($result['DIAP']['_TEMPERATURA_SVETA_K']["MIN"]==5000) {
-                    $result['PROPS']['_TEMPERATURA_SVETA_K'][] = 'ColorTcold';
-                }
-            }
-
         }
         return $result;
     }
-    public function NavRecordCount()
-    {
-        global $APPLICATION;
-        return $APPLICATION->GetPageProperty("NavRecordCount");
-    }
-    public function getSeoConst($name, $value)
-    {
-        if(is_array($name)){
-            foreach($name as $name_v){
-                if($this->arConsts['SEO_'.$name_v]['VALUE']!=''){
-                    $arValues = json_decode($this->arConsts['SEO_'.$name_v]['VALUE'], TRUE);
 
-                    //Если переменная brand_trans для производителя не указана, то на её место подставляется переменная brand
-                    if($name=='brand_trans' && !$arValues[$value])
-                        $arValues = json_decode($this->arConsts['SEO_brand']['VALUE'], TRUE);
+    public function getFullName($arProps, $id,$anyResult=false)
+    {
+        $arStringProps = $this->stringProperties;
 
-                    $res[] = $arValues[$value];
+        if(count($arProps['PROPS'])>0)
+        {
+            //pre($arProps);
+            $arX = [];
+            $arY = [];
+            $good = true;
+            $arPropsCodes = array_keys($arProps['PROPS']);
+            foreach($arProps['PROPS'] as $prop_code=>$arValue)
+            {
+                foreach($arValue as $value)
+                {
+                    //if($prop_code=='_STEPEN_ZASHCHITY_IP')
+                    //    $value = 'IP'.$value;
+                    $good_value = false;
+                    $x = $y = $xalt = $yalt = $yalt1 = '';
+                    if(in_array($prop_code,$arStringProps)){
+                        $value = $prop_code.'__'.$value;
+                    }
+                    $x = self::getSeoConst('props_x', $value);
+                    if($x!='')
+                    {
+                        $arX[] = $x;
+                        $good_value = true;
+                    }
+
+                        $getfrom = 'props_y';
+
+                    $y = self::getSeoConst($getfrom, $value);
+
+                    if($y!='' && $prop_code!='_PROIZVODITEL') $y = strtolower($y);
+                    if($y!='')
+                    {
+                        $arY[] = $y;
+                        $good_value = true;
+                    }
+
+                }
+                if(!$good_value)
+                    $good = false;
+
+                if($anyResult){
+                    $good = true;
                 }
             }
-        }
-        else{
-            if($this->arConsts['SEO_'.$name]['VALUE']!=''){
-                $arValues = json_decode($this->arConsts['SEO_'.$name]['VALUE'], TRUE);
-                //Если переменная brand_trans для производителя не указана, то на её место подставляется переменная brand
-                if($name=='brand_trans' && !$arValues[$value])
-                    $arValues = json_decode($this->arConsts['SEO_brand']['VALUE'], TRUE);
-
-                $res = $arValues[$value];
-            }
-        }
-
-        return  $res;
-    }
-
-    public function getTitle($code, $type='SECTION')
-    {
-        global $APPLICATION,$BP_TEMPLATE;
-        $page_url = $APPLICATION->getCurPage();
-        switch ($type) {
-            case 'ALL_CAT_FILTER':
-                $arProps = self::convertUrlToCheck($page_url);
-                $arValidFilt = [];
-                if(is_array($arProps['PROPS']))
-                {
-
-                        $arValidFilt['CNT_PROP'] = count($arProps['PROPS']);
-                        foreach($arProps['PROPS'] as $prop_code=>$arValue)
-                        {
-                            $arValidFilt['CNT_VALUES'] += count($arValue);
-                        }
-
-                    if($arValidFilt['CNT_PROP'] <= 2){
-                        $arValidFilt['PROP_CODE'] = array_keys($arProps['PROPS'])[0];
-                        if($arValidFilt['PROP_CODE'] == 'TYPE' || $arValidFilt['PROP_CODE'] == 'CATEGORY'){
-                            return $BP_TEMPLATE->str_fst_upper(self::getFullName($arProps, $code,true)).' «Vele Luce» – купить недорого в Москве';
-                        }
-                        elseif($arValidFilt['PROP_CODE'] == '_NOVINKA'){
-                            return $BP_TEMPLATE->str_fst_upper(self::getFullName($arProps, $code,true)).' «Vele Luce» – купить недорого в Москве';
-                        }
-                    }
-                    elseif ($arValidFilt['CNT_PROP'] == 3 && $arValidFilt['CNT_VALUES'] == 3){
-                        return $BP_TEMPLATE->str_fst_upper(self::getFullName($arProps, $code,true)).' «Vele Luce» – купить в Москве';
-                    }
-
-                }  else
-                    return '';
-            default:
+            if($good)
+            {
+                $out_x = implode(' ', $arX);
+                $out_y = implode(' ', $arY);
+                $out = mb_ucfirst(strtolower($out_x)).' '.strtolower(self::getSeoConst('secname', $id)).' '.$out_y;
+                return trim($out);
+            } else
                 return '';
+        } else {
+            return '';
         }
-
     }
 
-    public function getDesc($code, $type='SECTION')
+    public function getFullNameAlt($arProps, $id)
     {
-        global $APPLICATION,$BP_TEMPLATE;
-        $page_url = $APPLICATION->getCurPage();
-        switch ($type) {
-            case 'ALL_CAT_FILTER':
-                $arProps = self::convertUrlToCheck($page_url);
-                $arValidFilt = [];
-                if(is_array($arProps['PROPS']))
+        if(count($arProps['PROPS'])>0)
+        {
+            $arX = [];
+            $arY = [];
+            $good = true;
+            $arPropsCodes = array_keys($arProps['PROPS']);
+            foreach($arProps['PROPS'] as $prop_code=>$arValue)
+            {
+                foreach($arValue as $value)
                 {
-
-                    $arValidFilt['CNT_PROP'] = count($arProps['PROPS']);
-                    foreach($arProps['PROPS'] as $prop_code=>$arValue)
+                    //if($prop_code=='_STEPEN_ZASHCHITY_IP')
+                    //    $value = 'IP'.$value;
+                    $good_value = false;
+                    $x = $y = $xalt = $yalt = $yalt1 = '';
+                    $x = self::getSeoConst('props_xalt', $value);
+                    if($x!='')
                     {
-                        $arValidFilt['CNT_VALUES'] += count($arValue);
+                        $arX[] = $x;
+                        $good_value = true;
+                    }
+                    $getfrom = 'props_yalt';
+
+
+                    $y = self::getSeoConst($getfrom, $value);
+                    if($y!='' && $prop_code!='_PROIZVODITEL') $y = strtolower($y);
+                    if($y!='')
+                    {
+                        $arY[] = $y;
+                        $good_value = true;
                     }
 
-                    if($arValidFilt['CNT_PROP'] == 1 && $arValidFilt['CNT_VALUES'] == 1){
-                        $arValidFilt['PROP_CODE'] = array_keys($arProps['PROPS'])[0];
-
-                        if($arValidFilt['PROP_CODE'] == 'TYPE' || $arValidFilt['PROP_CODE'] == 'CATEGORY'){
-                            return 'Купить '. $BP_TEMPLATE->str_fst_lower(self::getFullName($arProps, $code,true)).' «Vele Luce» по недорогой цене в Москве с гарантией от
-производителя и доставкой по всей России. Модели всех стилей и цветов.';
+                    /*if($x=='' && $y=='')
+                    {
+                        $x = self::getSeoConst('props_x', $value);
+                        if($x!='')
+                        {
+                            $arX[] = $x;
+                            $good_value = true;
                         }
-                        elseif($arValidFilt['PROP_CODE'] == '_NOVINKA'){
-                            return 'Купить '. $BP_TEMPLATE->str_fst_lower(self::getFullName($arProps, $code,true)).' «Vele Luce» по недорогой цене в Москве с гарантией от
-производителя и доставкой по всей России. Модели всех стилей и цветов.';
+                        $y = self::getSeoConst('props_y', $value);
+                        if($y!='' && $prop_code!='_PROIZVODITEL') $y = strtolower($y);
+                        if($y!='')
+                        {
+                            $arY[] = $y;
+                            $good_value = true;
                         }
-                    }
-                    elseif ($arValidFilt['CNT_PROP'] == 2 && $arValidFilt['CNT_VALUES'] == 2){
-                            $maxname = self::getFullNameAlt($arProps, $code);
-                            return 'Купить '. $BP_TEMPLATE->str_fst_lower(self::getFullName($arProps, $code,true)).' «Vele Luce» по недорогой цене в Москве с гарантией от производителя. '.$BP_TEMPLATE->str_fst_upper($maxname).' с
-доставкой по всей России.';
-                    }
-                    elseif ($arValidFilt['CNT_PROP'] == 3 && $arValidFilt['CNT_VALUES'] == 3){
-                        return 'Купить '. $BP_TEMPLATE->str_fst_lower(self::getFullName($arProps, $code,true)).' «Vele Luce» по недорогой цене в Москве с гарантией от
-производителя и доставкой по всей России.';
-                    }
-
-                }  else
-                    return '';
-            default:
+                    }*/
+                }
+                if(!$good_value)
+                    $good = false;
+            }
+            if($good)
+            {
+                $out_x = implode(' ', $arX);
+                $out_y = implode(' ', $arY);
+                $out = mb_ucfirst(strtolower($out_x)).' '.strtolower(self::getSeoConst('secname', $id)).' '.$out_y;
+                return trim($out);
+            } else
                 return '';
+        } else {
+            return '';
         }
-
+    }
+    public static function CustomRuslesNoindex()
+    {
+        include ($_SERVER['DOCUMENT_ROOT'].'/local/modules/bp.template/files/noindex_urls.php');
+        global $APPLICATION,$arUrlsNoindex;
+        if(in_array($_SERVER['REQUEST_URI_OLD'],$arUrlsNoindex)){
+            $APPLICATION->AddHeadString('<meta name="robots" content="noindex, nofollow" />',true);
+        }
     }
 
+    public function FilterRules($section_id, &$arItems, $arActive=[])
+    {
+        global $APPLICATION;
+         self::CustomRuslesNoindex();
+
+        $arRules = [];
+        $dbConst = \Bp\Template\SettingsTable::getList(array(
+            'select' => array('ID','NAME','CODE','VALUE'),
+            'filter' => array('CODE' => 'SEO_nometa')
+        ));
+        if ($arConst = $dbConst->Fetch())
+            $arRules = json_decode($arConst['VALUE'],TRUE);
+        if(count($arRules)>0)
+        {
+            $arOut = [];
+            foreach($arRules as $arRule)
+            {
+                if($arRule['section_id']==$section_id)
+                {
+                    //Скрываем свойство в фильтре
+                    if(in_array('FILTER_HIDE',$arRule['rule']))
+                    {
+                        foreach($arItems as $k=>$arItem)
+                        {
+                            if($arItem['ID']==$arRule['property_id'])
+                            {
+                                unset($arItems[$k]);
+                            }
+                        }
+                    }
+
+                    //если выбрано свойство - помечаем страницу как безметатеговую
+                    if(in_array('CHILDS_META_HIDE',$arRule['rule']) && is_array($arActive))
+                    {
+                        foreach($arActive as $k=>$name)
+                        {
+                            if(strpos($k,'arrFilter_'.$arRule['property_id'])!==false)
+                                $APPLICATION->SetPageProperty("withoutmeta", "Y");
+                        }
+                    }
+
+                    //если выбрано свойство - выводим robots "noindex, follow"
+                    if(in_array('CHILDS_SHOW_NOINDEX',$arRule['rule']) && is_array($arActive))
+                    {
+                        foreach($arActive as $k=>$name)
+                        {
+                            if(strpos($k,'arrFilter_'.$arRule['property_id'])!==false)
+                                $APPLICATION->AddHeadString('<meta name="robots" content="noindex, follow"/>',true);
+                        }
+                    }
+
+                    if(in_array('CHILDS_NO_TEXT',$arRule['rule']) && is_array($arActive) && $arRule['property_id']!='')
+                    {
+                        foreach($arActive as $k=>$name)
+                        {
+                            if(strpos($k,'arrFilter_'.$arRule['property_id'])!==false)
+                                $APPLICATION->SetPageProperty("withouttext", "Y");
+                        }
+                    }
+                    if(in_array('CHILDS_NO_TEXT',$arRule['rule']) && $arRule['property_id']=='' && !is_array($arActive))
+                    {
+                        $APPLICATION->SetPageProperty("withouttext", "Y");
+                    }
+                    $arOut = $arRule;
+                }
+            }
+            return $arOut;
+        } else {
+            return false;
+        }
+    }
 }

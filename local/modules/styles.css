@@ -1,0 +1,78 @@
+.btn {
+    text-align: center;
+    cursor: pointer;
+    transition: .3s;
+    border: none;
+    white-space: nowrap;
+    height: 30px;
+    line-height:30px;
+    padding: 0 20px;
+    display: inline-block;
+}
+
+.btn:hover {
+    text-decoration: none
+}
+
+.btn.is-brown-light {
+    background: linear-gradient(180deg, #492c23 0, #2d1a14 100%);
+    color: #fff
+}
+
+.btn.is-brown-light:hover {
+    background: linear-gradient(180deg, #81402a 0, #3b2620 100%)
+}
+
+.btn.is-white {
+    background: #fff;
+    color: #240c04;
+    border: 1px solid #240c04
+}
+
+.btn.is-white:hover {
+    background: linear-gradient(180deg, #48261a 0, #130c0a 100%);
+    color: #fff
+}
+
+.btn.is-transp-brown {
+    background: 0 0;
+    color: #240c04;
+    border: 1px solid #240c04
+}
+
+.btn.is-transp-brown:hover {
+    background: linear-gradient(180deg, #48261a 0, #130c0a 100%);
+    color: #fff
+}
+
+.btn.is-white-blue {
+    background: #fff;
+    color: #240c04;
+    border: 1px solid #240c04
+}
+
+.btn.is-white-blue:hover {
+    border-color: #25accb;
+    background: linear-gradient(180deg, #62c2d8 0, #25accb 100%);
+    color: #fff
+}
+
+.btn.is-bege {
+    background: linear-gradient(180deg, #d5a672 0, #c48237 100%);
+    color: #fff;
+    border: 1px solid #c78b46
+}
+
+.btn.is-bege:hover {
+    background: linear-gradient(180deg, #c78b46 0, #c78b46 100%)
+}
+
+.btn.is-blue {
+    background: linear-gradient(180deg, #62c2d8 0, #25accb 100%);
+    color: #fff;
+    border: 1px solid #25accb
+}
+
+.btn.is-blue:hover {
+    background: linear-gradient(180deg, #25accb 0, #25accb 100%)
+}

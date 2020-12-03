@@ -1,0 +1,11 @@
+@media #{$media-640} {
+  .is-product-page{
+    .pers-info{
+      box-shadow: none;
+      border: none;
+    }
+    .footer._type-2 {
+      margin-bottom: 123px;
+    }
+  }
+}

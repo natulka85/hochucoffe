@@ -628,14 +628,12 @@
     }
     &__cnt{
       position: static;
-      flex-grow: 1;
+      margin-right: 20px;
       .count-block{
         justify-content: center;
       }
     }
     &__gram{
-      position: absolute;
-      bottom: 10px;
       .cst-select-current{
         height: 24px;
         padding: 4px 14px 4px 4px;
@@ -647,11 +645,6 @@
     }
     &__el{
       padding-left: 66px;
-    }
-    &__el-control{
-      padding-right: 80px;
-      padding-left: 108px;
-      margin-top: 12px;
     }
     &__cont-btn{
       margin-left: 4px;

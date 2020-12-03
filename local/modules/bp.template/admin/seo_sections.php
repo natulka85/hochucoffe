@@ -139,16 +139,21 @@ $tabControl->begin();
     ?>
     <tr><td>
         <table>
-            <tr><td>Название раздела</td><td>secname</td><td>secname_lonely</td><td>secname_parent</td><td>props_tags</td><td>secname_tvar</td><td>secname_lonely_vin</td><td>secname_spec</td><td>rod</td></tr>
+            <tr><td>Название раздела</td><td>secname</td><td>sec_search_tags</td><td>rod</td></tr>
             <?
             $arSecname = json_decode($arConsts['SEO_secname']['VALUE'],TRUE);
             $arSecname_lonely = json_decode($arConsts['SEO_sec_search_tags']['VALUE'],TRUE);
+            $arSecname_Rod = json_decode($arConsts['SEO_sec_rod']['VALUE'],TRUE);
 
             foreach($arSects as $xml_id=>$arSect):?>
+            <?echo "<pre>";
+               print_r($arSect);
+            echo "</pre>";?>
                 <tr  <?if($arSect['SORT']>=500 || $arSect['ACTIVE']!='Y'):?>style="background: #e0dfdf;opacity: 0.5;"<?endif;?>>
                     <td><?=$arSect['NAME']?>(<?=$arSect['ID']?>)</td>
                     <td><input type="text" name="SEO[secname][<?=$arSect['ID']?>]" value="<?=$arSecname[$arSect['ID']]?>" /></td>
                     <td><input type="text" name="SEO[sec_search_tags][<?=$arSect['ID']?>]" value="<?=$arSecname_lonely[$arSect['ID']]?>" /></td>
+                    <td><input type="text" name="SEO[sec_rod][<?=$arSect['ID']?>]" value="<?=$arSecname_Rod[$arSect['ID']]?>" /></td>
                 </tr>
             <?endforeach?>
         </table>

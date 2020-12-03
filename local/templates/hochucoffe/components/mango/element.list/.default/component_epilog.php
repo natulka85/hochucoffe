@@ -41,19 +41,34 @@ if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
     if(!empty($chainFilters))
         $APPLICATION->arAdditionalChain = array_merge($APPLICATION->arAdditionalChain, $chainFilters);
 
+}
+
 //check delay
-    $arDelay = [];
-    if(isset($_SESSION['bp_cache']['bp_user']['delay']))
+$arDelay = [];
+if(isset($_SESSION['bp_cache']['bp_user']['delay']))
+{
+    foreach($_SESSION['bp_cache']['bp_user']['delay'] as $delay_id=>$value)
     {
-        foreach($_SESSION['bp_cache']['bp_user']['delay'] as $delay_id=>$value)
-        {
-            if(in_array($delay_id,$arResult['ITEMS_ID']))
-                $arDelay[] = $delay_id;
-        }
+        if(in_array($delay_id,$arResult['ITEMS_ID']))
+            $arDelay[] = $delay_id;
     }
-    if(count($arDelay)>0)
-    {
-        echo '<script>inDelayList('.\Bitrix\Main\Web\Json::encode($arDelay).');</script>';
+}
+if(count($arDelay)>0)
+{
+    echo '<script>inDelayList('.\Bitrix\Main\Web\Json::encode($arDelay).');</script>';
+}
+
+foreach ($_SESSION['bp_cache']['bp_user']['basket_code'] as $el_ids=>$basketIds){
+    $elem_id = $el_ids;
+    foreach ($basketIds as $basket_id => $prop){
+        $html_element = '';
+        $decode_prop = json_decode($prop);
+        foreach ($decode_prop as $propCode => $val){
+            $html_element .= "[data-dop_".$propCode."='".$val."']";
+        }
+        $qunatity = round($_SESSION['bp_cache']['bp_user']['basket'][$elem_id][$basket_id]['quantity'],0);
+        $bid = $basket_id;
+        echo '<script>inBasket("[data-id='.$elem_id.']'.$html_element.'",'.$qunatity.','.$bid.','.$elem_id.');</script>';
     }
 }
 

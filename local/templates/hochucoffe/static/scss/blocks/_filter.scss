@@ -92,6 +92,21 @@
   }
   &__choose-block{
     margin: 20px 0 30px 0;
+    .filter__info-btn{
+      opacity: 0;
+      visibility: hidden;
+    }
+    &.is-closed{
+      height: 26px;
+      overflow: hidden;
+    }
+    &._is-checked{
+      height: auto !important;
+      .filter__info-btn{
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
   &__cnt{
     color: $grayBrown;
@@ -107,6 +122,7 @@
     &.disabled{
       opacity: .3;
       cursor: not-allowed;
+      pointer-events: none;
     }
   }
   &__fields{
@@ -300,19 +316,20 @@
 @media #{$media-640} {
   .filter{
     position: fixed;
-    z-index: 1000;
+    z-index: 999;
     top: 0;
     left: 0;
     width: 100%;
     border-radius: 0;
     display: none;
     height: calc(100vh - 116px);
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     &.is-opened{
       display: block;
     }
     &__choose-block{
       padding-left: 16px;
+      margin: 10px 0 20px 0;
     }
     &__btn-wrap{
       position: fixed;
@@ -323,17 +340,20 @@
       display: block;
     }
     &__choose{
+      .main-checkbox__span {
+        padding-left: 26px;
+      }
       .main-checkbox__span:after{
-        width: 12px;
-        height: 12px;
-        line-height: 12px;
-        top: 2px;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -9px;
       }
       .main-checkbox__span:before{
-        width: 12px;
-        height: 12px;
-        line-height: 12px;
-        top: 2px;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -9px;
       }
     }
   }

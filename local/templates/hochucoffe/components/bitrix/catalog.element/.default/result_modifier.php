@@ -91,9 +91,20 @@ if(isset($arResult)) {
         $arResult['PRICES']['max'],//$arResult['PRICES']['rozn']['VALUE'],
         $arResult['PRICES']['min'],//$arResult['PRICES']['Акция на сайте']['VALUE'],
         $arResult["PROPERTIES"]["_NOVINKA"]["VALUE"],
-        $arResult["PROPERTIES"]["_PROIZVODITEL"]["VALUE_ENUM_ID"],
-        $arResult["PROPERTIES"]["CML2_ARTICLE"]["VALUE"]
+        $arResult["PROPERTIES"]["ARTICLE_COMP"]["VALUE"],
+        $arResult['PROPERTIES']['_HIT_PRODAZH']['VALUE'],
+        $arResult['PROPERTIES']['OCENKA_SCA']['VALUE'],
+        $arResult['PROPERTIES']['_STRANA']['VALUE']
     );
+    if($arResultsAdditional['LABLES']['COUNTRY']['IMG']!=''){
+        $arFile = CFile::ResizeImageGet(
+            $arResultsAdditional['LABLES']['COUNTRY']['IMG'],
+            array("width" => 60, "height" => 60),
+            BX_RESIZE_IMAGE_PROPORTIONAL_ALT ,
+            true
+        );
+        $arResultsAdditional['LABLES']['COUNTRY']['IMG_AR'] = $arFile;
+    }
 
     //state
     $arResultsAdditional['STATE'] = $BP_TEMPLATE->Catalog()->state(
@@ -102,6 +113,20 @@ if(isset($arResult)) {
         $arResult['PRICES']['max'],//$arResult['PRICES']['rozn']['VALUE'],
         $arResult['PRICES']['min']//$arResult['PRICES']['Акция на сайте']['VALUE'],
     );
+
+    foreach ($arResultsAdditional['STATE']['DATA'] as $k=>$data){
+        $ar = explode('||',$data);
+        //проверяем есть ли значение в товарах чтобы выставить по умолчанию
+        if(!in_array($ar[2],$arResult['PROPERTIES'][$ar[0]]['VALUE'])) {
+            $ar[2] = $arResult['PROPERTIES'][$ar[0]]['VALUE'][0];
+            $arResultsAdditional['STATE']['DATA'][$k] = implode('||', $ar);
+        }
+    }
+    foreach ($arResultsAdditional['STATE']['DATA'] as $k=>$data){
+        $ar = explode('||',$data);
+        //проверяем есть ли значение в товарах чтобы выставить по умолчанию
+        $arResultsAdditional['STATE']['DATA_AR'][$ar[0]] = $ar;
+    }
 
     $arResult = array_merge($arResultsAdditional, $arResult);
 
@@ -115,7 +140,9 @@ if(isset($arResult)) {
         $arResult['PROPERTIES']['WEIGHT_VAR_AR'] = json_decode($arResult['PROPERTIES']['WEIGHT_VAR']['~VALUE'],TRUE);
         asort($arResult['PROPERTIES']['WEIGHT_VAR_AR'],SORT_NUMERIC);
     }
-
+    if($arResult['PROPERTIES']['WEIGHT']['VALUE']!=''){
+        $arResult['MOD_PRICE_100_G'] = round($arResult['STATE']['PRICE'] / $arResult['PROPERTIES']['WEIGHT']['VALUE']  * 100,0);
+    }
 }
 
 $arResult['TMPL_PROPS'] =[
@@ -129,8 +156,8 @@ $arResult['TMPL_PROPS'] =[
     'GOD_UROGAYA',
     'SPOSOB_OBRABOTKI',
     "SPOSOB_PRIGOTOVLENIYA",
-
 ];
+$arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;
 
 $arPropertiesLink = [
     'OCENKA_SCA',
@@ -193,9 +220,65 @@ if ($arParentSection = $rsParentSection->GetNext())
 $arResult['META_TAGS']['TITLE'] = $arResult['NAME'].' – купить в Москве с доставкой';
 $arResult['META_TAGS']['DESCRIPTION'] = $arResult['NAME'].' - купить по цене '.$arResult['STATE']['PRICE'].' руб. в Москве с доставкой по всей России и гарантией от производителя.';
 
+$arReviewRes = [
+    5 => '',
+    4 => '',
+    3 => '',
+    2 => '',
+    1 => '',
+];
+
+if($arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']>0){
+    $res = CIBlockElement::GetList(
+        [],
+        ['IBLOCK_ID' => 6,'ACTIVE'=>'Y'],
+        false,
+        false,
+        [
+            'ID',
+            'NAME',
+            'PREVIEW_PICTURE',
+            'PROPERTY_POSITION',
+        ]
+    );
+    while ($el = $res->Fetch()) {
+        $arFile = CFile::ResizeImageGet(
+            $el['PREVIEW_PICTURE'],
+            array("width" => 150, "height" => 150),
+            BX_RESIZE_IMAGE_PROPORTIONAL ,
+            true
+        );
+        $el['PICTURE'] = $arFile;
+        $arManagers[$el['ID']] = $el;
+    }
+    unset($res);
+
+    CModule::IncludeModule("askaron.reviews");
+
+    $res = \Askaron\Reviews\ReviewTable::getList(array(
+        'filter' => array('ELEMENT_ID' => $arResult['ID'],'ACTIVE'=>'Y'),
+        'order' => array('ID'=>'desc'),
+        'select' => array('*')
+    ));
+    while($ob = $res->fetch()){
+    $ob['MANAGER'] = $arManagers[$ob['USER_ID']];
+     $arResult['MOD_REVIEWS'][] = $ob;
+     $arReviewRes[$ob['GRADE']]++;
+    }
+}
+$arResult['MOD_REVIEWS_RES'] = $arReviewRes;
+$arResult['MOD_REVIEW_AVERAGE'] = round($arResult['PROPERTIES']['ASKARON_REVIEWS_AVERAGE']['VALUE'],0);
+
+$arResult['LABLES_TEMPLATE'] = [
+    'LEFT' => ['HIT','NEW','ACTION'],
+    'RIGHT' => ['COUNTRY','SCA'],
+];
+
 $cp = $this->__component; // объект компонента
 if (is_object($cp)) {
     $cp->arResult['CHAIN'] = $arAddChainSec1;
     $cp->arResult['PRICE'] = $arPrices[0];
-    $cp->SetResultCacheKeys(Array('CHAIN','PRICE'));
+    $cp->arResult['STATE'] = $arResult['STATE'];
+    $cp->SetResultCacheKeys(Array('CHAIN','PRICE','STATE'));
 }
+
