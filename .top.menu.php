@@ -3,6 +3,7 @@ $aMenuLinks = array(
     array('Каталог', '/catalog/', array(), array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"1"), ''),
 	array('Акции', '/akcii/', array(), array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"1"),''),
 	Array( "Интересно о кофе", "", Array(), Array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"1"), "" ),
+	Array( "Обзоры", "/views/", Array(), Array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"2"), "" ),
 	Array( "Статьи", "/articles/", Array(), Array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"2"), "" ),
 	Array( "Новости", "/news/", Array(), Array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"2"), "" ),
     array('Доставка и оплата', '/delivery-pay/', array(), array("FROM_IBLOCK"=>"", "IS_PARENT"=>"", "DEPTH_LEVEL"=>"1"), ''),

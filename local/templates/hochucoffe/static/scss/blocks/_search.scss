@@ -11,13 +11,13 @@
     padding-left: 28px;
     background: rgba(255, 255, 255, 0.15);
     border-radius: 28px;
-    border: none;
+    border: 1px solid $brownDeep;
     color: $brownDark;
     &::placeholder{
       font-family: GoogleSans,sans-serif;
       font-weight: 300;
       font-size: 18px;
-      color: $white;
+      //color: $white;
     }
     &:hover,
     &:focus,
@@ -45,7 +45,7 @@
     padding-right: 28px;
     &:before{
       font-size: 40px;
-      color: $white;
+      //color: $white;
     }
   }
 }

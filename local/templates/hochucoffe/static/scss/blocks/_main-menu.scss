@@ -1,5 +1,6 @@
 .main-menu{
-  color: $begeLight;
+  //color: $begeLight;
+  //color: $brownDark;
   padding-left: 15px;
   &__list{
     display: flex;
@@ -15,7 +16,7 @@
     cursor: pointer;
     white-space: nowrap;
     &>a{
-      color: $begeLight;
+      //color: $begeLight;
       &:hover{
         text-decoration: none;
       }

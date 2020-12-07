@@ -257,3 +257,29 @@
     &::-webkit-scrollbar-corner { background-color: #999;}
     &::-webkit-resizer { background-color: #666;}
 }
+@mixin pomolColor(){
+    &.is-franch{
+        background: #fdd8a9;
+    }
+    &.is-kem{
+        background: #fda9d0;
+    }
+    &.is-aero{
+        background: #acf29b;
+    }
+    &.is-kofe{
+        background: #d5aafd;
+    }
+    &.is-sif{
+        background: #9beef2;
+    }
+    &.is-turka{
+        background: #ffa181;
+    }
+    &.is-pur{
+        background: #feec55;
+    }
+    &.is-kapsul{
+        background: #fdbd3a;
+    }
+}

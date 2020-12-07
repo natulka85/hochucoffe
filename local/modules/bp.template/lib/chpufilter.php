@@ -280,7 +280,9 @@ class ChpuFilter
                     }
                 }
                 elseif(strpos($part,'optimal_price')!==false ||
-                    strpos($part,'weight') !== false){
+                    strpos($part,'weight') !== false ||
+                    strpos($part,'akciya') !== false
+                ){
                     if(!$index_no_filt){
                         $index_no_filt = $k-1;
                     }

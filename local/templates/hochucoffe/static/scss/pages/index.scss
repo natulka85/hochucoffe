@@ -1,6 +1,7 @@
 @import "../blocks/sections";
 @import "../blocks/footer";
 .banner{
+  background: $grayLight;
   &__item{
     &:hover{
       .banner__img{
@@ -14,6 +15,11 @@
   &__img{
     transition: .3s;
     transform: scale(1);
+  }
+  .slick-list{
+    max-width: 1480px;
+    margin: auto;
+    padding: 0;
   }
   .slick-dots{
     bottom: 24px;
@@ -98,15 +104,130 @@
 .pomol{
   margin-top: 50px;
   padding: 0 20px;
+  .slick-list{
+    padding-right: 5px;
+  }
   .page-block-head{
     padding-left: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   &__note{
     font-size: 16px;
     text-align: right;
     color: #6C6E70;
-    padding: 40px 100px 0 0;
+    padding: 20px 100px 0 0;
+  }
+  &__list{
+    &:not(.slick-initialized){
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    margin-left: -10px;
+  }
+  &__item-wrap{
+    padding: 20px 5px;
+  }
+  &__item{
+    border: 1px solid $grayBorder;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #ffff;
+    transition: .3s;
+    cursor: pointer;
+    padding: 20px 6px;
+    padding-bottom: 40px;
+    position: relative;
+    &:after{
+      content: '';
+      display: block;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      background: #c4c4c4;
+      margin: auto;
+      margin-top: 8px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &.is-franch{}
+    &.is-kem{
+      &:after{
+        width: 18px;
+        height: 18px;
+      }
+    }
+    &.is-aero{
+      &:after{
+        width: 16px;
+        height: 16px;
+      }
+    }
+    &.is-sif{
+      &:after{
+        width: 14px;
+        height: 14px;
+      }
+    }
+    &.is-pur{
+      &:after{
+        width: 12px;
+        height: 12px;
+      }
+    }
+    &.is-kofe{
+      &:after{
+        width: 10px;
+        height: 10px;
+      }
+    }
+    &.is-kapsul{
+      &:after{
+        width: 8px;
+        height: 8px;
+      }
+    }
+    &.is-turka{
+      &:after{
+        width: 6px;
+        height: 6px;
+      }
+    }
+  }
+  &__img{
+    max-width: 100%;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    margin: auto;
+    &>img{
+      margin: auto;
+      vertical-align: middle;
+      display: inline-block;
+      &:nth-child(1){
+        opacity: 1;
+        transition: .5s;
+      }
+      &:nth-child(2){
+        opacity: 0;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        //bottom: 0;
+        transform: translate(-50%,-50%);
+        z-index: 1;
+        transition: .5s;
+      }
+    }
+  }
+  &__name{
+    text-align: center;
+    margin-top: 8px;
+    text-transform: uppercase;
   }
 }
 .sale{
@@ -492,6 +613,15 @@
       border-bottom-color: transparent;
     }
   }
+  &__image{
+    margin: 0 10px;
+    width: 100px;
+    max-width: 100%;
+    text-align: center;
+    img{
+      margin: auto;
+    }
+  }
 }
 
 
@@ -533,7 +663,6 @@
   &__main-desc{
     display: flex;
     justify-content: space-between;
-    width: 390px;
     margin-bottom: 2px;
     max-width: 100%;
   }
@@ -544,6 +673,20 @@
   }
   &__describe{
     margin-top: 22px;
+    height: 134px;
+    overflow: hidden;
+    position: relative;
+    &:after{
+      content: '';
+      position: absolute;
+      display: block;
+      width: 100%;
+      background: #fff;
+      right: 0;
+      bottom: 0;
+      height: 20px;
+      background: linear-gradient(360deg, #fff, rgba(255, 255, 255, 0));
+    }
   }
   &__sect{
     font-weight: 500;
@@ -611,13 +754,19 @@
       right: 70px;
     }
   }
+  &__desc-value{
+    text-align: right;
+  }
   &__bottom-arrows{
     position: absolute;
-    bottom: 123px;
+    top: 80%;
     height: 26px;
     width: 90px;
     right: 0;
     display: none;
+  }
+  &__price-gr{
+    color: #a5b557;
   }
 }
 
@@ -692,7 +841,28 @@
     margin-bottom: 30px;
   }
 }
-
+@media screen and(min-width: 641px){
+  .pomol__item{
+    padding-top: 10px;
+    padding-bottom: 30px;
+    &:hover{
+      border-color: transparent;
+      &:after{
+        background: #ffffff;
+      }
+      @include Shadow();
+      .pomol__img{
+        &>img:nth-child(1){
+          opacity: 0;
+        }
+        &>img:nth-child(2){
+          opacity: 1;
+        }
+      }
+      @include pomolColor();
+    }
+  }
+}
 @media #{$media-640} {
   .banner{
     border-radius: 14px 14px 0 0 ;
@@ -739,6 +909,31 @@
     &__note{
       font-size: 10px;
       padding-right: 0;
+    }
+    &__item{
+      border-color: transparent;
+      &:after{
+        background: #ffffff;
+      }
+        //@include Shadow();
+
+       @include pomolColor();
+    }
+    &__img{
+      width: 100px;
+      height: 100px;
+      &>img:nth-child(1){
+        opacity: 0;
+      }
+      &>img:nth-child(2){
+        opacity: 1;
+      }
+    }
+    &__item-wrap{
+      padding: 0 5px;
+    }
+    .slick-list{
+      padding:0 20% 0 0;
     }
   }
   .sale{

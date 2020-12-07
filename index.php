@@ -9,22 +9,28 @@ global $BP_TEMPLATE;
 ?>
 <div class="page__ears is-left"></div>
 <div class="page__ears is-right"></div>
+</div>
 <section class="banner">
     <div class="banner__list">
-        <div class="banner__item"><a class="banner__link" href="/akcii/dly-teh-kto-lubit-poslashe/"><img class="banner__img"
-                                                               src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_1.png"></a>
+        <div class="banner__item inner"><a class="banner__link"><img class="banner__img"
+                                                                     src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_1_1.jpg"></a>
         </div>
-        <div class="banner__item"><a class="banner__link"><img class="banner__img"
-                                                               src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_1.png"></a>
+        <div class="banner__item inner"><a class="banner__link"><img class="banner__img"
+                                                                     src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_1_1.jpg"></a>
         </div>
-        <div class="banner__item"><a class="banner__link"><img class="banner__img"
-                                                               src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_1.png"></a>
+        <!--<div class="banner__item inner"><a class="banner__link" href="/akcii/dly-teh-kto-lubit-poslashe/"><img class="banner__img"
+                                                               src="<?/*=SITE_TEMPLATE_PATH*/?>/static/images/develop/banner_test.jpg"></a>
         </div>
-        <div class="banner__item"><a class="banner__link"><img class="banner__img"
-                                                               src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_1.png"></a>
+        <div class="banner__item inner"><a class="banner__link"><img class="banner__img"
+                                                               src="<?/*=SITE_TEMPLATE_PATH*/?>/static/images/develop/banner_1.png"></a>
+        </div>
+
+        <div class="banner__item inner"><a class="banner__link"><img class="banner__img"
+                                                               src="<?/*=SITE_TEMPLATE_PATH*/?>/static/images/develop/banner_1.png"></a>-->
         </div>
     </div>
 </section>
+<div class="inner">
 <section class="sections">
     <div class="sections__list">
         <div class="sections__item is-good-week">
@@ -75,6 +81,36 @@ global $BP_TEMPLATE;
             </a></div>
     </div>
 </section>
+    <section class="hits">
+        <div class="page-block-head"><h2 class="page-title _type-2">Хиты продаж</h2>
+            <a class="page-title-link" href="/catalog/">Смотреть все</a></div>
+        <?
+        global  $prodFilter;
+        $prodFilter = array(
+            "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
+            ">PROPERTY_OSTATOK_POSTAVSHCHIKA" => 0,
+        );
+        $APPLICATION->IncludeComponent(
+            "mango:element.list",
+            "",
+            array(
+                "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
+                "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
+                "COUNT_ON_PAGE" => 10,
+                "CACHE_TIME"  =>  3600,
+
+                "SECTION_ID" => "",
+                "FILTER_NAME" => "prodFilter",
+                "SORT_FIELD" => "",
+                "SORT_ORDER" => "asc",
+
+                "DISPLAY_TOP_PAGER" => "N",
+                "DISPLAY_BOTTOM_PAGER" => "N",
+                "PAGER_TEMPLATE" => "",
+            ),
+            false
+        );?>
+    </section>
 <section class="utp">
     <div class="utp__list">
         <div class="utp__item">
@@ -101,39 +137,76 @@ global $BP_TEMPLATE;
         </div>
     </div>
 </section>
-<section class="hits">
-    <div class="page-block-head"><h2 class="page-title _type-2">Хиты продаж</h2>
-        <a class="page-title-link" href="/catalog/">Смотреть все</a></div>
-    <?
-    global  $prodFilter;
-    $prodFilter = array(
-        "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
-        ">PROPERTY_OSTATOK_POSTAVSHCHIKA" => 0,
-    );
-    $APPLICATION->IncludeComponent(
-        "mango:element.list",
-        "",
-        array(
-            "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
-            "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
-            "COUNT_ON_PAGE" => 10,
-            "CACHE_TIME"  =>  3600,
 
-            "SECTION_ID" => "",
-            "FILTER_NAME" => "prodFilter",
-            "SORT_FIELD" => "",
-            "SORT_ORDER" => "asc",
-
-            "DISPLAY_TOP_PAGER" => "N",
-            "DISPLAY_BOTTOM_PAGER" => "N",
-            "PAGER_TEMPLATE" => "",
-        ),
-        false
-    );?>
-</section>
 <section class="pomol">
     <div class="page-block-head"><h2 class="page-title _type-2">Не знаете какой помол выбрать?</h2></div>
-    <div class="pomol__image"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/pomol.png"></div>
+    <div class="pomol__list">
+        <div class="pomol__item-wrap">
+            <div class="pomol__item is-franch">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_1.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_1_c.png" alt="">
+                </div>
+                <div class="pomol__name">Фрэнч-Пресс</div>
+            </div>
+        </div>
+        <div class="pomol__item-wrap"><div class="pomol__item is-kem">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_2.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_2_c.png" alt="">
+                </div>
+                <div class="pomol__name">Кемекс</div>
+            </div></div>
+        <div class="pomol__item-wrap"><div class="pomol__item is-aero">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_3.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_3_c.png" alt="">
+                </div>
+                <div class="pomol__name">Аэропресс</div>
+            </div></div>
+        <div class="pomol__item-wrap"><div class="pomol__item is-sif">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_4.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_4_c.png" alt="">
+                </div>
+                <div class="pomol__name">Сифон</div>
+            </div></div>
+        <div class="pomol__item-wrap">
+            <div class="pomol__item is-pur">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_8.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_8_c.png" alt="">
+                </div>
+                <div class="pomol__name">Пуровер</div>
+            </div>
+        </div>
+        <div class="pomol__item-wrap">
+            <div class="pomol__item is-kofe">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_6.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_6_c.png" alt="">
+                </div>
+                <div class="pomol__name">Эспрессо</div>
+            </div>
+        </div>
+        <div class="pomol__item-wrap"><div class="pomol__item is-kapsul">
+                <div class="pomol__img">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_9.png" alt="">
+                    <img src="/local/templates/hochucoffe/static/images/develop/pom_p_9_c.png" alt="">
+                </div>
+                <div class="pomol__name">Капсуллы</div>
+            </div></div>
+        <div class="pomol__item-wrap"><div class="pomol__item is-turka">
+                <div class="pomol__img">
+                    <div class="pomol__img is-turka">
+                        <img src="/local/templates/hochucoffe/static/images/develop/pom_p_7.png" alt="">
+                        <img src="/local/templates/hochucoffe/static/images/develop/pom_p_7_c.png" alt="">
+                    </div>
+                </div>
+                <div class="pomol__name">Турка</div>
+            </div>
+        </div>
+    </div>
     <div class="pomol__note">* В нашем Магазине при заказе зерного кофе Вы можете выбрать любой помол, а
         Также степень обжарки !!!
     </div>
@@ -252,198 +325,21 @@ $APPLICATION->IncludeComponent(
 
 </section>
 <section class="view">
-    <div class="page-block-head"><h2 class="page-title _type-2">Обзоры новинок</h2><a
+    <div class="page-block-head"><h2 class="page-title _type-2">Обзоры новинок</h2><a href="/views/" target="_blank"
                 class="page-title-link">Читать все обзоры</a></div>
-    <div class="view__list">
-        <div class="view__item">
-            <div class="view__content">
-                <div class="view__left">
-                    <div class="view__image"><a href="#"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/view.png"></a></div>
-                </div>
-                <div class="view__right"><a class="view__title" href="#">Обзор Итальянского кофи пино
-                        Гридже</a>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Страна происхождения:</div>
-                        <div class="view__desc-value">Перу</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Вкусовые качества:</div>
-                        <div class="view__desc-value">Вишня, манго, лимон</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Степень обжарки:</div>
-                        <div class="view__desc-value">Любая</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Цена:</div>
-                        <div class="view__desc-value">1000 Р за 1000 г</div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Описание</div>
-                        <div class="view__text">Супер-новинка из Перу!<br>Настоящие перуанцы своими
-                            перуанскими пальцами собирали этот кофе в условиях жуткой непогоды, рискуя
-                            своими жизнями во время того как вулкан выбрасывал свою лаву.
-                            Носили мешки в амбар, натирая мозоли на ногах
-                        </div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Основные отличия</div>
-                        <div class="view__text">Супер-новинка из Перу!Настоящие перуанцы своими перуанскими
-                            пальцами собирали этот кофе в условиях жуткой непогоды, рискуя своими жизнями во
-                            время того как вулкан выбрасывал свою лаву. Носили мешки в амбар, натирая мозоли
-                            на ногах
-                        </div>
-                    </div>
-                    <div class="view__control-links">
-                        <div class="view__control-link is-view"><a href="#">Читать весь обзор</a></div>
-                        <div class="view__control-link is-good"><a href="#">Перейти к товару</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="view__item">
-            <div class="view__content">
-                <div class="view__left">
-                    <div class="view__image"><a href="#"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/view.png"></a></div>
-                </div>
-                <div class="view__right"><a class="view__title" href="#">Обзор Итальянского кофи пино
-                        Гридже</a>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Страна происхождения:</div>
-                        <div class="view__desc-value">Перу</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Вкусовые качества:</div>
-                        <div class="view__desc-value">Вишня, манго, лимон</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Степень обжарки:</div>
-                        <div class="view__desc-value">Любая</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Цена:</div>
-                        <div class="view__desc-value">1000 Р за 1000 г</div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Описание</div>
-                        <div class="view__text">Супер-новинка из Перу!<br>Настоящие перуанцы своими
-                            перуанскими пальцами собирали этот кофе в условиях жуткой непогоды, рискуя
-                            своими жизнями во время того как вулкан выбрасывал свою лаву.
-                            Носили мешки в амбар, натирая мозоли на ногах
-                        </div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Основные отличия</div>
-                        <div class="view__text">Супер-новинка из Перу!Настоящие перуанцы своими перуанскими
-                            пальцами собирали этот кофе в условиях жуткой непогоды, рискуя своими жизнями во
-                            время того как вулкан выбрасывал свою лаву. Носили мешки в амбар, натирая мозоли
-                            на ногах
-                        </div>
-                    </div>
-                    <div class="view__control-links">
-                        <div class="view__control-link is-view"><a href="#">Читать весь обзор</a></div>
-                        <div class="view__control-link is-good"><a href="#">Перейти к товару</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="view__item">
-            <div class="view__content">
-                <div class="view__left">
-                    <div class="view__image"><a href="#"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/view.png"></a></div>
-                </div>
-                <div class="view__right"><a class="view__title" href="#">Обзор Итальянского кофи пино
-                        Гридже</a>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Страна происхождения:</div>
-                        <div class="view__desc-value">Перу</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Вкусовые качества:</div>
-                        <div class="view__desc-value">Вишня, манго, лимон</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Степень обжарки:</div>
-                        <div class="view__desc-value">Любая</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Цена:</div>
-                        <div class="view__desc-value">1000 Р за 1000 г</div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Описание</div>
-                        <div class="view__text">Супер-новинка из Перу!<br>Настоящие перуанцы своими
-                            перуанскими пальцами собирали этот кофе в условиях жуткой непогоды, рискуя
-                            своими жизнями во время того как вулкан выбрасывал свою лаву.
-                            Носили мешки в амбар, натирая мозоли на ногах
-                        </div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Основные отличия</div>
-                        <div class="view__text">Супер-новинка из Перу!Настоящие перуанцы своими перуанскими
-                            пальцами собирали этот кофе в условиях жуткой непогоды, рискуя своими жизнями во
-                            время того как вулкан выбрасывал свою лаву. Носили мешки в амбар, натирая мозоли
-                            на ногах
-                        </div>
-                    </div>
-                    <div class="view__control-links">
-                        <div class="view__control-link is-view"><a href="#">Читать весь обзор</a></div>
-                        <div class="view__control-link is-good"><a href="#">Перейти к товару</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="view__item">
-            <div class="view__content">
-                <div class="view__left">
-                    <div class="view__image"><a href="#"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/view.png"></a></div>
-                </div>
-                <div class="view__right"><a class="view__title" href="#">Обзор Итальянского кофи пино
-                        Гридже</a>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Страна происхождения:</div>
-                        <div class="view__desc-value">Перу</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Вкусовые качества:</div>
-                        <div class="view__desc-value">Вишня, манго, лимон</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Степень обжарки:</div>
-                        <div class="view__desc-value">Любая</div>
-                    </div>
-                    <div class="view__main-desc">
-                        <div class="view__desc-name">Цена:</div>
-                        <div class="view__desc-value">1000 Р за 1000 г</div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Описание</div>
-                        <div class="view__text">Супер-новинка из Перу!<br>Настоящие перуанцы своими
-                            перуанскими пальцами собирали этот кофе в условиях жуткой непогоды, рискуя
-                            своими жизнями во время того как вулкан выбрасывал свою лаву.
-                            Носили мешки в амбар, натирая мозоли на ногах
-                        </div>
-                    </div>
-                    <div class="view__describe">
-                        <div class="view__sect">Основные отличия</div>
-                        <div class="view__text">Супер-новинка из Перу!Настоящие перуанцы своими перуанскими
-                            пальцами собирали этот кофе в условиях жуткой непогоды, рискуя своими жизнями во
-                            время того как вулкан выбрасывал свою лаву. Носили мешки в амбар, натирая мозоли
-                            на ногах
-                        </div>
-                    </div>
-                    <div class="view__control-links">
-                        <div class="view__control-link is-view"><a href="#">Читать весь обзор</a></div>
-                        <div class="view__control-link is-good"><a href="#">Перейти к товару</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="view__bottom-arrows">
-        <span class="slick-prev slick-arrow"></span>
-        <span class="slick-next slick-arrow"></span>
-    </div>
+    <?
+    $APPLICATION->IncludeComponent(
+        "mango:cache.set",
+        "view-list",
+        [
+            'IBLOCK_ID' => 7,
+            'IBLOCK_TYPE' => 'content',
+            'COUNT_ON_PAGE' =>4,
+            'LIST_CLASS' => 'is-slider',
+            'PIC_ARRAY' => 'Y'
+        ],
+        false
+    );?>
 </section>
 </div>
 </div>
@@ -506,11 +402,6 @@ $APPLICATION->IncludeComponent(
         <p>
             Будем рады возможности побаловать Вас свежим и вкусным Кофе!
         </p>
-    </div>
-    <div class="index-banner-bottom">
-        <div class="page-block-head"><h2 class="page-title _type-2">Или все-таки чай? :)</h2></div>
-        <div class="index-banner-bottom__img"><a href=""><img src="<?=SITE_TEMPLATE_PATH?>/static/images/develop/banner_bot.png"></a>
-        </div>
     </div>
     <?
     global $GLOBAL_CUSTOM;

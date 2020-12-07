@@ -3,7 +3,7 @@
 @import "search";
 @import "menu-top";
 .header {
-  background: $brownDeep;
+  background: $white;
   width: 100%;
   //min-width: 1500px;
   max-width: 1920px;
@@ -21,7 +21,7 @@
     &:before{
       display: none;
       font-size: 24px;
-      color: $begeSuperLight;
+      //color: $begeSuperLight;
       box-shadow: 1px 1px 7px #e9c498;
     }
   }
@@ -29,11 +29,11 @@
     display: flex;
     align-items: center;
     padding-left: 70px;
-    color: $white;
+    //color: $white;
   }
 
   &__phone-link{
-    color: $white;
+    //color: $white;
     font-weight: bold;
     font-size: 20px;
     &:hover{
@@ -46,10 +46,13 @@
   &__block-l{
     display: flex;
     align-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
   &__callback{
     padding: 10px 22px;
     background: rgba(255, 255, 255, 0.15);
+    border: 1px solid $brownDeep;
     border-radius: 20px;
     text-transform: uppercase;
     font-weight: bold;
@@ -60,10 +63,6 @@
     &:hover{
       background: rgba(255, 255, 255, 0.4);
     }
-  }
-  &__block-l{
-    padding-top: 20px;
-    padding-bottom: 56px;
   }
 }
 

@@ -18,21 +18,6 @@
         <div class="header">
             <div class="header__content inner">
                 <div class="header__left">
-                    <?$APPLICATION->IncludeComponent("bitrix:menu","top",
-                            Array(
-                            "ROOT_MENU_TYPE" => "top",
-                            "MAX_LEVEL" => "3",
-                            "CHILD_MENU_TYPE" => "top-blog-podmenu",
-                            "USE_EXT" => "Y",
-                            "DELAY" => "N",
-                            "ALLOW_MULTI_SELECT" => "Y",
-                            "MENU_CACHE_TYPE" => "N",
-                            "MENU_CACHE_TIME" => "3600",
-                            "MENU_CACHE_USE_GROUPS" => "Y",
-                            "MENU_CACHE_GET_VARS" => ""
-                        )
-                    );?>
-
                     <div class="header__block-l">
                         <div class="header__logo">
                             <?$alt = 'Интернет-магазин ХочуКофе – кофе высокого качества с доставкой по Москве и всей России'?>
@@ -81,32 +66,46 @@
                 </div>
             </div>
         </div>
-        <div class="inner">
-            <div class="page">
+        <?$APPLICATION->IncludeComponent("bitrix:menu","top",
+            Array(
+                "ROOT_MENU_TYPE" => "top",
+                "MAX_LEVEL" => "3",
+                "CHILD_MENU_TYPE" => "top-blog-podmenu",
+                "USE_EXT" => "Y",
+                "DELAY" => "N",
+                "ALLOW_MULTI_SELECT" => "Y",
+                "MENU_CACHE_TYPE" => "N",
+                "MENU_CACHE_TIME" => "3600",
+                "MENU_CACHE_USE_GROUPS" => "Y",
+                "MENU_CACHE_GET_VARS" => ""
+            )
+        );?>
+        <?/*$APPLICATION->IncludeComponent("bitrix:menu","sections",
+            Array(
+                "ROOT_MENU_TYPE" => "left",
+                "MAX_LEVEL" => "3",
+                "CHILD_MENU_TYPE" => "",
+                "USE_EXT" => "Y",
+                "DELAY" => "N",
+                "ALLOW_MULTI_SELECT" => "Y",
+                "MENU_CACHE_TYPE" => "N",
+                "MENU_CACHE_TIME" => "3600",
+                "MENU_CACHE_USE_GROUPS" => "Y",
+                "MENU_CACHE_GET_VARS" => ""
+            )
+        );*/?>
 
-            <?$APPLICATION->IncludeComponent("bitrix:menu","sections",
-                Array(
-                    "ROOT_MENU_TYPE" => "left",
-                    "MAX_LEVEL" => "3",
-                    "CHILD_MENU_TYPE" => "",
-                    "USE_EXT" => "Y",
-                    "DELAY" => "N",
-                    "ALLOW_MULTI_SELECT" => "Y",
-                    "MENU_CACHE_TYPE" => "N",
-                    "MENU_CACHE_TIME" => "3600",
-                    "MENU_CACHE_USE_GROUPS" => "Y",
-                    "MENU_CACHE_GET_VARS" => ""
-                )
-            );?>
-
-            <?if(CATALOG_PAGE=='Y'):?>
-                <div class="menu-catalog">
-                    <div class="menu-catalog__list">
-                        <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
-                                        class="icon-2l_sort">Сортировка</span></a></div>
-                        <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
-                                        class="icon-2k_filter">Фильтр</span></a></div>
-                    </div>
+        <?if(CATALOG_PAGE=='Y'):?>
+            <div class="menu-catalog">
+                <div class="menu-catalog__list">
+                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
+                                    class="icon-2l_sort">Сортировка</span></a></div>
+                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
+                                    class="icon-2k_filter">Фильтр</span></a></div>
                 </div>
-            <?endif;?>
+            </div>
+        <?endif;?>
+        <div class="page">
+            <div class="inner">
+
 

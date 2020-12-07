@@ -81,34 +81,25 @@ if (!isset($arCurSection))
         ?>
     </div>
 </div>
-<section class="cloud">
-                    <div class="cloud__list">
-                        <div class="cloud__item is-active"><a class="cloud__link" href="#">Камерун<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Сильная обжарка<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Средня обжарка<span class="cloud__num">50</span></a>
-                        </div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Молотый<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">до 1000 ₽<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Дорогой кофе<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item is-active"><a class="cloud__link" href="#">Камерун<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Сильная обжарка<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Средня обжарка<span class="cloud__num">50</span></a>
-                        </div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Молотый<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">до 1000 ₽<span
-                                class="cloud__num">50</span></a></div>
-                        <div class="cloud__item"><a class="cloud__link" href="#">Дорогой кофе<span
-                                class="cloud__num">50</span></a></div>
-                    </div>
-                </section>
+<?if($_REQUEST["catalog_ajax_call"] == "Y") {
+
+    ob_start();
+}
+$APPLICATION->IncludeComponent(
+    "mango:cache.set",
+    "cloud-section",
+    [
+        'SECTION_ID' => $arCurSection['ID'],
+        'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE']
+    ],
+    false
+);?>
+<?if ($_REQUEST["catalog_ajax_call"] == "Y")
+{
+    $strAjaxCloud = ob_get_clean();
+    $APPLICATION->RestartBuffer();
+}
+?>
 <div class="catalog__main-wrap fw">
     <div class="sidebar">
         <?if($_REQUEST["catalog_ajax_call"] == "Y") {
@@ -302,7 +293,8 @@ if ($_REQUEST["catalog_ajax_call"] == "Y")
         'nav_cnt' => 'товаров '.$APPLICATION->GetPageProperty("NavRecordCount"),
         'title' =>$title,
         'description' =>$desc,
-        'text' =>$text
+        'text' =>$text,
+        'cloud' =>$strAjaxCloud
 
     ]);
     die();

@@ -218,7 +218,7 @@ if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
     }
     $arResult['LABLES_TEMPLATE'] = [
         'LEFT' => ['HIT','NEW'],
-        'RIGHT' => ['COUNTRY','SCA'],
+        'RIGHT' => ['SCA'],
         'CENTER' => ['ACTION'],
     ];
 

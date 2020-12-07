@@ -1,0 +1,42 @@
+.view-page{
+  padding: 0 34px;
+  .view{
+    &__item{
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    &__content{
+      box-shadow: none;
+    }
+  }
+}
+.view-page-detail{
+  .view{
+    &__describe{
+      height: auto;
+      overflow: visible;
+      &:after{
+        display: none;
+      }
+    }
+    &__content{
+      display: block;
+      border: none;
+      padding: 0;
+    }
+    &__left{
+      width: 60%;
+      float: right;
+      margin-top: -40px;
+    }
+    &__right{
+      width: 100%;
+      padding: 0;
+    }
+    &__describe{
+      ul{
+        //clear: both;
+      }
+    }
+  }
+}

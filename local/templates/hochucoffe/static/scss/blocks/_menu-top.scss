@@ -1,7 +1,8 @@
 .menu-top{
   //border-radius: 46px 46px 0 0;
-  border-radius: 14px 14px 0 0;
+  //border-radius: 14px 14px 0 0;
   overflow: hidden;
+  background: $brownDeep;
   &__list{
     display: flex;
     align-items: center;
@@ -11,9 +12,9 @@
     transition: .3s;
     flex-grow: 1;
     text-align: center;
-    background: $grayLight;
+    //background: $grayLight;
     &:not(:first-child){
-      border-left: 1px solid $grayBorder;
+      //border-left: 1px solid $grayBorder;
     }
     &:hover{
       background: $gradientBlue;
@@ -32,6 +33,7 @@
     height: 44px;
     line-height: 44px;
     transition: .3s background;
+    color: $white;
   }
 }
 @media #{$media-640} {

@@ -16,7 +16,7 @@ if($_REQUEST['state']=='empty'){
     if(!empty($arRand[$sect_rand])){
         $res = CIBlockElement::GetList(
              array('PROPERTY_AKTSIYA'=>'desc,nulls'),
-            array("IBLOCK_ID" => $arParams['IBLOCK_ID'], 'ACTIVE' => 'Y', 'SECTION_ID'=>$sect_rand,'>PROPERTY_OSTATOK_POSTAVSHIKA'=>0,'=PROPERTY_AKCIYA'=>'true'),
+            array("IBLOCK_ID" => $arParams['IBLOCK_ID'], 'ACTIVE' => 'Y', 'SECTION_ID'=>$sect_rand,'>PROPERTY_OSTATOK_POSTAVSHCHIKA'=>0,'=PROPERTY_AKCIYA'=>'true'),
             false,
             ['nTopCount'=>4],
             array("ID",

@@ -47,7 +47,6 @@ $(function(){
             var mapPoint = $(this);
             var coord = mapPoint.offset();
             var html = $('.map__country-link[data-country_id='+mapPoint.attr('id')+']').find('span').html();
-            console.log(html);
             if(html!=undefined && html !=='undefined'){
                 makeWindow('<span>'+html+'</span>',coord)
             }
@@ -59,8 +58,7 @@ $(function(){
         })
     }
 
-    if($('.view__list').length > 0){
-        console.log('test_list');
+    if($('.view__list.is-slider').length > 0){
         $(document).on('click','.view__bottom-arrows span.slick-prev',function(){
           $(this).parents('.view').find('button.slick-prev').trigger('click');
           console.log('test');

@@ -14,7 +14,7 @@ var mango_inic = 0;
 
         var methods = {
             dataset: function(object){
-                //devLog(object.length, object.parents('.js-slide-ix-control-block').outerWidth(),'rr');
+                //console.log(object.length, object.parents('.js-slide-ix-control-block').outerWidth(),'rr');
                 object.each(function(index, value){
                     //$(this).attr('left',$(this).position().left);
                     var left = object.parents('.js-slide-ix-control-block').outerWidth() / object.length * index;
@@ -24,14 +24,19 @@ var mango_inic = 0;
             },
             moveSliders: function(e, index){
                 //devLog(index,'index');
-              var current_pos = e.offsetX;
+                var k = 1;
+                if($('html').css('zoom')){
+                    k = $('html').css('zoom')
+                }
+              var current_pos = e.offsetX * (1/k) ;
               var control_list = $(e.currentTarget).children();
               var list = $(e.currentTarget).siblings('.js-slide-ix-target');
               var index = index;
 
               if(index === 'undefined' || index == undefined){
+
                   control_list.each(function(){
-                      if(current_pos > $(this).attr('left')){
+                      if(current_pos > ($(this).attr('left'))){
                           index = $(this).data('index');
                           return index;
                       }

@@ -15,10 +15,12 @@ unset($arNewItems);
 ?>
 <?if (!empty($arResult['ITEMS'])):?>
     <div class="menu-top">
-        <div class="menu-top__list">
-            <?foreach ($arResult['ITEMS'] as $item):?>
-                <div class="menu-top__item"><a class="menu-top__link" href="<?=$item['LINK']?>"><span><?=$item['TEXT']?></span></a></div>
-            <?endforeach;?>
+        <div class="inner">
+            <div class="menu-top__list">
+                <?foreach ($arResult['ITEMS'] as $item):?>
+                    <div class="menu-top__item"><a class="menu-top__link" href="<?=$item['LINK']?>"><span><?=$item['TEXT']?></span></a></div>
+                <?endforeach;?>
+            </div>
         </div>
     </div>
 <?endif?>
