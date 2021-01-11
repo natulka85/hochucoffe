@@ -1,6 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?
 global $BP_TEMPLATE;
+$arResult['ELEMENTS'] = [];
 if(!empty($arResult['ITEMS'])){
     foreach ($arResult['ITEMS'] as &$arItem){
         if($arParams['PIC_ARRAY']=='Y'){
@@ -19,7 +20,7 @@ $arResult['ELEM_PROPS'] = [
     'OPTIMAL_PRICE' =>'Цена',
 
 ];
-$arSelect = ['ID','NAME','PROPERTY_WEIGHT'];
+$arSelect = ['ID','NAME','PROPERTY_WEIGHT','CODE'];
 foreach ($arResult['ELEM_PROPS'] as $prop=>$propName){
     $arSelect[] = 'PROPERTY_'.$prop;
 }

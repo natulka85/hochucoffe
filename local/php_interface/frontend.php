@@ -18,64 +18,42 @@ $arLibs = [
      *      'lang_additional'   => '', // Путь до дополнительного lang файла с php массивом, который будет транслирован в js
      * )
      */
-    'jquery' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/jquery-3.4.1.min.js',
+    'lib' => [
+        'js'   => $cur_templ_path.'/static/dist/js/lib/vendors.min.js',
+        'rel'  => ['lib'],
     ],
-    'jquery_ui' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/jquery-ui.js',
-        'rel'  => ['jquery'],
-    ],
-    'slick' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/slick.min.js',
-        'rel'  => ['jquery'],
-    ],
-    'fancy' => array(
-        'js'   => $cur_templ_path.'/static/js/vendors/jquery.fancybox.js',
-    ),
     'mask' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/maskedinput.min.js',
-        'rel'  => ['jquery'],
-    ],
-    'touchSwipe' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/touchSwipe.min.js',
-        'rel'  => ['jquery'],
-    ],
-    'nicescroll' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/jquery.nicescroll.min.js',
-        'rel'  => ['jquery'],
-    ],
-    'nouislider' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/nouislider.min.js',
-        'rel'  => ['jquery'],
+        'js'   => $cur_templ_path.'/static/dist/js/vendors/maskedinput.min.js',
+        'rel'  => ['lib'],
     ],
     'cookie' => [
-        'js'   => $cur_templ_path.'/static/js/vendors/jquery.cookie.min.js',
-        'rel'  => ['jquery'],
+        'js'   => $cur_templ_path.'/static/dist/js/vendors/jquery.cookie.min.js',
+        'rel'  => ['lib'],
     ],
-    'actual' => ['js'   => $cur_templ_path.'/static/js/vendors/actual.min.js',
-        'rel'  => ['jquery'],
-        ],
-    'tohidelister' => ['js'   => $cur_templ_path.'/static/js/vendors/tohidelister.js',
-        'rel'  => ['jquery'],
-        ],
-    'mango_slider' => ['js'   => $cur_templ_path.'/static/js/minify-js/mango_slider.js',
-        'rel'  => ['jquery'],
+    'mango_slider' => [
+        'js'   => $cur_templ_path.'/static/dist/js/vendors/mango_slider.min.js',
+        'rel'  => ['lib'],
+    ],
+    'barba' => [
+        'js'   => $cur_templ_path.'/static/dist/js/vendors/barna.min.js',
+        'rel'  => ['lib'],
     ],
     'mainjs' => [
-        'js'   => $cur_templ_path.'/static/js/minify-js/script.min.js',
+        'js'   => $cur_templ_path.'/static/dist/js/script.min.js',
         'rel'  => [
-            'jquery',
-            'jquery_ui',
-            'slick',
-            'fancy',
+            //'jquery',
+            //'jquery_ui',
+            //'slick',
+            //'fancy',
+            'lib',
             'mask',
-            'touchSwipe',
-            'nicescroll',
-            'nouislider',
+            //'touchSwipe',
+            //'nicescroll',
+            //'nouislider',
             'cookie',
             'actual',
             'mango_slider',
-            'tohidelister'
+            'barba'
         ],
     ],
 ];

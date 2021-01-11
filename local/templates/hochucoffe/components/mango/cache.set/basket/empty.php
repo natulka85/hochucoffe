@@ -42,38 +42,6 @@
         </div>
     </section>
 
-    <?
-    include_once ($_SERVER['DOCUMENT_ROOT'].'/includes/viewed_generate.php');
-    if(count($GLOBALS['arViewedProducts'])>0):?>
-        <section class="your-viewed">
-            <div class="page-block-head"><h2 class="page-title _type-2">Вы недавно смотрели</h2><a
-                        class="page-title-link" href="/personal/viewed/">Смотреть все</a></div>
-            <?
-            global  $prodFilter;
-            $prodFilter = array(
-                "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
-                'ID' => $GLOBALS['arViewedProducts']
-            );
-            $APPLICATION->IncludeComponent(
-                "mango:element.list",
-                "",
-                array(
-                    "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
-                    "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
-                    "COUNT_ON_PAGE" => 10,
-                    "CACHE_TIME"  =>  3600,
+    <?include_once ($_SERVER['DOCUMENT_ROOT'].'/local/templates/hochucoffe/includes/you_viewed.php');?>
 
-                    "SECTION_ID" => "",
-                    "FILTER_NAME" => "prodFilter",
-                    "SORT_FIELD" => "",
-                    "SORT_ORDER" => "asc",
-
-                    "DISPLAY_TOP_PAGER" => "N",
-                    "DISPLAY_BOTTOM_PAGER" => "N",
-                    "PAGER_TEMPLATE" => "",
-                ),
-                false
-            );?>
-        </section>
-    <?endif;?>
 </div>

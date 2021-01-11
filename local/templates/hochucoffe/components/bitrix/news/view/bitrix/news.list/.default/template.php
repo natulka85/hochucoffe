@@ -5,7 +5,7 @@ global $BP_TEMPLATE;?>
     <div class="view__list <?=$arParams['LIST_CLASS']?>">
         <?foreach ($arResult['ITEMS'] as $arItem):?>
         <?$arElem = $arResult['ELEMENTS'][$arItem['PROPERTIES']['ELEMENT_ID']['VALUE']];?>
-            <div class="view__item">
+            <div class="view__item <?=$arParams['ITEM_CLASS']?>">
                 <div class="view__content">
                     <div class="view__left">
                         <div class="view__image"><a href="/views/<?=$arItem['CODE']?>/"><img src="<?=$arItem['PREVIEW_PICTURE']['SRC']?>"></a></div>
@@ -22,7 +22,7 @@ global $BP_TEMPLATE;?>
                                 <?$price_100 = round($arElem['PROPERTY_'.$prop.'_VALUE'] / $arElem['PROPERTY_WEIGHT_VALUE']  * 100,0);?>
                                     <div class="view__desc-value">
                                         <span class="view__price-all"><?=\SaleFormatCurrency($arElem['PROPERTY_'.$prop.'_VALUE'], 'RUB')?> за <?=$arElem['PROPERTY_WEIGHT_VALUE']?>г</span><br>
-                                        <span class="view__price-gr"><?=\SaleFormatCurrency($price_100, 'RUB')?> за 100 г</span>
+                                        <span class="view__price-gr"><?=\SaleFormatCurrency($price_100, 'RUB')?> за 100г</span>
                                     </div>
                                 <?else:?>
                                     <div class="view__desc-value"><?=$propVal?></div>
@@ -45,6 +45,9 @@ global $BP_TEMPLATE;?>
         <?endforeach;?>
     </div>
     <div class="view__bottom-arrows">
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+
         <span class="slick-prev slick-arrow"></span>
         <span class="slick-next slick-arrow"></span>
     </div>

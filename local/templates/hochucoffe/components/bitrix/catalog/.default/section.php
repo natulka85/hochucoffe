@@ -61,6 +61,17 @@ if (!isset($arCurSection))
 
 
 ?>
+<div class="menu-catalog__wrap">
+    <div class="menu-catalog">
+        <div class="menu-catalog__list">
+            <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
+                            class="icon-2l_sort">Сортировка</span></a></div>
+            <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
+                            class="icon-2k_filter">Фильтр</span></a></div>
+        </div>
+    </div>
+</div>
+
 <?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(
             "START_FROM" => "0",
             "PATH" => "",
@@ -73,7 +84,7 @@ if (!isset($arCurSection))
     <span class="page-title-note">товаров <?=$APPLICATION->ShowProperty('NavRecordCount')?></span>
 </div>
 <div class="catalog__text">
-    <div class="page-text">
+    <div class="page-text is-col-2">
         <?
         if($_REQUEST['PAGEN_1']<=1) {
             $APPLICATION->ShowProperty("text");
@@ -214,53 +225,9 @@ $APPLICATION->IncludeComponent(
 
         ?>
     </div>
-    <div class="inner">
-        <?
-        $F_USER = Sale\Fuser::getId();
-
-        $bd_viewed = CatalogViewedProductTable::GetList(
-            ['filter'=>[
-                'FUSER_ID' => $F_USER
-            ]
-            ]);
-
-        while($ob_view = $bd_viewed->Fetch()){
-            $arElements[] = $ob_view['ELEMENT_ID'];
-        }
-        global $arrFilter;
-        $arrFilter['ID'] =  $arElements;
-
-        if(count($arrFilter['ID']) > 0){?>
-            <section class="your-viewed">
-            <div class="page-block-head"><h2 class="page-title _type-2">Вы недавно смотрели</h2>
-                <a class="page-title-link" href="/personal/viewed/" target="_blank">Смотреть все</a>
-            </div>
-                <?}
-                $APPLICATION->IncludeComponent(
-                    "mango:element.list",
-                    "",
-                    [
-                        "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
-                        "IBLOCK_ID" => array(1),
-                        "COUNT_ON_PAGE" => 150,
-                        "CACHE_TIME"  =>  3600,
-
-                        "" => 5,
-                        "FILTER_NAME" => "arrFilter",
-                        "SORT_FIELD" => "",
-                        "SORT_ORDER" => "",
-
-                        "DISPLAY_TOP_PAGER" => "N",
-                        "DISPLAY_BOTTOM_PAGER" => "N",
-                        "PAGER_TEMPLATE" => "",
-                        'PAGE_TYPE' => 'VIEWED',
-                    ],
-                    false
-                );
-                ?>
-            </section>
-        <div class="catalog__text-box">
-        </div>
+    <div class="inner" style="clear: both">
+        <? include ($_SERVER['DOCUMENT_ROOT'].'/local/templates/hochucoffe/includes/you_viewed.php');?>
+        <div class="catalog__text-box"></div>
     </div>
 </div>
 

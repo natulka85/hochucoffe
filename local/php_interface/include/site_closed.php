@@ -2,13 +2,12 @@
 define('STOP_STATISTICS', true);
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 $GLOBALS['APPLICATION']->RestartBuffer();?>
-<strong class="logo"><a href="/"><img src="/local/templates/hochucoffe/static/images/svg/logo_brown_bege.svg" alt="" ></a></strong>
+<strong class="logo"><a href="/"><img style="width: 200px" src="/local/templates/hochucoffe/static/dist/images/logo.svg" alt="" ></a></strong>
 <br><br>
-Вы видите эту страницу, т.к. на сервере произошла внутренняя ошибка. <br>
-Возможно, мы обновляем программное обеспечение или проводим профилактические работы. <br>
-В любом случае делаем что-то очень важное и нужное. <br>
-Просим извинить за временные неудобства и зайти к нам позднее.  <br>
-Сайт будет доступен в ближайшее время.  <br>
+Уважаемые посетители, в настоящее время на сайте ведутся технические работы, некоторый функционал сайта может быть недоступен, приносим извинения за доставленные неудобства. <br>
+Просим извинить за временные неудобства.<br>
+Попробуйте обновить страницу или зайти на сайт позднее.<br>
+По срочным вопросам можете связаться с нами через форму обратной связи ниже. Мы обязательно Вам ответим.
 <br><br>
 <br><br>
 <a href="mailto:info@hochucoffe.ru">info@hochucoffe.ru</a>

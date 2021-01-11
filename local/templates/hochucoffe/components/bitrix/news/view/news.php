@@ -1,6 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 global $BP_TEMPLATE;
 $this->setFrameMode(true);?>
+
 <div class="view-page-list">
 <div class="page-block-head">
     <h1 class="page-title _type-1">Обзоры на зерновой кофе</h1>

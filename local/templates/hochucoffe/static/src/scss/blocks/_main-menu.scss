@@ -1,0 +1,234 @@
+.main-menu{
+  //color: $begeLight;
+  //color: $grafit;
+  padding-left: 15px;
+  background: $grafit;
+  //border-radius: 0 0 14px 14px;
+  //border-radius: 4px;
+  &__wrapp{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media #{$media-640} {
+      height: 50px;
+    }
+  }
+  &__list{
+    display: flex;
+    margin-left: 0;
+  }
+
+  &__item{
+    font-size: 16px;
+    position: relative;
+    transition: .3s;
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
+    //border-radius: 4px;
+    &>a{
+      display: inline-block;
+      color: $grayLight;
+      padding: 20px 15px;
+      &:hover{
+        text-decoration: none;
+      }
+    }
+    &.icon-2z_bar{
+      padding-left: 36px;
+      &:before{
+        left: 10px;
+        position: absolute;
+        font-size: 26px;
+        color: $grafit;
+        top: 50%;
+        margin-top: -13px;
+      }
+    }
+  }
+  &__item-wrap{
+    position: relative;
+    border-radius: 4px;
+    margin-right: -2px;
+    &:nth-child(1){
+      //border-radius: 14px 0 0 14px;
+    }
+    &:last-child{
+      //border-radius: 0 14px 14px 0;
+    }
+    &.is-menu{
+      background: $blue;
+      .main-menu__burger{
+        display: inline-block;
+        margin-right: 4px;
+      }
+      .main-menu__submenu{
+        background: $blue;
+      }
+      &:hover{
+        border-radius: 4px 4px 0 0;
+      }
+    }
+    &:not(.is-menu):hover,
+    &:not(.is-menu).is-active{
+      &>.main-menu__item{
+        background: $green;
+      }
+    }
+  }
+  &__submenu{
+    position: absolute;
+    min-width: 100%;
+    height: 0;
+    opacity: 0;
+    transform-origin: top;
+    transition: .3s;
+    background: $grafit;
+    top: 100%;
+    z-index: 20;
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+    .main-menu__item{
+      &:hover{
+        //background: $grafitLight;
+        background: $green;
+      }
+    }
+  }
+  &__submenu-cont{
+    display: none;
+  }
+  &__burger{
+    display: none;
+  }
+  &__item-btn{
+    display: none;
+    @include icon(2a_plus);
+  }
+}
+@media screen and(min-width: 641px){
+  .main-menu{
+    padding-left: 0;
+    &__item-wrap{
+      &:hover{
+        &>.main-menu__item>a{
+          color: $white;
+        }
+        &>.main-menu__submenu{
+          height: auto;
+          opacity: 1;
+          .main-menu__submenu-cont{
+            display: block;
+          }
+        }
+      }
+    }
+    .header__logo{
+      display: none;
+    }
+  }
+}
+
+@media #{$media-640} {
+  .main-menu{
+    //background: $white;
+    //border-bottom: 1px solid $grafit;
+    display: block;
+    left: 0;
+    top: 0;
+    padding-left: 0;
+    &__burger{
+      display: block;
+    }
+    &__list{
+      background: $grafit;
+      position: fixed;
+      min-width: 100vw;
+      width: 100%;
+      flex-direction: column;
+      left: 200%;
+      top: 0;
+      z-index: 1000;
+      height: 100vh;
+      transition: .4s;
+      &.is-opened{
+        left: 0;
+      }
+    }
+    &__item-wrap{
+      width: 100%;
+    }
+    &__submenu{
+      width: 100%;
+      flex-wrap: wrap;
+      position: static;
+      display: block;
+      border-color: transparent;
+      height: 0;
+      opacity: 1;
+      border-radius: 0;
+      z-index: 999;
+      transition: 1s;
+      .main-menu__item>a{
+        padding-left: 40px;
+      }
+    }
+    &__submenu-cont{
+      padding: 0;
+    }
+    &__item{
+      margin-right: 0 !important;
+      border-radius: 0 !important;
+      &:not(:last-child){
+        margin-right: 30px;
+      }
+    }
+    &__item-wrap{
+      border-radius: 0 !important;
+      &:not(.is-menu){
+        border-bottom: 1px solid $white;
+      }
+      &.is-opened-sub{
+        .main-menu__submenu{
+          height: auto;
+          opacity: 1;
+        }
+        .main-menu__submenu-cont{
+          display: block;
+        }
+        .main-menu__item-btn{
+          &:before{
+            animation: smaller .8s;
+            content: '\E01B';
+            transition: .3s;
+          }
+        }
+      }
+    }
+    &__item-btn{
+      position: absolute;
+      width: 50px;
+      height: 100%;
+      right: 0;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 0;
+      &:before{
+        animation: bigger .8s;
+        display: block;
+        transition: .3s;
+        color: $white;
+        top: 50%;
+        margin-top: -6px;
+      }
+    }
+    .header__logo{
+      display: block;
+      height: 100%;
+      padding: 6px 0;
+    }
+  }
+}
+

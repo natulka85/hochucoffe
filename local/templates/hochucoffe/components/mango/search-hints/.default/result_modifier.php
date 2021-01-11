@@ -6,7 +6,7 @@ if($_REQUEST['state']=='empty'){
 
     $arRand = [
         2 => ['NAME'=>'Кофе Арабика', 'LINK'=>'/catalog/section/arabika/akciya-is-true/','EXTERNAL_ID'=>'arabika'],
-        13 => ['NAME'=>'Ароматизированный кофе', 'LINK'=>'catalog/section/aromatizirovannyy/akciya-is-true/','EXTERNAL_ID'=>'aromatizirovannyy'],
+        13 => ['NAME'=>'Ароматизированный кофе', 'LINK'=>'/catalog/section/aromatizirovannyy/akciya-is-true/','EXTERNAL_ID'=>'aromatizirovannyy'],
     ];
 
     $sect_rand = array_rand($arRand);

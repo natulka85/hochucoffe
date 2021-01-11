@@ -1,4 +1,4 @@
 <?
-$sSectionName = "Просмотренные товары";
+//$sSectionName = "Просмотренные товары";
 $arDirProperties = array();
 ?>

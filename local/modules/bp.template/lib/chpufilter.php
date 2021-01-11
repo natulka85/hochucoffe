@@ -153,7 +153,7 @@ class ChpuFilter
             $arDaMatrix = [
                 'Новинка' => 'новинки',
             ];
-            $arExProps = ['Цвет плафонов', 'Материал плафонов', 'Количество ламп'] ;
+            $arExProps = ['Оценка SCA'] ;
             $arDualPropsMatrix = [];
 
             //pre($arPropsValues);
@@ -167,28 +167,36 @@ class ChpuFilter
             }
             //pre($arDualPropsMatrix);
             $arResult = [];
-            foreach($arProps as $xml_id => $arProp)
+            foreach($arProps as $xml_id => &$arProp)
             {
+                $arProp["VALUE"] = str_replace('+','plus',$arProp["VALUE"]);
                 $new_url = '';
                 $new_url_alt ='';
                 if($arProp["VALUE"]=='Да'){
-                    $new_url = \Cutil::translit($arDaMatrix[trim($arProp["PROP_NAME"])],"ru",array("replace_space"=>"_","replace_other"=>"_"));
-                    $new_url_alt = \Cutil::translit(strtolower($arProp["VALUE"]),"ru",array("replace_space"=>"_","replace_other"=>"_"));
+                    $new_url = \Cutil::translit($arDaMatrix[trim($arProp["PROP_NAME"])],"ru",array("replace_space"=>"-","replace_other"=>"-"));
+                    $new_url_alt = \Cutil::translit(strtolower($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
                 }
                  elseif($arProp["VALUE"]=='Нет'){
-                     $new_url = \Cutil::translit(trim($arProp["PROP_NAME"]),"ru",array("replace_space"=>"_","replace_other"=>"_")).'-'.\Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"_","replace_other"=>"_"));
-                     $new_url_alt = \Cutil::translit(strtolower($arProp["VALUE"]),"ru",array("replace_space"=>"_","replace_other"=>"_"));
+                     $new_url = \Cutil::translit(trim($arProp["PROP_NAME"]),"ru",array("replace_space"=>"-","replace_other"=>"-")).'-'.\Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
+                     $new_url_alt = \Cutil::translit(strtolower($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
                  }
-                elseif($arDualPropsMatrix[trim($arProp["VALUE"])])
+                elseif($arDualPropsMatrix[trim($arProp["VALUE"])]){
                     if($arDualPropsMatrix[trim($arProp["VALUE"])]==trim($arProp["PROP_NAME"]) && (!in_array(trim($arProp["PROP_NAME"]),$arExProps)))
                         $new_url = \Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
                     else{
-                        $new_url = \Cutil::translit(trim($arProp["PROP_NAME"]),"ru",array("replace_space"=>"_","replace_other"=>"_")).'_'.\Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"_","replace_other"=>"_"));
+                        $new_url = \Cutil::translit(trim($arProp["PROP_NAME"]),"ru",array("replace_space"=>"-","replace_other"=>"-")).'_'.\Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
                         $new_url_alt = \Cutil::translit(strtolower($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
                     }
+                }
+                else{
+                    if(in_array(trim($arProp["PROP_NAME"]),$arExProps)){
+                        $new_url = \Cutil::translit(trim($arProp["PROP_NAME"]),"ru",array("replace_space"=>"-","replace_other"=>"-")).'_'.\Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
+                    }
+                    else{
+                        $new_url = \Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
+                    }
+                }
 
-                else
-                    $new_url = \Cutil::translit(trim($arProp["VALUE"]),"ru",array("replace_space"=>"-","replace_other"=>"-"));
 
                 $arResult[$xml_id] = [
                     'URL' => $new_url,
@@ -256,6 +264,10 @@ class ChpuFilter
         {
             $filter_page = false;
             $arNewParts = self::getNewPartsL();
+
+           /* echo "<pre>";
+               print_r($arNewParts);
+            echo "</pre>";*/
 
             $arNewPartsIndex = [];
             foreach($arNewParts as $arPart)

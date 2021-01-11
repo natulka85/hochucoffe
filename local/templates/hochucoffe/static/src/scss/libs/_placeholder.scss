@@ -1,0 +1,71 @@
+div.input-block {
+  position: relative;
+}
+
+div.input-block input {
+  width: 100%;
+  border: 1px solid  $grayBorder;
+  outline:none;
+  height: 60px;
+  border-radius: 0;
+  &.is-border-bottom{
+    padding: 0;
+    padding-top: 24px;
+    border:none;
+    border-bottom: 1px solid $grayBorder;
+  }
+}
+div.input-block{
+  .border-bottom{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    width: 0;
+    margin: auto;
+    height: 2px;
+    background: $grafit;
+    transform-origin: center;
+    transition: .5s;
+    left: 50%;
+    transform:translateY(-50%);
+    &.is-green{
+      background: $green;
+    }
+    &.is-blue{
+      background: $blue;
+    }
+    &.is-bege{
+      background: $bege;
+    }
+  }
+}
+div.input-block span.placeholder {
+  position: absolute;
+  //padding: 7px 0;
+  color:  $grayBorderDark;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  top: calc(100% - 27px);
+  left: 0;
+  transition: all 0.2s;
+  transform-origin: 0% 0%;
+  background: none;
+  pointer-events: none;
+  width: 100%;
+}
+
+div.input-block input.is-valid + span.placeholder,
+div.input-block input:focus + span.placeholder {
+  transform: scale(0.8) translateY(-30px);
+}
+
+div.input-block input:focus{
+  &+span.placeholder{
+    &+.border-bottom{
+      width: 100%;
+      left: 0;
+    }
+  }
+}

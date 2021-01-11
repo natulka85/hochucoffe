@@ -1,0 +1,233 @@
+////////////////////////////////////////////////////// views //////////////////////////////////////////////////////
+.view{
+  padding: 0 20px;
+  margin-top: 70px;
+  position: relative;
+  .page-block-head{
+    margin-bottom: 10px;
+    padding-left: 40px;
+  }
+  &__item{
+    padding: 40px;
+  }
+  &__content{
+    display: flex;
+    border: 1px solid $grayBorder;
+    font-size: 16px;
+    padding: 48px 20px;
+    box-shadow: 0px 0px 28px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    position: relative;
+  }
+  &__left{
+    width: 48%;
+  }
+  &__right{
+    width: 52%;
+    padding: 0 30px;
+  }
+  &__title{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 26px;
+    margin-bottom: 22px;
+    display: block;
+  }
+  &__main-desc{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    max-width: 100%;
+    font-family: 'Roboto',sans-serif;
+    font-weight: normal;
+  }
+  &__desc-name{
+    color: $grayBrown;
+    white-space: nowrap;
+  }
+  &__describe{
+    margin-top: 22px;
+    height: 130px;
+    overflow: hidden;
+    position: relative;
+    text-align: justify;
+    &:after{
+      content: '';
+      position: absolute;
+      display: block;
+      width: 100%;
+      background: #fff;
+      right: 0;
+      bottom: 0;
+      height: 30px;
+      background: linear-gradient(360deg, #fff, rgba(255, 255, 255, 0.2));
+    }
+  }
+  &__sect{
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 10px;
+  }
+  &__text{
+    line-height: 26px;
+  }
+  &__control-links{
+    display: flex;
+    margin-top: 28px;
+    width: 390px;
+    max-width: 100%;
+    justify-content: space-between;
+    @media #{$media-640} {
+      margin-top: 18px;
+    }
+  }
+  &__control-link{
+    border-bottom: 1px dashed;
+    line-height: 20px;
+    transition: .3s;
+    white-space: nowrap;
+    &.is-view{
+      color: $blue;
+      border-bottom-color: $blue;
+      &>a{
+        color: $blue;
+      }
+      &:hover{
+        border-bottom-color: transparent;
+      }
+    }
+    &.is-good{
+      color: $grafit;
+      border-bottom-color: $grafit;
+      &>a{
+        color: $grafit;
+      }
+      &:hover{
+        border-bottom-color: transparent;
+      }
+    }
+    &:hover{
+      a{
+        text-decoration: none;
+      }
+    }
+  }
+  /*.slick-arrow{
+    top: 100px;
+    border-color: $blue;
+    &:before{
+      color: $blue;
+    }
+    &:hover{
+      border-color: $grayBrown;
+      &:before{
+        color: $grayBrown;
+      }
+    }
+    &.slick-prev{
+      right: 126px;
+      left: auto;
+    }
+    &.slick-next{
+      right: 70px;
+    }
+  }*/
+  .swiper-button-next.is-top{
+    top: 96px;
+    right: 90px;
+  }
+  .swiper-button-prev.is-top{
+    top: 96px;
+    right: 150px;
+  }
+
+  &__desc-value{
+    text-align: right;
+  }
+  &__bottom-arrows{
+    position: absolute;
+    top: 80%;
+    height: 26px;
+    width: 90px;
+    right: 0;
+    display: none;
+  }
+  &__price-gr{
+    color: $blue;
+    /*color: #a5b557;*/
+  }
+}
+
+@media #{$media-640} {
+  .view{
+    margin-top: 30px;
+    padding: 0;
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    .slick-arrow{
+      opacity: 1;
+      top: 80px;
+      /*&.slick-next,
+      {
+        right: 30px;
+      }*/
+      /*&.slick-prev{
+        right: 60px;
+      }*/
+    }
+    .swiper-button-next.is-top{
+      right: 30px;
+    }
+    .swiper-button-prev.is-top{
+      right: 60px;
+    }
+    .page-block-head{
+      padding-left: 16px;
+      margin-bottom: 20px;
+    }
+    &__item{
+      padding: 10px;
+      background: $white;
+    }
+    &__content{
+      display: block;
+      padding: 28px 14px;
+      box-shadow: 0 0 12px rgba(0,0,0,.1);
+    }
+    &__left{
+      width: 100%;
+    }
+    &__right{
+      width: 100%;
+      padding: 0;
+    }
+    &__title{
+      font-size: 16px;
+      line-height: 20px;
+      margin-bottom: 12px;
+    }
+    &__desc-name{
+      font-size: 14px;
+      line-height: 15px;
+    }
+    &__desc-value{
+      font-size: 14px;
+      line-height: 15px;
+    }
+    &__sect{
+      margin-bottom: 8px;
+      line-height: 16px;
+    }
+    &__text{
+      font-size: 14px;
+      line-height: 24px;
+    }
+    &__control-link{
+      font-size: 14px;
+      line-height: 16px;
+    }
+    &__bottom-arrows{
+      display: block;
+    }
+  }
+}

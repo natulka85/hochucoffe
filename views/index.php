@@ -1,6 +1,7 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Интересные статьи о кофе");
+$APPLICATION->SetTitle("Обзоры на зерновой кофе");
+\Bitrix\Main\Page\Asset::getInstance()->addCss("/local/templates/hochucoffe/static/dist/css/view-page.css");
 ?>
 <div class="view-page">
     <?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(
@@ -37,7 +38,7 @@ $APPLICATION->SetTitle("Интересные статьи о кофе");
     "SET_TITLE" => "N",	// Устанавливать заголовок страницы
     "SET_STATUS_404" => "Y",	// Устанавливать статус 404, если не найдены элемент или раздел
     "INCLUDE_IBLOCK_INTO_CHAIN" => "N",	// Включать инфоблок в цепочку навигации
-    "ADD_SECTIONS_CHAIN" => "N",	// Включать раздел в цепочку навигации
+    "ADD_SECTIONS_CHAIN" => "Y",	// Включать раздел в цепочку навигации
     'ADD_ELEMENT_CHAIN' => 'Y',
     "USE_PERMISSIONS" => "N",	// Использовать дополнительное ограничение доступа
     "PREVIEW_TRUNCATE_LEN" => "400",	// Максимальная длина анонса для вывода (только для типа текст)

@@ -15,7 +15,7 @@ if(isset($arResult)) {
     $arResult["CATALOG_QUANTITY"] =  $arResult['PROPERTIES']['OSTATOK_POSTAVSHCHIKA']['VALUE'];
 
 
-    $no_photo_src = '/local/templates/hochucoffe/static/images/general/no-photo.png';
+    $no_photo_src = '/local/templates/hochucoffe/static/dist/images/general/no-photo.png';
     $pic_width = 562;
     $pic_height = 562;
 
@@ -266,12 +266,15 @@ if($arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']>0){
      $arReviewRes[$ob['GRADE']]++;
     }
 }
+else{
+    $arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE'] = 0;
+}
 $arResult['MOD_REVIEWS_RES'] = $arReviewRes;
 $arResult['MOD_REVIEW_AVERAGE'] = round($arResult['PROPERTIES']['ASKARON_REVIEWS_AVERAGE']['VALUE'],0);
 
 $arResult['LABLES_TEMPLATE'] = [
-    'LEFT' => ['HIT','NEW','ACTION'],
-    'RIGHT' => ['COUNTRY','SCA'],
+    'LEFT' => ['HIT','NEW'/*,'ACTION'*/],
+    'RIGHT' => [/*'COUNTRY',*/'SCA'],
 ];
 
 $cp = $this->__component; // объект компонента

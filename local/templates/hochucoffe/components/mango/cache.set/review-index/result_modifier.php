@@ -7,16 +7,22 @@ $limit = 10;
 if($arParams['CNT']>0)
     $limit = $arParams['CNT'];
 
+$arFilter = ['ACTIVE' => 'Y'];
+if($arParams['FILTER_NAME']!=''){
+    global ${$arParams['FILTER_NAME']};
+    $arFilter = array_merge($arFilter,${$arParams['FILTER_NAME']});
+}
 $res = \Askaron\Reviews\ReviewTable::getList(array(
-    'filter' => array('ACTIVE' => 'Y'),
+    'filter' => $arFilter,
     'order' => array('DATE'=>'desc'),
     'select' => array('*'),
     'limit' =>$limit
 ));
 while($ob = $res->fetch()){
-    if(strlen($ob['TEXT']) > 170){
-        $shotName = substr($ob['TEXT'], 0, 170);
+    if($arParams['TEXT_LENGTH']!='' && strlen($ob['TEXT']) > $arParams['TEXT_LENGTH']){
+        $shotName = substr($ob['TEXT'], 0, $arParams['TEXT_LENGTH']);
         $ob['TEXT_FORMAT'] = substr($shotName, 0, strrpos($shotName, ' ')).'...';
+        $ob['BTN_ALL'] = true;
     }
     else{
         $ob['TEXT_FORMAT'] = $ob['TEXT'];

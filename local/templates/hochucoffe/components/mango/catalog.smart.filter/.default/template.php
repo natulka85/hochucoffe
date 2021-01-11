@@ -18,7 +18,7 @@ global $BP_TEMPLATE;?>
         <div class="mob__btn-back icon-2m_arrow-l js-link is-filter"></div>
     </div>
     <?if(count($arResult["ACTIVE"])>0):?>
-    <div class="filter__info">
+    <div class="filter__info<?=$_REQUEST['ax_filter_class']?>">
         <div class="filter__control-block">
             <div class="filter__info-title">Выбранные фильтры</div>
             <div class="filter__info-btn" data-all="Y">Cбросить все</div>
@@ -33,6 +33,7 @@ global $BP_TEMPLATE;?>
                 <?endforeach;?>
             </div>
         <?endforeach;?>
+        <div class="filter__info-close icon-2a_plus"></div>
     </div>
     <?endif?>
     <form class="filter__choose" name="smartfilter" id="smartfilter" action="<?echo $BP_TEMPLATE->ChpuFilter()->convertOldToNew($arResult["FORM_ACTION"])?>" method="get" >
@@ -87,5 +88,8 @@ global $BP_TEMPLATE;?>
     var smartFilter = new JCSmartFilter('<?echo CUtil::JSEscape($arResult["FORM_ACTION"])?>', '<?=CUtil::JSEscape($arParams["FILTER_VIEW_MODE"])?>', <?=CUtil::PhpToJSObject($arResult["JS_FILTER_PARAMS"])?>);
     $(function (){
         initRangeSlider();
+        if(window.outerWidth > 640){
+            StickyMy($('.filter__choose'), $('.filter__info:not(.noSticky)'),0);
+        }
     })
 </script>

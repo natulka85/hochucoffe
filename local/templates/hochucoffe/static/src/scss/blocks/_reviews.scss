@@ -1,0 +1,179 @@
+////////////////////////////////////////////////////// reviews //////////////////////////////////////////////////////
+.reviews{
+  //padding: 0 60px;
+  margin-top: 70px;
+  .page-block-head{
+    margin-bottom: 50px;
+  }
+  &__list{
+    //display: flex;
+    //justify-content: space-between;
+  }
+  &__item{
+    border: 1px solid $grayBorder;
+    border-radius: 18px;
+    background: $grayLight;
+    padding-bottom: 10px;
+    //width: 296px;
+    overflow: hidden;
+    //margin-right: 3.9em
+  }
+  &__top{
+    background: $white;
+    display: flex;
+    height: 152px;
+    padding-right: 10px;
+    padding-top: 10px;
+  }
+  &__img{
+    text-align: center;
+    width: 110px;
+    margin-right: 16px;
+    img{
+      max-height: 100%;
+    }
+  }
+  &__product{
+    font-size: 18px;
+    line-height: 22px;
+    margin-bottom: 20px;
+    display: block;
+    padding-top: 8px;
+    &>span{
+      transition: .3s;
+    }
+    &:hover{
+      &>span{
+        color: $grayBrown;
+      }
+    }
+  }
+  &__stat{
+    line-height: 16px;
+    color: $grayBrown;
+    margin-bottom: 5px;
+    &>span{
+      font-weight: bold;
+    }
+  }
+  &__bottom{
+    padding: 10px 18px;
+  }
+  &__name{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    margin-top: 10px;
+  }
+  &__text{
+    font-size: 16px;
+    line-height: 22px;
+    height: 90px;
+    overflow: hidden;
+  }
+  &__link-wrap{
+    text-align: center;
+    height: 38px;
+  }
+  &__link{
+    border-bottom: 1px dashed $bege;
+    transition: .3s;
+    padding-top: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    color: $bege;
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+    &:hover{
+      text-decoration: none;
+      border-bottom-color: transparent;
+    }
+  }
+  &__image{
+    margin: 0 10px;
+    width: 100px;
+    max-width: 100%;
+    text-align: center;
+    img{
+      margin: auto;
+    }
+  }
+}
+
+@media #{$media-640} {
+.reviews{
+  margin-top: 30px;
+  padding: 0;
+  .page-block-head{
+    padding-left: 16px;
+    margin-bottom: 20px;
+  }
+  .slick-track{
+    margin-left: 3px;
+  }
+  &__top{
+    display: block;
+    padding-left: 10px;
+  }
+  &__image{
+    margin: auto;
+    width: 60px;
+  }
+  &__right{
+    min-width: 96px;
+  }
+  &__bottom{
+    padding: 6px 10px;
+    position: relative;
+    .catg__stars{
+      position: absolute;
+      right: 10px;
+      top: -24px;
+    }
+  }
+  &__item{
+    margin-right: 6px;
+  }
+  &__product{
+    font-size: 14px;
+    line-height: 16px;
+    padding: 0;
+    margin-bottom: 8px;
+  }
+  &__stat{
+    font-size: 12px;
+    line-height: 14px;
+    margin-bottom: 3px;
+  }
+  &__name{
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  &__text{
+    font-size: 12px;
+    line-height: 18px;
+    height: 60px;
+  }
+  &__link{
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 10px;
+  }
+  &__link-wrap{
+    height: 30px;
+  }
+
+  .catg__star{
+    &:before{
+      font-size: 10px;
+    }
+    &:not(:last-child){
+      margin-right: 2px;
+    }
+  }
+}
+}
+

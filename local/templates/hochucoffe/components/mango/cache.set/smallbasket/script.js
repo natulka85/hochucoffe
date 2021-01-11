@@ -24,7 +24,12 @@ $(function(){
         $(this).parents('.pers-info').attr('data-opened', $(this).attr('data-opened'))
 
     })
-    $(document).on('mouseleave','.pers-info__item',function(){
-        $(this).parents('.pers-info').attr('data-opened', '')
+    $(document).on('mouseleave','.pers-info__item',function(e){
+        var domElem = $('.basket__cont-btn-wrap'); //костыль для списка опций
+        if (!domElem.is(e.target) // если клик был не по нашему блоку
+            && domElem.has(e.target).length === 0){
+            $(this).parents('.pers-info').attr('data-opened', '');
+            closeSelect();
+        }
     })
 })

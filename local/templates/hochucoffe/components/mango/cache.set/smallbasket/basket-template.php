@@ -1,5 +1,4 @@
 <?if(count($arData['basket'])>0):?>
-<? $arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;?>
 <div class="pers-info__list-wrap">
     <div class="pers-info__list-title">Корзина</div>
     <div class="pers-info__list-hold">

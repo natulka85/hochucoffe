@@ -212,7 +212,7 @@ else{
                     else
                         $dost_part .= '<span>Поздравляем, доставка до пункта выдачи будет бесплатной!</span>';
 
-                    $dost_part .= '<img src="'.SITE_TEMPLATE_PATH.'/static/images/general/delivery-truck.jpg">';
+                    $dost_part .= '<img src="'.SITE_TEMPLATE_PATH.'/static/dist/images/general/delivery-truck.jpg">';
                     $dost_part .= '<div class="line-deliver"></div>';
                     $dost_part .= '</div>';
                 } else {
@@ -221,7 +221,7 @@ else{
                     $dost_part .= '<div class="popup_amount">'.\SaleFormatCurrency(($free_delivary-$sum), 'RUB').'</div>';
                     $dost_part .= '</div>';
                     $dost_part .= '<div class="popup__dost">';
-                    $dost_part .= '<img style="right: '.round(440*(($free_delivary-$sum)/$free_delivary)-10).'px; filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */" src="'.SITE_TEMPLATE_PATH.'/static/images/general/delivery-truck.jpg">';
+                    $dost_part .= '<img style="right: '.round(440*(($free_delivary-$sum)/$free_delivary)-10).'px; filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */" src="'.SITE_TEMPLATE_PATH.'/static/dist/images/general/delivery-truck.jpg">';
                     $dost_part .= '<div class="line-deliver" style="background-position-x: '.round(-440*(($free_delivary-$sum)/$free_delivary)).'px;"></div>';
                     $dost_part .= '</div>';
                 }

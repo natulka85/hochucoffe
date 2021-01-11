@@ -5,7 +5,6 @@ use Bp\Template\ChpuFilter;
 global $BP_TEMPLATE,$APPLICATION;
 $page_url = $APPLICATION->getCurPage();
 $arProps = SeoSection::convertUrlToCheck($page_url);
-
 if($arParams['SECTION_ID']>0){
     $arConsts = array();
     $dbConst = SettingsTable::getList(array(
@@ -56,7 +55,8 @@ foreach ($arItems as $prop=>$val){
         }
         $name = $arKeys[0].$arPropMatrix[$prop];
         $link = $section_part.$filter_part.'/';
-        if($link == $page_url){
+
+        if(strpos($page_url,str_replace('/catalog/filter/','',$link)) !==false ){
             $active = 'Y';
         }
         $arResult['ITEMS'][] = [

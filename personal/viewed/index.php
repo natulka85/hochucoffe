@@ -1,6 +1,9 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Просмотренные товары в интернет-магазине 'ХочуКофе'");
+\Bitrix\Main\Page\Asset::getInstance()->addCss("/local/templates/hochucoffe/static/dist/css/viewed-page.css");
+$APPLICATION->AddChainItem("Каталог", "/catalog/");
+$APPLICATION->AddChainItem("Просмотренные товары", "/catalog/");
 
 use Bitrix\Sale,
     Bitrix\Catalog\CatalogViewedProductTable;

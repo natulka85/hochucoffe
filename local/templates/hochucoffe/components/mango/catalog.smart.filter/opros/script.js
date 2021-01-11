@@ -1041,7 +1041,8 @@ $(document).on('change','.index-form__radio[name=section_id]',function(){
 	var data = {
 		section_id:$(this).val(),
 		section_code:$(this).data('section_code'),
-		catalog_ajax_call: 'Y'
+		catalog_ajax_call: 'Y',
+		ax_filter_class: $('.js-ajax-filter .form').attr('class').replace('form','')
 	};
 	reloadPage(window.location.href, data, 'filter_opros');
 })

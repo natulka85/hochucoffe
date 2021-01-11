@@ -1,6 +1,8 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 $this->setFrameMode(true);
-global $BP_TEMPLATE;?>
+global $BP_TEMPLATE;
+
+?>
 <div class="view-page-detail">
 <?
 

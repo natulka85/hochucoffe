@@ -62,8 +62,8 @@ if(count($arResult['ITEMS'])==1){
 include ($_SERVER['DOCUMENT_ROOT'].'/local/templates/hochucoffe/components/bitrix/catalog.element/.default/result_modifier.php');
 
 $arResult['LABLES_TEMPLATE'] = [
-    'LEFT' => ['HIT','NEW','ACTION'],
-    'RIGHT' => ['COUNTRY','SCA'],
+    'LEFT' => ['HIT','NEW'/*,'ACTION'*/],
+    'RIGHT' => [/*'COUNTRY',*/'SCA'],
 ];
 
 if($arParams['MOD_TEMPATE']=='FAST_VIEW'){

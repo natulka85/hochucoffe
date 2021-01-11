@@ -2,9 +2,9 @@
 $this->setFrameMode(true);
 ?>
 <?if(count($arResult['ITEMS'])>0):?>
-<div class="reviews__list">
+<div class="reviews__list <?=$arParams['LIST_CLASS']?>">
 <?foreach($arResult['ITEMS'] as $arItem):?>
-    <div class="reviews__item">
+    <div class="reviews__item <?=$arParams['ITEM_CLASS']?>">
         <div class="reviews__top">
             <div class="reviews__image"><a href="<?=$arItem['ELEMENT']['DETAIL_PAGE_URL']?>" target="_blank"><img src="<?=$arItem['ELEMENT']['PICTURE']['src']?>"/></a></div>
             <div class="reviews__right"><a class="reviews__product" href="<?=$arItem['ELEMENT']['DETAIL_PAGE_URL']?>" target="_blank"><span><?=$arItem['ELEMENT']['NAME']?></span></a>
@@ -19,10 +19,15 @@ $this->setFrameMode(true);
                 <?endfor;?>
             </div>
             <div class="reviews__name"><?=$arItem['AUTHOR_NAME']?></div>
-            <div class="reviews__text"><?=$arItem['TEXT_FORMAT']?>
-            </div>
-            <div class="reviews__link-wrap"><a class="reviews__link" href="#">Читать весь отзыв</a>
-            </div>
+            <div class="reviews__text"><?=$arItem['TEXT_FORMAT']?></div>
+                <div class="reviews__link-wrap">
+                    <?if($arItem['BTN_ALL']):?>
+                    <span class="reviews__link js-do" data-action="review_popup" data-id="<?=$arItem['ID']?>">Читать весь отзыв</span>
+                    <?endif;?>
+                    <?if($arParams['GOOD_LINK']):?>
+                        <a href="<?=$arItem['ELEMENT']['DETAIL_PAGE_URL']?>" class="reviews__link" target="<?=$arParams['GOOD_LINK_TARGET']?>">Перейти к товару</a>
+                    <?endif;?>
+                </div>
         </div>
     </div>
 <?endforeach?>

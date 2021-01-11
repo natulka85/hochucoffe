@@ -1,0 +1,78 @@
+$height:3px;
+.burger--htx {
+  height: 28px;
+  width: 34px;
+  position: relative;
+
+  span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    height: $height;
+    background: $white;
+    width: 100%;
+    transition: background 0s 0.3s;
+    border-radius: 10px;
+  }
+
+  span::before,
+  span::after {
+    position: absolute;
+    display: block;
+    left: 0;
+    width: 100%;
+    height: $height;
+    background-color: $white;
+    border-radius: 10px;
+    content: "";
+  }
+
+  span::before {
+    top: -10px;
+  }
+
+  span::after {
+    bottom: -10px;
+  }
+}
+
+.burger--htx span::before,
+.burger--htx span::after {
+  transition-duration: 0.3s, 0.3s;
+  transition-delay: 0.3s, 0s;
+}
+
+.burger--htx span::before {
+  transition-property: top, transform;
+}
+
+.burger--htx span::after {
+  transition-property: bottom, transform;
+}
+
+/* состояние active при открытом меню  */
+.burger--htx.is-active {
+  //background-color: #cb0032;
+}
+
+.burger--htx.is-active span {
+  background: none;
+}
+
+.burger--htx.is-active span::before {
+  top: 0;
+  transform: rotate(45deg);
+  background: $green;
+}
+
+.burger--htx.is-active span::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+  background: $green;
+}
+
+.burger--htx.is-active span::before,
+.burger--htx.is-active span::after {
+  transition-delay: 0s, 0.3s;
+}

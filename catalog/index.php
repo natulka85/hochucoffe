@@ -10,7 +10,8 @@ global $APPLICATION;
 $APPLICATION->SetTitle("Каталог");
 $CategoryType = '';
 require(__DIR__."/catalog.php");
-\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/js/minify-js/catalog.min.js");
+\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/dist/js/catalog.min.js");
+\Bitrix\Main\Page\Asset::getInstance()->addCss("/local/templates/hochucoffe/static/dist/css/catalog.css");
 ?>
 <div class="catalog">
     <div class="page__ears is-left"></div>

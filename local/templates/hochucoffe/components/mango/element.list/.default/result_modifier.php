@@ -21,7 +21,7 @@ if(isset($arResult['ITEMS'])) {
     unset($arElement);
 
 
-    $no_photo_src = '/local/templates/hochucoffe/static/images/general/no-photo.png';
+    $no_photo_src = '/local/templates/hochucoffe/static/dist/images/general/no-photo.png';
     $pic_width = 220;
     $pic_height = 220;
 
@@ -125,12 +125,27 @@ if(isset($arResult['ITEMS'])) {
         if($arResult['ITEMS'][$key]['PROPERTIES']['WEIGHT']['VALUE']!=''){
             $arResult['ITEMS'][$key]['MOD_PRICE_100_G'] = round($arResult['ITEMS'][$key]['STATE']['PRICE'] / $arResult['ITEMS'][$key]['PROPERTIES']['WEIGHT']['VALUE']  * 100,0);
         }
+
+        $arResult['ITEMS'][$key]['MOD_REVIEW_AVERAGE'] = round($arItem['PROPERTIES']['ASKARON_REVIEWS_AVERAGE']['VALUE'],0);
     }
 
    /* echo "<pre>";
     print_r($arResult["NAV_STRING"]);
     echo "</pre>";
     */
+    //showmore + hash
+    if(
+        $arResult["NAV_RESULT"]->NavPageCount>1
+        && $arResult["NAV_RESULT"]->NavPageNomer!=$arResult["NAV_RESULT"]->nEndPage
+    )
+    {
+        $arQuery = explode("?",htmlspecialchars_decode($_SERVER['REQUEST_URI']));
+        $addurlparam = "";
+
+        $arResult['SHOWMORE_URL'] = $BP_TEMPLATE->Catalog()->hashurl($arQuery[0].'?PAGEN_'.$arResult["NAV_RESULT"]->NavNum.'='.($arResult["NAV_RESULT"]->NavPageNomer+1).$addurlparam, true);
+        $arResult['SHOWMORE_COUNT'] = $arResult['NAV_RESULT']->nSelectedCount - $arResult['NAV_RESULT']->SIZEN*$arResult['NAV_RESULT']->PAGEN;
+
+    }
 
     //hash
     $arResult["NAV_STRING"] = preg_replace_callback(
@@ -219,7 +234,7 @@ if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
     $arResult['LABLES_TEMPLATE'] = [
         'LEFT' => ['HIT','NEW'],
         'RIGHT' => ['SCA'],
-        'CENTER' => ['ACTION'],
+        'CENTER' => [],
     ];
 
 

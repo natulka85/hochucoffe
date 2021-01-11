@@ -27,7 +27,7 @@ $dateC = $datetime->format(DateTime::ATOM);
         "author":{
             "@type":"Organization",
             "name":"ХочуКофе",
-            "logo":"http://hochucoffe.ru/<?=SITE_TEMPLATE_PATH?>/static/images/logo_correct.svg",
+            "logo":"http://hochucoffe.ru/<?=SITE_TEMPLATE_PATH?>/static/dist/images/logo_correct.svg",
             "url":"http://hochucoffe.ru/"
         },
         "headline": "<?=htmlspecialchars($arResult['NAME'])?>",

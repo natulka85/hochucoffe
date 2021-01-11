@@ -24,6 +24,11 @@ if(strpos($_SERVER['REQUEST_URI'], '/catalog/')!==false && strpos($_SERVER['REQU
     }
 }
 
+/*echo "<pre>";
+   print_r($_SERVER);
+echo "</pre>";
+die();*/
+
 //меняем шаблон для умногофильтра , если надо используем корневой каталог
 $SmartTemplate = '';
 if(strpos($_SERVER['REQUEST_URI'], '/catalog/section/')!==false)

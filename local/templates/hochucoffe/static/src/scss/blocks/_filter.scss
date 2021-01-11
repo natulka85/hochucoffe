@@ -1,0 +1,404 @@
+@import "../utils/mixins";
+.filter{
+  background: $white;
+  &__control-block{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  &__info{
+    padding: 15px 13px;
+    background: $grayLight;
+    border-radius: 16px;
+    z-index: 10;
+    width: 300px;
+    position: relative;
+    &.doFixed,
+    &.doFixedBottom{
+      @include Shadow();
+      .filter__info-close{
+        display: block;
+      }
+    }
+  }
+  &__info-close{
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    text-align: center;
+    line-height: 20px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 3;
+    display: none;
+    &:before{
+      transform: rotate(45deg);
+      color: $grayBrown;
+      display: block;
+      font-size: 18px;
+    }
+    &:hover{
+      animation: scale 1s;
+    }
+    //display: none;
+  }
+  &__info-title{
+    font-weight: 500;
+  }
+  &__info-btn{
+    font-weight: 500;
+    color: $linkBlue;
+    border-bottom: 1px dashed $linkBlue;
+    transition: .3s;
+    cursor: pointer;
+    &:hover{
+      border-bottom-color: transparent;
+    }
+  }
+  &__info-params{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  &__info-params-name{
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+  &__info-params-value{
+    color: $brownLight;
+    background: #F1F1F1;
+    height: 22px;
+    line-height: 22px;
+    white-space: nowrap;
+    display: inline-block;
+    border-radius: 16px;
+    padding-left: 8px;
+    padding-right: 22px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 4px;
+    &>span{
+      line-height: 1;
+    }
+  }
+  &__remove{
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    top: 50%;
+    margin-top: -11px;
+    right: 0;
+    cursor: pointer;
+    &:before{
+      font-size: 10px;
+    }
+  }
+  &__choose{
+    .filter__info-title{
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .filter__info-btn{
+      color: $grayBrown;
+      font-weight: 300;
+      margin-right: 20px;
+      border-bottom-color: $grayBrown;
+    }
+    .main-checkbox__span:after{
+      border-color: $grayBorder;
+      width: 26px;
+      height: 26px;
+      top: 50%;
+      margin-top: -13px;
+    }
+    .main-checkbox__span:before{
+      top: 50%;
+      margin-top: -13px;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+    }
+    .main-checkbox__checkbox:checked+.main-checkbox__span:after, .main-checkbox.is-active:checked+.main-checkbox__span:after{
+      @include gradient('bege');
+    }
+  }
+  &__choose-block{
+    margin: 20px 0 30px 0;
+    .filter__info-btn{
+      opacity: 0;
+      visibility: hidden;
+    }
+    &.is-closed{
+      height: 26px;
+      overflow: hidden;
+    }
+    &._is-checked{
+      height: auto !important;
+      .filter__info-btn{
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+  &__cnt{
+    color: $grayBrown;
+    padding-left: 10px;
+  }
+  &__label{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-height: 30px;
+    margin-top: 4px;
+    &.disabled{
+      opacity: .3;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+  &__fields{
+    max-height: 174px;
+    overflow-y: auto;
+    &::-webkit-scrollbar { width: 4px; height: 4px;}
+    &::-webkit-scrollbar-button {  background-color: $bege; }
+    &::-webkit-scrollbar-track {  background-color: $bege;}
+    &::-webkit-scrollbar-track-piece { background-color: #F1F1F1;}
+    &::-webkit-scrollbar-thumb { height: 16px; background-color: $bege; border-radius: 2px;}
+    &::-webkit-scrollbar-corner { background-color: #999;}
+    &::-webkit-resizer { background-color: #666;}
+
+  }
+  &__fields-wrap{
+    position: relative;
+  }
+  &__scroll-control{
+    position: absolute;
+    font-size: 8px;
+    color: #F1F1F1;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    &.is-up{
+      right: -8px;
+      top: -27px;
+      transform: rotate(180deg);
+      @include icon(1h_galka);
+      &:before{
+        content: "\E008";
+      }
+    }
+    &.is-down{
+      right: -8px;
+      bottom: -27px;
+      @include icon(1h_galka);
+      &:before{
+        content: "\E008";
+      }
+    }
+    &:before{
+      font-size: 8px !important;
+    }
+  }
+  &__btn-wrap{
+    background: #FFFFFF;
+    display: none;
+  }
+  &__btn{
+    height: 38px;
+    width: 100%;
+    border-radius: 10px;
+    text-transform: uppercase;
+    font-size: 16px;
+    max-width: 340px;
+    margin: auto;
+  }
+  &__more-btn{
+    margin-top: 20px;
+  }
+  &__span{
+    width: 100%;
+    display: inline-block;
+    line-height: 1;
+  }
+}
+
+/* Catalog filter pointer */
+.filter__tip{
+  position: absolute;
+  border-radius: 4px;
+  padding: 17px 15px;
+  left: calc(100% + 10px);
+  display: none;
+  background: $grayLight;
+  @include Shadow();
+  width: 150px;
+  z-index: 1000;
+  text-align: center;
+
+  &:before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    left: -6px;
+    border: 6px solid transparent;
+    border-right: 6px solid $grayLight;
+    border-left: none;
+
+  }
+
+  @media(min-width: 768px){
+    display: block;
+  }
+
+  a{
+    display: none;
+    text-decoration: underline;
+    line-height: 24px;
+  }
+}
+
+#modef_wait {
+  background: url(../images/svg/waite.svg) no-repeat center;
+  background-size: contain;
+  display: none;
+  width: 30px;
+  height: 30px;
+  margin: 10px auto;
+}
+
+
+.c-filt-price-field{
+  height: 26px;
+  border: 1px solid $grayBorder;
+  &:nth-child(1){
+    margin-right: 20px;
+  }
+}
+
+.c-filt-price{
+  padding-bottom: 26px;
+}
+
+.noUi-base{
+  position: relative;
+  height: 4px;
+  width: 176px;
+  bottom: 0px;
+  margin-left: 4px;
+}
+/*********** PRICE RANGE *********/
+.noUi-horizontal{
+  height: 4px;
+  border-radius: 3px;
+  .noUi-handle {
+    width: 16px;
+    height: 16px;
+    left: -4px;
+    top: -6px;
+    border-radius: 50%;
+    border: 2px solid $bege;
+    background: $white;
+  }
+}
+
+.noUi-target, .noUi-background{
+  background: $grayBorder;
+  border:none;
+  box-shadow:none;
+  position: relative;
+  bottom: -40px;
+  width: 176px;
+}
+
+.noUi-connect{
+  position: absolute;
+  height: 100%;
+  @include gradient('bege');
+  box-shadow:none;
+  border-radius: 2px!important;
+}
+
+.noUi-handle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  box-shadow: none;
+  transition: .2s;
+  &:focus{
+    outline: none;
+  }
+
+  &:after{
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border:none;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    margin-left: -6px;
+    margin-top: -6px;
+    background: transparent;
+  }
+
+  &:before{
+    background-color: transparent;
+  }
+
+  &:hover{
+  }
+}
+@media #{$media-640} {
+  .filter{
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 200%;
+    width: 100%;
+    border-radius: 0;
+    height: calc(100vh - 116px);
+    overflow-y: scroll !important;
+    transition: .4s;
+    &.is-opened{
+      left: 0;
+    }
+    &__choose-block{
+      padding-left: 16px;
+      margin: 10px 0 20px 0;
+    }
+    &__btn-wrap{
+      position: fixed;
+      width: 100%;
+      bottom: 58px;
+      background: $grayLight;
+      padding: 10px;
+      display: block;
+    }
+    &__choose{
+      .main-checkbox__span {
+        padding-left: 26px;
+      }
+      .main-checkbox__span:after{
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -9px;
+      }
+      .main-checkbox__span:before{
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-top: -9px;
+      }
+    }
+  }
+}

@@ -15,17 +15,17 @@ $this->setFrameMode(true);
                 <div class="catg__star<?if($i<=$arResult['MOD_REVIEW_AVERAGE']):?> icon-1b_star_full<?else:?> icon-1a_star<?endif;?>"></div>
             <?endfor;?>
         </div>
-        <a href="#reviews" class="js-anchor">отзывов <?=$arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']?></a></div>
+        <a class="link js-anchor" href="#reviews">отзывов <?=$arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']?></a></div>
     <div class="prod__link js-do" data-state="N" data-img="<?=$arResult['PREVIEW_PICTURE']['SRC']?>" data-action="delay_change" data-id="<?=$arResult['ID']?>">
-        <div class="prod__link-btn catg__like btn-like"></div>
+        <div class="prod__link-btn btn-like"></div>
         <div class="prod__link-text _text">Отложить</div>
     </div>
-    <div class="prod__link">
-        <div class="prod__link-btn catg__sravn btn-sravn"></div>
+    <div class="prod__link" title="В разработке" style="color: #b2b5b7 !important;cursor: default">
+        <div class="prod__link-btn btn-sravn"></div>
         <div class="prod__link-text">В сравнение</div>
     </div>
     <div class="prod__link">
-        <div class="prod__link-btn catg__share btn-share"></div>
+        <div class="prod__link-btn btn-share"></div>
         <div class="prod__link-text">Поделиться</div>
     </div>
 </div>
@@ -63,23 +63,30 @@ $this->setFrameMode(true);
                     <?endforeach;?>
                 </div>
             <?endif;?>
-            <div class="prod__image js-slick-3">
-                <?foreach ($arResult['DEFAULT_IMAGE'] as $defImg):?>
-                    <div class="prod__image-img">
-                        <a href="<?=$defImg['HREF']?>" data-fancybox="element">
-                            <img src="<?=$defImg['SRC']?>" alt="<?=$defImg['ALT']?>">
-                        </a>
-                    </div>
-                <?endforeach;?>
-            </div>
-            <div class="prod__tmbs js-slick-nav-3">
-                <?foreach ($arResult['DEFAULT_TUMB_IMAGE'] as $defImgTumb):?>
-                    <div class="prod__tmb">
-                        <div class="prod__tmb-img">
-                            <img src="<?=$defImgTumb['SRC']?>" alt="<?=$defImgTumb['ALT']?>">
+            <div class="prod__image swiper-container">
+                <div class="swiper-wrapper">
+                    <?foreach ($arResult['DEFAULT_IMAGE'] as $defImg):?>
+                        <div class="prod__image-img swiper-slide">
+                            <a href="<?=$defImg['HREF']?>" data-fancybox="element">
+                                <img src="<?=$defImg['SRC']?>" alt="<?=$defImg['ALT']?>">
+                            </a>
                         </div>
-                    </div>
-                <?endforeach;?>
+                    <?endforeach;?>
+                </div>
+                <div class="swiper-pagination swiper__bullet"></div>
+                <div class="swiper__btn swiper-button-prev"></div>
+                <div class="swiper__btn swiper-button-next"></div>
+            </div>
+            <div class="prod__tmbs swiper-container">
+                <div class="swiper-wrapper">
+                    <?foreach ($arResult['DEFAULT_TUMB_IMAGE'] as $defImgTumb):?>
+                        <div class="prod__tmb swiper-slide">
+                            <div class="prod__tmb-img">
+                                <img src="<?=$defImgTumb['SRC']?>" alt="<?=$defImgTumb['ALT']?>">
+                            </div>
+                        </div>
+                    <?endforeach;?>
+                </div>
             </div>
         </div>
         <div class="prod__main">
@@ -141,20 +148,28 @@ $this->setFrameMode(true);
             <div class="prod__check is-st-shadow">
                 <div class="catg__price-block">
                     <?if($arResult['STATE']['PRICE']>0):?>
-                        <div class="catg__price"><?=\SaleFormatCurrency($arResult['STATE']['PRICE'], 'RUB')?></div>
+                        <div class="catg__cur-w">
+                            <div class="catg__price"><?=\SaleFormatCurrency($arResult['STATE']['PRICE'], 'RUB')?></div>
+                            <div class="catg__price-block-gr">
+                                <?=\SaleFormatCurrency($arResult['MOD_PRICE_100_G'], 'RUB');?>/100г
+                            </div>
+                        </div>
                     <?endif;?>
                     <?if($arResult['STATE']['PRICE_OLD']>0):?>
-                        <div class="catg__price-old"><?=\SaleFormatCurrency($arResult['STATE']['PRICE_OLD'], 'RUB')?></div>
+                        <div class="catg__old-w">
+                            <div class="catg__price-old"><?=\SaleFormatCurrency($arResult['STATE']['PRICE_OLD'], 'RUB')?></div>
+                        <?$lKey='ACTION'?>
+                            <div class="labels__item <?=$arResult['LABLES'][$lKey]['CLASS']?>">
+                                <span><?=$arResult['LABLES'][$lKey]['TEXT']?></span>
+                            </div>
+                        </div>
                     <?endif;?>
-                </div>
-                <div class="catg__price-block-gr">
-                    <?=\SaleFormatCurrency($arResult['MOD_PRICE_100_G'], 'RUB');?>/100 г
                 </div>
                 <div class="prod__avail-block">
                     <div class="prod__avail"><?=$arResult['STATE']['TEXT']?></div>
                 </div>
                 <div class="prod__deliv"><span>Бесплатная</span> доставка при заказе от 5000 ₽</div>
-                <div class="prod__link-bl">Хочу дешевле!</div>
+                <div class="prod__link-bl js-do" data-action="form_cheaper">Хочу дешевле!</div>
                 <div class="prod__deliv-info"><span>Доставка на:</span> 26.12.2020</div>
                 <div class="prod__btn-wrap">
                     <div class="prod__btn btn is-buy js-do" data-id="<?=$arResult['ID']?>" data-action="basket_change" <?foreach ($arResult['STATE']['DATA'] as $data=>$dataVal):?><?=$data?>="<?=$dataVal?>"<?endforeach;?>>В корзину</div>
@@ -164,7 +179,7 @@ $this->setFrameMode(true);
     </div>
     <div class="prod__bottom">
         <div class="prod__des-block">
-            <div class="prod__des-btn js-slide-btn icon-1h_galka">Описание</div>
+            <div class="prod__des-btn js-slide-btn icon-2a_plus is-active">Описание</div>
             <div class="js-slide-content" data-show_more="block" data-show_more_height="400">
                 <div class="prod__des-content" data-show_more="content"><?=$arResult['~DETAIL_TEXT']?></div>
                 <div class="prod__btn-more">
@@ -174,7 +189,7 @@ $this->setFrameMode(true);
             </div>
         </div>
         <div class="prod__des-block">
-            <div class="prod__des-btn js-slide-btn icon-1h_galka">Важное про кофе</div>
+            <div class="prod__des-btn js-slide-btn icon-2a_plus">Важное про кофе</div>
             <div class="prod__des-content js-slide-content" style="display: none;">
                 <div class="main-text__h">
                     Как хранить кофе...
@@ -193,13 +208,13 @@ $this->setFrameMode(true);
             </div>
         </div>
         <div class="prod__des-block">
-            <div class="prod__des-btn js-slide-btn icon-1h_galka">Отзывы:</div>
+            <?
+            $display = 'none';
+            if(count($arResult['MOD_REVIEWS'])==0) {$display='block';}?>
+            <div class="prod__des-btn js-slide-btn icon-2a_plus is-active" id="reviews">Отзывы:</div>
             <div class="prod__des-content js-slide-content">
-                <div class="prod__reviews" id="reviews">
+                <div class="prod__reviews">
                     <div class="prod__reviews-l">
-                        <?
-                        $display = 'none';
-                        if(count($arResult['MOD_REVIEWS'])==0) {$display='block';}?>
                         <div class="prod__btn is-review btn is-white-bege js-toggle-rf">Написать отзыв</div>
                         <div class="prod__review-form" style="display:<?=$display;?>">
                             <form action="" class="review-form">
@@ -299,7 +314,7 @@ $this->setFrameMode(true);
         </div>
 
         <div class="prod__des-block">
-            <div class="prod__des-btn js-slide-btn icon-1h_galka">Доставка и оплата</div>
+            <div class="prod__des-btn js-slide-btn icon-2a_plus">Доставка и оплата</div>
             <div class="prod__des-content js-slide-content" style="display: none;">
                 <p>
                     Мы доставляем кофе прямо до вашего дома бережно и в короткие сроки.
@@ -319,5 +334,11 @@ $this->setFrameMode(true);
 <section class="page-kartochka__screen-three">
     <?include_once($_SERVER['DOCUMENT_ROOT'].'/local/php_interface/ajax/analogs.php');?>
 </section>
-
+<script>
+    $(function (){
+        if(window.outerWidth > 640){
+            StickyMy($('.prod__content'), $('.prod__check'),10);
+        }
+    })
+</script>
 </div>

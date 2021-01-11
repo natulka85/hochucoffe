@@ -23,14 +23,25 @@ echo "</pre>";*/
         </div>
     <?endif;?>
 
-    <div class="catg__list">
+    <div class="catg__list <?=$arParams['MOD_LIST_CLASS']?>" data-block="block-list">
         <?foreach ($arResult['ITEMS'] as $arItem):?>
+            <?$item_data='block-item'?>
             <?include ($_SERVER['DOCUMENT_ROOT'].SITE_TEMPLATE_PATH.'/includes/catalog_card.php');?>
         <?endforeach;?>
     </div>
-<?endif;?>
-<?
-if($arParams['DISPLAY_BOTTOM_PAGER']=='Y'):?>
-    <?=$arResult['NAV_STRING']?>
+    <?
+    if($arParams['DISPLAY_BOTTOM_PAGER']=='Y'):?>
+        <?if($arResult['SHOWMORE_URL']): //если много товаров на странице - выводим?>
+            <div class="catg__more">
+                <a class="js-more-el" href="<?=$arResult['SHOWMORE_URL']?>">
+                <span class="catg__more-1">Показать ещё
+                    <span class="catg__more-icon icon-3a_more"></span>
+                </span>
+                    <span class="catg__more-2">осталось <?=$arResult['SHOWMORE_COUNT']?> шт</span>
+                </a>
+            </div>
+        <?endif;?>
+        <?=$arResult['NAV_STRING']?>
+    <?endif;?>
 <?endif;?>
 

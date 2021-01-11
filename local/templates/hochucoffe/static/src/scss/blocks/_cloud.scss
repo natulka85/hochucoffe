@@ -1,0 +1,90 @@
+.cloud{
+  position: relative;
+  &__title{
+    margin-bottom: 30px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  &__list{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  &__item{
+    border: 1px solid $grayBorder;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background: $white;
+    transition: .3s;
+    position: relative;
+    white-space: nowrap;
+    margin-right: 18px;
+    margin-bottom: 14px;
+    @include ShadowLight();
+    &:hover{
+      border-color: $bege;
+      background: $grayLight;
+      @include BorderPen($bege);
+    }
+    &.is-active{
+      border-color: $bege;
+      @include BorderPen($bege);
+      //box-shadow: none;
+      //box-shadow: inset 2px 2px 0 $bege, 1px 1px 0 $bege;
+    }
+  }
+  &__link{
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    font-size: 16px;
+    padding: 0 18px;
+
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  &__num{
+    font-size: 12px;
+    color: $grayBrown;
+    margin-left: 6px;
+    position: relative;
+    top: 2px;
+  }
+  &__btn-more{
+    display: inline-block;
+    float: right;
+    color: #fff;
+    position: absolute;
+    left: 240px;
+    top: -10px;
+    border-radius: 18px;
+    padding: 8px 10px;
+  }
+}
+
+@media #{$media-640} {
+  .cloud{
+    margin-bottom: 30px;
+    &__list{
+      flex-wrap: nowrap;
+    }
+    &__item{
+      margin-right: 4px;
+      margin-bottom: 10px;
+    }
+    &__link{
+     /* font-size: 14px;
+      height: 26px;
+      line-height: 26px;
+      padding: 0 8px;*/
+    }
+    &__num{
+      font-size: 10px;
+    }
+    &__btn-more{
+      display: none;
+    }
+  }
+
+}

@@ -5,30 +5,29 @@ $APPLICATION->SetTitle("");
 $APPLICATION->SetPageProperty("description","");
 $APPLICATION->SetPageProperty("keywords","");
 global $BP_TEMPLATE;
-CModule::IncludeModule("iblock");
-CModule::IncludeModule("askaron.reviews");
 
- $arFilterCard = array(
-        "=ID" => 815,
-    );
+$ar = $BP_TEMPLATE->ChpuFilter()->getNewPartsL();
 
-    $arSettings = [
-        "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_IB_TYPE,
-        "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
-        "COUNT_ON_PAGE" => 1,
-        "CACHE_TIME"  =>  86400,
-        "SECTION_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE,
-        "FILTER_NAME" => 'arFilterCard',
-        'MOD_TEMPATE' => 'FAST_VIEW',
-        'CATEGORY_TYPE'=> 'ONE_CARD',
-      //  'REQUEST_ID' => 815
-    ];
-
-    $APPLICATION->IncludeComponent(
-        "mango:cache.set",
-        "one_element",
-        $arSettings,
+$_REQUEST['q'] = 'орех';
+$APPLICATION->IncludeComponent(
+        "mango:search-hints",
+        "",
+        array(
+            'IBLOCK_ID' => 1,
+            'CACHE_TIME' => 259200,
+            'PICTURE'=> ['width'=>66, 'heigth'=>60],
+            'SEARCH_PAGE' => '/search/',
+            'REQUEST' => $_REQUEST['q'],
+            'REQUEST_SECTION' => $_REQUEST['section'],
+            'FIX_HEADER' => $_REQUEST['fixheader']
+        ),
         false
     );
+
+
+
     ?>
+
+
+
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

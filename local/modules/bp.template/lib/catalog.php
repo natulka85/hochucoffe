@@ -273,7 +273,7 @@ class Catalog
         {
             $arResult['HIT']['COUNT'] = false;
             $arResult['HIT']['CLASS'] = 'is-hit';
-            $arResult['HIT']['TEXT'] = 'Выбор покупателей';
+            $arResult['HIT']['TEXT'] = 'Хит продаж';
         }
 
         if(
@@ -283,7 +283,7 @@ class Catalog
             $arResult['NEW']['COUNT'] = false;
             $arResult['NEW']['CLASS'] = 'is-new';
             $arResult['NEW']['TEXT'] = '';
-            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/images/minified-svg/ico-label-03.svg" alt="">';
+            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/dist/images/minified-svg/ico-label-03.svg" alt="">';
         }
 
         if(
@@ -293,7 +293,7 @@ class Catalog
             $arResult['SCA']['COUNT'] = false;
             $arResult['SCA']['CLASS'] = 'is-sca';
             $arResult['SCA']['TEXT'] = $OCENKA_SCA;
-            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/images/minified-svg/ico-label-03.svg" alt="">';
+            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/dist/images/minified-svg/ico-label-03.svg" alt="">';
         }
         //страна флаг
         if(
@@ -305,7 +305,7 @@ class Catalog
             $arResult['COUNTRY']['CLASS'] = 'is-country';
             $arResult['COUNTRY']['IMG'] = $arCountry['DETAIL_PICTURE'];
             $arResult['COUNTRY']['TEXT'] = $STRANA;
-            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/images/minified-svg/ico-label-03.svg" alt="">';
+            //$arResult['NEW']['IMAGE'] = '<img width="35" height="34" src="'.SITE_TEMPLATE_PATH.'/static/dist/images/minified-svg/ico-label-03.svg" alt="">';
         }
 
         return $arResult;

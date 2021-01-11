@@ -118,14 +118,13 @@ global $BP_TEMPLATE,$APPLICATION;
                     </div>
                 </div>
                 <div class="basket__res-btn-wrap">
-                <button type="submit" onclick="submitForm('Y');return false;" name="order_ok" class="basket__res-btn btn is-brown-light is-order">Оформить заказ</button>
-                    <div class="basket__res-btn btn is-brown-light is-to-order">Перейти к оформлению
-                    </div>
+                <button type="submit" onclick="submitForm('Y');return false;" name="order_ok" class="basket__res-btn btn is-blue-s is-order">Оформить заказ</button>
+                    <a href="#go_to_oform" class="basket__res-btn btn is-blue-s is-to-order js-anchor">Перейти к оформлению</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="basket__form">
+    <div class="basket__form" id="go_to_oform">
         <div class="basket__title-h">
             <div class="basket__title">Ваши данные:</div>
             <div class="basket__check">
@@ -138,43 +137,51 @@ global $BP_TEMPLATE,$APPLICATION;
 
         <div class="basket__fast-order" <?if($_REQUEST['forder_ok']!='F'):?> style="display: none;" <?endif;?>>
          <div class="basket__fields is-name">
-            <div class="basket__field<?if($arResult['ERRORS']['qname']!=''):?> is-error<?endif;?>">
-                <input class="basket__input" placeholder="Имя" name="qname" value="<?=$_REQUEST['qname']?>">
+            <div class="basket__field input-block<?if($arResult['ERRORS']['qname']!=''):?> is-error<?endif;?>">
+                <input class="basket__input is-border-bottom <?if($_REQUEST['qname']!=''):?>is-valid<?endif;?>"" name="qname" value="<?=$_REQUEST['qname']?>">
+                <span class="placeholder">Имя</span>
+                <div class="border-bottom is-blue"></div>
                 <span class="basket__label">(введите Ваше имя)</span>
                 <div class="error"><?=$arResult['ERRORS']['qname']?></div>
             </div>
-            <div class="basket__field<?if($arResult['ERRORS']['qphone']!=''):?> is-error<?endif;?>">
-                <input class="basket__input" placeholder="Телефон" value="<?=$_REQUEST['qphone']?>" name="qphone">
+            <div class="basket__field input-block<?if($arResult['ERRORS']['qphone']!=''):?> is-error<?endif;?>">
+                <input class="basket__input is-border-bottom <?if($_REQUEST['qphone']!=''):?>is-valid<?endif;?>" value="<?=$_REQUEST['qphone']?>" name="qphone">
+                <span class="placeholder">Телефон</span>
+                <div class="border-bottom is-blue"></div>
                 <span class="basket__label">(уточним детали заказа)</span>
                  <div class="error"><?=$arResult['ERRORS']['qphone']?></div>
              </div>
 
             </div>
         </div>
-
-
         <div class="basket__full-order" <?if($_REQUEST['forder_ok']=='F'):?> style="display: none;" <?endif;?>>
          <div class="basket__fields is-name">
-            <div class="basket__field<?if($arResult['ERRORS']['fio']!=''):?> is-error<?endif;?>">
-                <input class="basket__input" placeholder="Имя" name="fio" value="<?=$_REQUEST['fio']?>">
-                <span class="basket__label">(введите Ваше имя)</span>
+            <div class="basket__field input-block<?if($arResult['ERRORS']['fio']!=''):?> is-error<?endif;?>">
+                <input class="basket__input is-border-bottom <?if($_REQUEST['fio']!=''):?>is-valid<?endif;?>" name="fio" value="<?=$_REQUEST['fio']?>">
+                <span class="placeholder">Имя</span>
+                <div class="border-bottom is-bege"></div>
                 <div class="error"><?=$arResult['ERRORS']['fio']?></div>
             </div>
-            <div class="basket__field<?if($arResult['ERRORS']['bphone']!=''):?> is-error<?endif;?>">
-                <input class="basket__input" placeholder="Телефон" value="<?=$_REQUEST['bphone']?>" name="bphone">
-                <span class="basket__label">(уточним детали заказа)</span>
+            <div class="basket__field input-block<?if($arResult['ERRORS']['bphone']!=''):?> is-error<?endif;?>">
+                <input class="basket__input is-border-bottom <?if($_REQUEST['bphone']!=''):?>is-valid<?endif;?>" value="<?=$_REQUEST['bphone']?>" name="bphone">
+                <span class="placeholder">Телефон</span>
+                <div class="border-bottom is-bege"></div>
                  <div class="error"><?=$arResult['ERRORS']['bphone']?></div>
              </div>
-              <div class="basket__field<?if($arResult['ERRORS']['email']!=''):?> is-error<?endif;?>" >
-                <input class="basket__input" placeholder="Email" value="<?=$_REQUEST['email']?>" name="email">
-                <span class="basket__label">(для письма о статусе заказа)</span>
+              <div class="basket__field input-block<?if($arResult['ERRORS']['email']!=''):?> is-error<?endif;?>" >
+                <input class="basket__input is-border-bottom  <?if($_REQUEST['email']!=''):?>is-valid<?endif;?>" value="<?=$_REQUEST['email']?>" name="email">
+                <span class="placeholder">Email</span>
+               <div class="border-bottom is-bege"></div>
                  <div class="error"><?=$arResult['ERRORS']['email']?></div>
              </div>
         </div>
         <div id="change_adr"></div>
             <div class="basket__title" id="delivery-block">Способ доставки:</div>
-            <div class="basket__form-address"><span>Адрес</span>
-            <input class="basket__input" type="text" name="address" value="<?=$_REQUEST['address']?>">
+            <div class="basket__form-address input-block">
+                <span>Адрес</span>
+                <input class="basket__input is-border-bottom" type="text" name="address" value="<?=$_REQUEST['address']?>">
+                <span class="placeholder"></span>
+                <div class="border-bottom is-bege"></div>
                 <div class="basket__link-change" data-c_name="address">Изменить</div>
             </div>
             <div class="basket__hidden-block">
@@ -206,21 +213,16 @@ global $BP_TEMPLATE,$APPLICATION;
                     <div class="basket__form-btn-choose<?if($arPaysystem['CHECKED']=='Y'):?> is-active<?endif?>"><?=$arPaysystem['NAME']?></div>
                 </div>
             <?endforeach?>
-            <div class="basket__fields">
-                <div class="basket__field">
-                <textarea class="basket__textarea" name="comment" placeholder="Комментарий">
-                    <?if($_REQUEST['comment']!=''):?>
-                        <?=$_REQUEST['comment']?>
-                    <?endif;?>
-
-                    </textarea>
+            </div>
+        <div class="basket__fields">
+                <div class="basket__field is-comment">
+                <textarea class="basket__textarea" name="comment" placeholder="Комментарий"><?if($_REQUEST['comment']!=''):?><?=$_REQUEST['comment']?><?endif;?></textarea>
                     <span class="basket__label">(например, не звонить спит ребенок)</span>
-
                 </div>
             </div>
-        </div>
-        <div class="basket__res-btn-wrap">
-            <a class="basket__res-btn btn is-brown-light is-order-bot" href="/hochucoffe/static/html/pages/basket_success.html">Оформить заказ</a></div>
+    </div>
+    <div class="basket__res-btn-wrap">
+    <button type="submit" onclick="submitForm('Y');return false;" name="order_ok" class="basket__res-btn btn is-blue-s is-order-bot">Оформить заказ</button>
     </div>
 </div>
     <?if($_POST["is_ajax_post"] != "Y"):?>

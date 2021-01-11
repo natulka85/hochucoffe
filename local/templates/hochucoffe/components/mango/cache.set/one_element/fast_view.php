@@ -20,17 +20,17 @@ $this->setFrameMode(true);
                             <div class="catg__star<?if($i<=$arResult['MOD_REVIEW_AVERAGE']):?> icon-1b_star_full<?else:?> icon-1a_star<?endif;?>"></div>
                         <?endfor;?>
                     </div>
-                    <a href="#reviews" class="js-anchor">отзывов <?=$arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']?></a></div>
-                <div class="prod__link js-do" data-state="N" data-img="<?=$arResult['PREVIEW_PICTURE']['SRC']?>" data-action="delay_change" data-id="<?=$arResult['ID']?>">
-                    <div class="prod__link-btn catg__like btn-like"></div>
+                    <span class="link">отзывов <?=$arResult['PROPERTIES']['ASKARON_REVIEWS_COUNT']['VALUE']?></span></div>
+                <div class="prod__link js-do" data-state="N" data-img="<?=$arResult['DEFAULT_IMAGE'][0]['SRC']?>" data-action="delay_change" data-id="<?=$arResult['ID']?>">
+                    <div class="prod__link-btn btn-like"></div>
                     <div class="prod__link-text _text">Отложить</div>
                 </div>
                 <div class="prod__link">
-                    <div class="prod__link-btn catg__sravn btn-sravn"></div>
+                    <div class="prod__link-btn btn-sravn"></div>
                     <div class="prod__link-text">В сравнение</div>
                 </div>
                 <div class="prod__link">
-                    <div class="prod__link-btn catg__share btn-share"></div>
+                    <div class="prod__link-btn btn-share"></div>
                     <div class="prod__link-text">Поделиться</div>
                 </div>
             </div>
@@ -69,23 +69,30 @@ $this->setFrameMode(true);
                                     <?endforeach;?>
                                 </div>
                             <?endif;?>
-                            <div class="prod__image js-slick-3">
-                                <?foreach ($arResult['DEFAULT_IMAGE'] as $defImg):?>
-                                    <div class="prod__image-img">
-                                        <a href="<?=$defImg['HREF']?>" data-fancybox="element">
-                                            <img src="<?=$defImg['SRC']?>" alt="<?=$defImg['ALT']?>">
-                                        </a>
-                                    </div>
-                                <?endforeach;?>
-                            </div>
-                            <div class="prod__tmbs js-slick-nav-3">
-                                <?foreach ($arResult['DEFAULT_TUMB_IMAGE'] as $defImgTumb):?>
-                                    <div class="prod__tmb">
-                                        <div class="prod__tmb-img">
-                                            <img src="<?=$defImgTumb['SRC']?>" alt="<?=$defImgTumb['ALT']?>">
+                            <div class="prod__image swiper-container">
+                                <div class="swiper-wrapper">
+                                    <?foreach ($arResult['DEFAULT_IMAGE'] as $defImg):?>
+                                        <div class="prod__image-img swiper-slide">
+                                            <a href="<?=$defImg['HREF']?>" data-fancybox="element">
+                                                <img src="<?=$defImg['SRC']?>" alt="<?=$defImg['ALT']?>">
+                                            </a>
                                         </div>
-                                    </div>
-                                <?endforeach;?>
+                                    <?endforeach;?>
+                                </div>
+                                <div class="swiper-pagination swiper__bullet"></div>
+                                <div class="swiper__btn swiper-button-prev"></div>
+                                <div class="swiper__btn swiper-button-next"></div>
+                            </div>
+                            <div class="prod__tmbs swiper-container">
+                                <div class="swiper-wrapper">
+                                    <?foreach ($arResult['DEFAULT_TUMB_IMAGE'] as $defImgTumb):?>
+                                        <div class="prod__tmb swiper-slide">
+                                            <div class="prod__tmb-img">
+                                                <img src="<?=$defImgTumb['SRC']?>" alt="<?=$defImgTumb['ALT']?>">
+                                            </div>
+                                        </div>
+                                    <?endforeach;?>
+                                </div>
                             </div>
                         </div>
 
@@ -95,14 +102,22 @@ $this->setFrameMode(true);
                             <div class="prod__check">
                                 <div class="catg__price-block">
                                     <?if($arResult['STATE']['PRICE']>0):?>
-                                        <div class="catg__price"><?=\SaleFormatCurrency($arResult['STATE']['PRICE'], 'RUB')?></div>
+                                        <div class="catg__cur-w">
+                                            <div class="catg__price"><?=\SaleFormatCurrency($arResult['STATE']['PRICE'], 'RUB')?></div>
+                                            <div class="catg__price-block-gr">
+                                                <?=\SaleFormatCurrency($arResult['MOD_PRICE_100_G'], 'RUB');?>/100г
+                                            </div>
+                                        </div>
                                     <?endif;?>
                                     <?if($arResult['STATE']['PRICE_OLD']>0):?>
-                                        <div class="catg__price-old"><?=\SaleFormatCurrency($arResult['STATE']['PRICE_OLD'], 'RUB')?></div>
+                                        <div class="catg__old-w">
+                                            <div class="catg__price-old"><?=\SaleFormatCurrency($arResult['STATE']['PRICE_OLD'], 'RUB')?></div>
+                                            <?$lKey='ACTION'?>
+                                            <div class="labels__item <?=$arResult['LABLES'][$lKey]['CLASS']?>">
+                                                <span><?=$arResult['LABLES'][$lKey]['TEXT']?></span>
+                                            </div>
+                                        </div>
                                     <?endif;?>
-                                </div>
-                                <div class="catg__price-block-gr">
-                                    <?=\SaleFormatCurrency($arResult['MOD_PRICE_100_G'], 'RUB');?>/100 г
                                 </div>
                                 <div class="prod__avail-block">
                                     <div class="prod__avail"><?=$arResult['STATE']['TEXT']?></div>
@@ -177,7 +192,7 @@ $this->setFrameMode(true);
                     <?endforeach;?>
                 </div>
             </div>
-            <a href="<?=$arResult['DETAIL_PAGE_URL']?>" class="fast-card__btn btn is-blue">Подробнее о товаре</a>
+            <a href="<?=$arResult['DETAIL_PAGE_URL']?>" class="fast-card__btn btn is-white">Подробнее о товаре</a>
             </div>
 
         </div>

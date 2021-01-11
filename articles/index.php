@@ -1,7 +1,15 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Интересные статьи о кофе");
+$APPLICATION->SetTitle("Новости магазина зернового кофе");
+\Bitrix\Main\Page\Asset::getInstance()->addCss("/local/templates/hochucoffe/static/dist/css/articles-page.css");
 ?>
+<div class="articles-page">
+<?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(
+        "START_FROM" => "0",
+        "PATH" => "",
+        "SITE_ID" => "s1"
+    )
+);?>
 
 <?$APPLICATION->IncludeComponent("bitrix:news", "articles", Array(
     "IBLOCK_TYPE" => "content",	// Тип инфоблока
@@ -96,5 +104,5 @@ $APPLICATION->SetTitle("Интересные статьи о кофе");
         "ACTIVE_COMPONENT" => "Y"
     )
 );?>
-
+</div>
 <? require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/footer.php"); ?>

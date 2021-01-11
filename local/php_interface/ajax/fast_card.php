@@ -40,8 +40,8 @@ if($id>0){
     $APPLICATION->RestartBuffer();
 
     $json['error'] = 'ok';
-    $json['func'] ='$(".popup").html(`'.$out.'`);
-                    showPopup($(".popup"),{widthCss:"1000",className:"is-fast",absolute:"true"});
+    $json['func'] ='$(".popup-dop").html(`'.$out.'`);
+                    showPopup($(".popup-dop"),{widthCss:"1000",className:"is-fast",absolute:"true"});
                     initProductDetailPhotoGallery();'.$event;
 }
 

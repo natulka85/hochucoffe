@@ -1,0 +1,47 @@
+// File for scss-vars.
+// For example: main colors, paddings and so on.
+
+$media-1240: 'screen and (max-width: 1240px)'; // 1024
+$media-991: 'screen and (max-width: 991px)'; //960,780
+$media-767: 'screen and (max-width: 767px)';
+$media-640: 'screen and (max-width: 640px)';
+$media-641: 'screen and(min-width: 641px)';
+//$media-520: 'screen and (max-width: 520px)'; // 320
+//$media-480: 'screen and (max-width: 480px)'; // 320
+//$media-410: 'screen and (max-width: 410px)'; // 320
+
+$white:#ffffff;
+$brownDark: #240C04;
+$brownDeep: #1B1614;
+$brownLight: #492C23;
+$bege: #c78b46;
+$begeLight: #D5A672;
+$begeSuperLight: #f9d0a2;
+$begeUltraLight:#EFC89D;
+//$blue: #25ACCB;
+$blue: #00b1cf;
+$blueDark: #019EB8;
+//$blue: #27c3e4;
+$grayBorder: #EBEBEB;
+$grayBorderDark: #9a9da4;
+$grayLight:#FBFBFD;
+//$grayBrown: #76706F;
+$grayBrown: #6f6f76;
+$linkBlue: #2559A6;
+//$pink: #EB5757;
+$pink: #FC0808;
+//$green: #a5b557;
+$green: #b9cf00;
+$greenDark: #b9cf00;
+$grafit:#323337;
+$grafitLight:#c4c4c4;
+$fiol:#CF00CD;
+$orange: #ff8800;
+
+
+
+$gradientBrown: linear-gradient(180deg, #48261A 0%, #130C0A 100%);
+$gradientBege: linear-gradient(180deg, #D5A672 0%, #C48237 100%);
+$gradientBlue: linear-gradient(180deg, #62C2D8 0%, #25ACCB 100%);
+
+

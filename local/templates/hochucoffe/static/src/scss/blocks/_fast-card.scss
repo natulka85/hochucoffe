@@ -1,0 +1,144 @@
+.fast-card{
+  max-width: 1000px;
+  padding: 40px 30px;
+  //overflow-y: auto;
+  //height: calc(100vh - 200px);
+  &__opt{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title{
+    font-size: 30px;
+    margin: 10px 0;
+  }
+  .prod{
+    &__head{
+      .page-title._type-1{
+        margin-top: 0;
+      }
+    }
+    &__avail-block{
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 16px;
+      margin-top: 0;
+    }
+    &__deliv{
+      margin: 6px 0;
+      font-size: 18px;
+    }
+    &__link-bl{
+      margin-bottom: 10px;
+      font-size: 16px;
+      line-height: 20px;
+    }
+    &__deliv-info{
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+    &__main{
+      width: 100%;
+      margin-left: 0;
+      margin-top: 20px;
+    }
+    &__left{
+      width: 50%;
+      margin-right: 20px;
+    }
+    &__right{
+    }
+    &__image{
+      height: 380px;
+      line-height: 380px;
+    }
+    &__image-img{
+      height: 380px;
+    }
+    &__image-wrap {
+    }
+    &__check{
+      width: 100%;
+      border: 1px solid $grayBorder;
+      padding: 20px;
+      position: relative;
+      .catg__price {
+        font-size: 30px;
+        line-height: 30px;
+      }
+      .catg__price-old{
+        font-size: 26px;
+      }
+    }
+    &__check-wrap{
+      width: 100%;
+    }
+    &__main {
+    }
+    &__control{
+      margin-bottom: 10px;
+    }
+    &__bottom{
+      width: 100%;
+    }
+    &__main-choose-bl{
+      padding-right: 0;
+      margin-bottom: 18px;
+      &.is-weight{
+        margin-top: 0;
+      }
+    }
+    &__form-btn-choose{
+      padding: 0 8px;
+      height: 28px;
+      line-height: 28px;
+      font-size: 16px;
+    }
+    &__main-title{
+      font-size: 18px;
+      line-height: 20px;
+      margin-bottom: 6px;
+    }
+    &__tmbs{
+      height: 60px;
+      margin-top: 8px;
+      display: flex;
+    }
+    &__tmb{
+      width: 60px;
+      height: 60px !important;
+    }
+    &__bottom{
+      display: flex;
+      justify-content: space-between;
+    }
+    &__opt{
+      width: 54%;
+    }
+    &__link-text{
+      font-size: 16px;
+    }
+    &__field{
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
+    }
+    &__main-char{
+      width: 48%;
+      padding-right: 0;
+    }
+  }
+  &__description{
+    margin-right: 20px;
+    width: 50%;
+    font-size: 18px;
+  }
+  &__btn{
+    margin-top: 30px;
+    font-size: 18px;
+    text-transform: uppercase;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 10px;
+  }
+}

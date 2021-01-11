@@ -6,7 +6,7 @@ $this->setFrameMode(true);
 <?
 if(count($arResult['ITEMS'])>0):?>
 <section class="map">
-    <div class="page-block-head"><h2 class="page-title _type-2">Выбрать кофе по стране</h2></div>
+    <div class="page-block-head is-center"><h2 class="page-title _type-2">Выбрать кофе по стране</h2></div>
     <div class="map__content">
         <div class="map__left"></div>
         <div class="map__right">

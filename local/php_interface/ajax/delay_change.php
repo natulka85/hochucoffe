@@ -131,7 +131,7 @@ if($_REQUEST["state"]=='N')
             $out .= '</div>';
         }
         $out .= '<div class="popup__btn-wrap">';
-        $out .= '<a href="/personal/delay/" target="_blank" class="popup__btn btn is-transp-brown">Перейти к отложенным</a>';
+        $out .= '<a href="/personal/delay/" target="_blank" class="popup__btn btn is-transp-red">Перейти к отложенным</a>';
         $out .= '</div>';
         $out .= '</div>';
         if(!$popup_opened){

@@ -1,0 +1,26 @@
+.form{
+  &__input{
+    font-size: 16px;
+  }
+  &__form-btn{
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    &.is-center{
+      margin: auto;
+    }
+  }
+  &__btn{
+    &.is-center{
+      margin: auto;
+      margin-top: 30px;
+    }
+    padding: 0 20px;
+    min-width: 180px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    border-radius: 4px;
+    margin-top: 30px;
+  }
+}

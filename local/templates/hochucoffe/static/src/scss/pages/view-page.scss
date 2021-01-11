@@ -1,0 +1,171 @@
+@import "../utils/assets";
+@import "../blocks/viewes";
+
+.view-page {
+  //padding: 0 34px;
+  .view {
+    &__item {
+      padding: 0;
+      margin-bottom: 20px;
+    }
+
+    &__content {
+      box-shadow: none;
+    }
+  }
+}
+
+.view-page-detail {
+  padding-bottom: 30px;
+
+  .view {
+    &__describe {
+      height: auto;
+      overflow: visible;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    &__content {
+      display: block;
+      border: none;
+      padding: 0;
+    }
+
+    &__left {
+      width: 60%;
+      float: left;
+      margin-top: -40px;
+      @media #{$media-640} {
+        width: 100%;
+        float: none;
+        margin-top: 0;
+      }
+    }
+
+    &__right {
+      width: 40%;
+      float: right;
+      line-height: 30px;
+      font-size: 18px;
+      border: 1px solid $grafit;
+      border-radius: 16px;
+      padding: 20px;
+      font-style: italic;
+      color: #6f6f76;
+      position: relative;
+      background: $white;
+      /* max-width: 90%; */
+      margin: auto;
+      font-family: "Istok Web", sans-serif;
+      @media #{$media-640} {
+        width: 100%;
+        float: none;
+      }
+
+      &.is-green {
+        border-color: #368344;
+        background: #f6fff8;
+      }
+
+      &.is-blue {
+        border-color: $blue;
+        background: #fafdfe;
+      }
+
+      &.is-yellow {
+        border-color: #ffc30e;
+      }
+
+      &.is-black {
+        border-color: $grafit;
+        background: $grayLight;
+      }
+
+      &.is-orange {
+        border-color: #fb9706;
+      } &.is-red {
+        border-color: #f20005;
+      }
+      &.is-blue-dark{
+        border-color: #083fa8;
+      }
+    }
+
+    &__text {
+      line-height: 1.86;
+      @media #{$media-640} {
+        font-size: 14px;
+        line-height: 24px;
+      }
+      ul{
+        li{
+          &:not(:last-child){
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+    &__desc-name{
+      line-height: 1;
+    }
+    &__desc-value{
+      line-height: 1;
+    }
+    &__bottom {
+      clear: both;
+      @media #{$media-640} {
+        padding: 0 10px;
+      }
+    }
+
+    &__describe {
+      font-size: 18px;
+
+      &.is-main {
+        margin-top: 50px;
+        @media #{$media-640} {
+          margin-top: 20px;
+        }
+      }
+    }
+
+    &__main-desc {
+      font-size: 18px;
+      color: $grafit;
+      font-style: normal;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+
+    &__price-gr {
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    &__control-link.is-good {
+      font-size: 18px;
+      border-bottom-color: $green;
+
+      & > a {
+        color: $green;
+      }
+
+      &:hover {
+        border-bottom-color: $grafit;
+
+        & > a {
+          color: $grafit;
+        }
+      }
+    }
+
+    &__sect {
+      font-size: 20px;
+    }
+  }
+}

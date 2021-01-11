@@ -1,0 +1,12 @@
+.btn{
+    &.is-green{
+       &:hover{
+            background: $greenDark;
+       }
+    }
+  &.is-gray{
+    &:hover{
+      background: #D9DFE2;
+    }
+  }
+}

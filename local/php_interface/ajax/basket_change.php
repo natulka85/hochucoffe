@@ -3,6 +3,7 @@ global $BP_TEMPLATE;
 $basket_id = 0;
 $arProps = [];
 $element_id = $_REQUEST['id'];
+
 foreach ($_REQUEST as $data_key=>$data){
     if(strpos($data_key,'dop_')!==false){
         $ar=explode('dop_',$data_key);
@@ -175,7 +176,7 @@ elseif($element_id>0){
 
             $out .= '<div class="popup__btn-wrap">';
             $out .= '<div class="popup__btn btn is-bege" onclick="window.location.href = \'/personal/basket/\';">Перейти в корзину</div>';
-            $out .= '<div class="popup__btn btn is-blue" onclick="closePopup();">Продолжить покупки</div>';
+            $out .= '<div class="popup__btn btn is-blue" onclick="flyProd($(this));closePopup();">Продолжить покупки</div>';
             $out .= '</div>';
             $out .= '</div>';
             $out .= '<hr>';
@@ -198,7 +199,7 @@ elseif($element_id>0){
                     else
                         $dost_part .= '<span>Поздравляем, доставка до пункта выдачи будет бесплатной!</span>';
 
-                    $dost_part .= '<img src="'.SITE_TEMPLATE_PATH.'/static/images/general/delivery-truck.jpg">';
+                    $dost_part .= '<img src="'.SITE_TEMPLATE_PATH.'/static/dist/images/general/delivery-truck.jpg">';
                     $dost_part .= '<div class="line-deliver"></div>';
                     $dost_part .= '</div>';
                 } else {
@@ -207,7 +208,7 @@ elseif($element_id>0){
                     $dost_part .= '<div class="popup_amount">'.\SaleFormatCurrency(($free_delivary-$sum), 'RUB').'</div>';
                     $dost_part .= '</div>';
                     $dost_part .= '<div class="popup__dost">';
-                    $dost_part .= '<img style="right: '.round(440*(($free_delivary-$sum)/$free_delivary)-10).'px; filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */" src="'.SITE_TEMPLATE_PATH.'/static/images/general/delivery-truck.jpg">';
+                    $dost_part .= '<img style="right: '.round(440*(($free_delivary-$sum)/$free_delivary)-10).'px; filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */" src="'.SITE_TEMPLATE_PATH.'/static/dist/images/general/delivery-truck.jpg">';
                     $dost_part .= '<div class="line-deliver" style="background-position-x: '.round(-440*(($free_delivary-$sum)/$free_delivary)).'px;"></div>';
                     $dost_part .= '</div>';
                 }
@@ -229,6 +230,7 @@ elseif($element_id>0){
         }
         $out .= '<script>';
         //$out .= "$('body').prepend('<div class=\"shadow shadow-select\"></div>');";
+        //$out .= 'flyProd(`'.$element_id.'`);';
         $out .= 'showPopup($(".popup"),{cssAuto:"true"});';
         $out .= '$(".sbasket-refresh").click();';
         $out .= '$("#basket-refresh").click();';

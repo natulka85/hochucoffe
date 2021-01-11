@@ -4,6 +4,7 @@ global $APPLICATION;
 $APPLICATION->SetTitle("");
 $APPLICATION->SetPageProperty("description", "");
 global $BP_TEMPLATE, $APPLICATION;
+\Bitrix\Main\Page\Asset::getInstance()->addCss("/local/templates/hochucoffe/static/dist/css/search-page.css");
 
 ?>
 <div class="search-page inner">
@@ -114,7 +115,7 @@ $phrase = $_REQUEST['q'];?>
 
 <?
 if(empty($arElements)){
-echo '<div class="search-result-count">К сожалению, по вашему запросу «'.$_REQUEST['q'].'» ничего не найдено</div>';
+echo '<div class="search-page__result-count">К сожалению, по вашему запросу «'.$_REQUEST['q'].'» ничего не найдено</div>';
     //include(__DIR__.'/search_empty.php');
 }
 ?>

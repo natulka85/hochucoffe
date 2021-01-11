@@ -14,7 +14,7 @@ foreach($arResult["ITEMS"] as $k=>&$arItem){
                 }
                 if($arItem["NAME"] == 'Хит продаж')
                 {
-                    $arItem["NAME"] = 'Выбор покупателей';
+                    //$arItem["NAME"] = 'Выбор покупателей';
                     $v["VALUE"] = 'Да';
                 }
 

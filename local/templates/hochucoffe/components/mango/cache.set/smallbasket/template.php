@@ -35,6 +35,7 @@ if(count($arData['compare'])>0){
     $compare = true;
 }
 ?>
+<? $arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;?>
     <div class="pers-info__ajax-wrap">
         <a class="sbasket-refresh" style="display:none;" rel="nofollow" href="<?=$APPLICATION->GetCurPage()?>">Обновить</a>
         <div class="pers-info__list">
@@ -52,11 +53,12 @@ if(count($arData['compare'])>0){
                     <div class="pers-info__num"><span></span></div>
                     <? //include (__DIR__.'/compare-template.php');?>
                 </a></div>
-            <div class="pers-info__item is-delay"><a class="pers-info__link" href="/personal/delay/">
+            <div class="pers-info__item is-delay" data-opened="delay">
+                <a class="pers-info__link" href="/personal/delay/">
                     <div class="pers-info__icon icon-1e_heart"></div>
                     <div class="pers-info__text">Отложенные</div>
                     <div class="pers-info__num"><span></span></div>
-                    <? //include (__DIR__.'/delay-template.php');?>
+                    <? include (__DIR__.'/delay-template.php');?>
                 </a></div>
             <div class="pers-info__item is-basket" data-opened="basket">
                 <a class="pers-info__link" href="/personal/basket/">
@@ -86,6 +88,7 @@ $(function(){
     $('.is-delay .pers-info__num').text('<?=count($arData['delay'])?>').addClass("<?=$delay_class?>");
     $('.is-compare .pers-info__num').text('<?=count($arData['compare'])?>').addClass("<?=$compare_class?>");
     $('.is-basket .pers-info__num').text('<?=$count?>').addClass("<?=$basket_class?>");
+    inDelayList(<?=\Bitrix\Main\Web\Json::encode(array_keys($arData['delay']))?>);
 })
 
 </script>

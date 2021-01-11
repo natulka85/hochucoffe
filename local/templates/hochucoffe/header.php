@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <?CJSCore::Init(array('mainjs'));?>
-    <link href="<?=SITE_TEMPLATE_PATH?>/static/css/global.css" rel="stylesheet">
+    <link href="<?=SITE_TEMPLATE_PATH?>/static/dist/css/global.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?$APPLICATION->ShowTitle();?></title>
     <?$APPLICATION->ShowHead();?>
@@ -18,20 +18,20 @@
         <div class="header">
             <div class="header__content inner">
                 <div class="header__left">
-                    <div class="header__block-l">
-                        <div class="header__logo">
-                            <?$alt = 'Интернет-магазин ХочуКофе – кофе высокого качества с доставкой по Москве и всей России'?>
-                            <?if($APPLICATION->GetCurPage()!="/"):?>
-                                <a href="/" title="Перейти на главную страницу сайта"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/logo_main.svg" alt="<?=$alt?>"></a>
-                            <?else:?>
-                                <a href="/"><img src="<?=SITE_TEMPLATE_PATH?>/static/images/logo_main.svg" alt="<?=$alt?>"></a>
-                            <?endif?>
+                    <div class="header__phone">
+                        <div class="header__phone-content icon-2o_phone"><a class="header__phone-link">8 (495) 320-20-20</a>
+                            <div class="header__callback btn is-white"><span>Обратный звонок</span></div>
                         </div>
-                        <div class="header__phone icon-2h_phone">
-                            <div class="header__phone-content"><a class="header__phone-link">8 (495) 320-20-20</a>
-                                <div class="header__callback"><span>Обратный звонок</span></div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+                <div class="header__center">
+                    <div class="header__logo">
+                        <?$alt = 'Интернет-магазин ХочуКофе – кофе высокого качества с доставкой по Москве и всей России'?>
+                        <?if($APPLICATION->GetCurPage()!="/"):?>
+                            <a href="/" title="Перейти на главную страницу сайта"><img src="<?=SITE_TEMPLATE_PATH?>/static/dist/images/logo.svg" alt="<?=$alt?>"></a>
+                        <?else:?>
+                            <a href="/"><img src="<?=SITE_TEMPLATE_PATH?>/static/dist/images/logo.svg" alt="<?=$alt?>"></a>
+                        <?endif?>
                     </div>
                 </div>
                 <div class="header__right">
@@ -52,16 +52,6 @@
                         ),
                         false
                     );?>
-                    </div>
-                    <div class="search">
-                        <span class="search__form-section" data-section_id=""></span>
-                        <form class="search__form" action="/search/">
-                            <div class="search__fields"><input class="search__input" name="q"
-                                                               placeholder="Я ищу свой любимый кофе" autocomplete="off">
-                                <button class="search__btn icon-1i_search"></button>
-                            </div>
-                        </form>
-                        <div class="search-hint-ajax"></div>
                     </div>
                 </div>
             </div>
@@ -94,17 +84,6 @@
                 "MENU_CACHE_GET_VARS" => ""
             )
         );*/?>
-
-        <?if(CATALOG_PAGE=='Y'):?>
-            <div class="menu-catalog">
-                <div class="menu-catalog__list">
-                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-sort-link" href="#"><span
-                                    class="icon-2l_sort">Сортировка</span></a></div>
-                    <div class="menu-catalog__item"><a class="menu-catalog__link js-link is-filter" href="#"><span
-                                    class="icon-2k_filter">Фильтр</span></a></div>
-                </div>
-            </div>
-        <?endif;?>
         <div class="page">
             <div class="inner">
 

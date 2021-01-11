@@ -269,8 +269,15 @@ JCSmartFilter.prototype.postHandler = function (result, fromCache)
 					$('#modef a').hide();
 				else
 					$('#modef a').show();*/
+				var filter_class = $('.filter__info').attr('class');
 				url = result.SEF_SET_FILTER_URL;
 				var data = parceAjaxUrl(url);
+
+				if(filter_class!=undefined){
+					filter_class = filter_class.replace('filter__info','');
+					data['ax_filter_class'] = filter_class;
+				}
+
 				if(window.outerWidth > 640){
 					reloadPage(url, data, 'filter_sec');
 				}
@@ -1063,3 +1070,6 @@ $(document).on('click','.filter__info-btn',function(){
 		block.find('.filter__checkbox:checked').click();
 	}
 })
+$(document).on('click','.filter__info-close',function(){
+	$('.filter__info').removeClass('doFixed').removeClass('doFixedBottom').addClass('noSticky');
+});

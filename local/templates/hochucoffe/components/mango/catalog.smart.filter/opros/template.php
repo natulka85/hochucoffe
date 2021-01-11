@@ -13,9 +13,9 @@
 $this->setFrameMode(true);
 global $BP_TEMPLATE;?>
 
-<section class="form is-opened">
+<section class="form<?=$_REQUEST['ax_filter_class']?>">
     <div class="form__head">
-        <div class="form__title page-block-head"><h2 class="page-title _type-2 icon-1h_galka">Быстро найти
+        <div class="form__title page-block-head"><h2 class="page-title _type-3 icon-1h_galka">Быстро найти
                 любимый кофе</h2></div>
         <div class="form__note">Ответьте на несколько вопросов о том, какой кофе Вы ищете и мы покажем
             страницу, где оно представлено
@@ -35,6 +35,10 @@ global $BP_TEMPLATE;?>
                             <label class="index-form__label">
                                 <input class="index-form__radio main-checkbox__checkbox" type="radio" name="section_id" data-section_code="<?=$sect['CODE']?>" value="<?=$sect_id?>" <?if($sect['CHECKED']=='Y'):?> checked <?endif;?>>
                                 <span class="main-checkbox__span is-radio index-form__span"><?=$sect['VALUE']?></span>
+                                <svg width='15' height='14' viewbox='0 0 15 14' fill='none'>
+                                    <path d='M2 8.36364L6.23077 12L13 2'></path>
+                                </svg>
+
                             </label>
                         </div>
                     <?endforeach;?>
