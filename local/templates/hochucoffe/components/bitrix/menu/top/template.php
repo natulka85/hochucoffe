@@ -59,11 +59,12 @@ unset($arNewItems);
                 <?endif?>
             </div>
             <div class="search">
+                <div class="search__btn icon-1i_search"></div>
                 <span class="search__form-section" data-section_id=""></span>
                 <form class="search__form" action="/search/">
                     <div class="search__fields"><input class="search__input" name="q"
                                                        placeholder="Я ищу свой любимый кофе" autocomplete="off">
-                        <button class="search__btn icon-1i_search"></button>
+                        <button class="search__btn-funct">Найти</button>
                     </div>
                 </form>
                 <div class="search-hint-ajax"></div>

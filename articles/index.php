@@ -92,7 +92,7 @@ $APPLICATION->SetTitle("Новости магазина зернового ко�
     "USE_SHARE" => "N",	// Отображать панель соц. закладок
     "AJAX_OPTION_ADDITIONAL" => "",	// Дополнительный идентификатор
     'MOD_TAGS_URL' => '/articles/sort_#NAME_TRANS#/',
-    'CATEGORY_TYPE' =>'ARTICLES_LIST',
+    'CATEGORY_TYPE' =>'ALL_ARTTICLES',
     "SEF_URL_TEMPLATES" => array(
         "news" => "",
         "section" => "#ELEMENT_CODE#/#SECTION_CODE#/",

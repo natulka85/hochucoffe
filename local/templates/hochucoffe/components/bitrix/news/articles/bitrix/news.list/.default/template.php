@@ -3,12 +3,14 @@ $this->setFrameMode(true);
 global $BP_TEMPLATE;?>
 <div class="articles">
 <?if(!empty($arResult['ITEMS'])):?>
+    <div class="catg__list-control">
     <div class="catg__list-control-bl is-sort">
         <div class="catg__list-control-name">Сортировать по:</div>
         <?foreach ($arParams['SORT_LIST'] as $sort_code=>$list):?>
             <?if(strpos($sort_code))?>
                 <div class="catg__list-control-value js-ctg-sort <?=$list['class']?>" data-value="<?=$sort_code?>"><?=$list['name']?></div>
         <?endforeach;?>
+    </div>
     </div>
 
     <div class="articles__list">
@@ -18,17 +20,15 @@ global $BP_TEMPLATE;?>
                     <img src="<?=$item['PREVIEW_PICTURE']['SRC']?>" alt="">
                 </div>
                 <a href="<?=$item['DETAIL_PAGE_URL']?>" class="articles__back">
-                    <div class="articles__date">Подробнее</div>
+                    <div class="articles__date"><?=$item['FORMATE_DATE_CREATE']?></div>
                     <div class="articles__title"><?=$item['NAME']?></div>
-                    <div class="articles__short"><?=$item['PREVIEW_TEXT']?></div>
+                    <div class="articles__short"><?=$item['PREVIEW_TEXT_SHORT']?></div>
                     <span class="articles__item-f">
-
-                        <div class="articles__btn">Подробнее</div>
+                        <div class="articles__btn btn is-transp-white">Подробнее</div>
+                        <?if($item['SHOW_COUNTER']>0):?> <div class="articles__show icon-3b_eye"><span><?=$item['SHOW_COUNTER']?></span><?endif;?></div>
                     </span>
                 </a>
             </div>
-        <?include(__DIR__.'/news-card-element.php')?>
-
         <?endforeach;?>
     </div>
 <?endif;?>

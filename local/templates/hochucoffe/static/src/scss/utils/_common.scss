@@ -405,6 +405,9 @@ video::-webkit-media-controls {
     &.is-transp-brown{
         @include btnColor('transp-brown');
     }
+    &.is-transp-white{
+        @include btnColor('transp-white');
+    }
     &.is-transp-red{
         @include btnColor('transp-red');
     }

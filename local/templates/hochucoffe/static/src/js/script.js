@@ -541,24 +541,20 @@ function adaptiveContent() {
 
 function searchBtn(){
     $(document).on('click','.search__btn',function(e){
-        var input = $(this).parents('form').find('input');
-        if(input.val()===''){
-            e.preventDefault();
-            $(this).parents('.search').removeClass('is-opened');
-        }
+        $(this).parents('.search').toggleClass('is-opened');
     })
     $(document).on('click','.search:not(".is-opened") button',function (e) {
         e.preventDefault();
         $(this).parents('.search').addClass('is-opened');
     })
-    $(document).on('mouseenter','.search:not(".is-opened") button',function (e) {
+    $(document).on('mouseenter','.search__btn',function (e) {
         e.preventDefault();
         $(this).parents('.search').addClass('is-opened');
     })
-    $(document).on('mouseleave','.search:not(".is-opened") button',function (e) {
+    /*$(document).on('mouseleave','.search:not(".is-opened") button',function (e) {
         e.preventDefault();
         $(this).parents('.search').removeClass('is-opened');
-    })
+    })*/
 
     $(document).mouseup(function (e){ // событие клика по веб-документу
         var domElem = $('.search'),

@@ -1,13 +1,14 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
-global $BP_TEMPLATE;
+global $BP_TEMPLATE, $APPLICATION;
 $this->setFrameMode(true);?>
-
+<div class="articles-page-list">
+<div class="page-block-head">
+    <h1 class="page-title _type-1">Интересные статьи о зерновом кофе</h1>
+</div>
 <?
 if ($_REQUEST["catalog_ajax_call"] == "Y") {
-    ob_get_clean();
     ob_start();
 }
-
 //sort
 if(!$_REQUEST['sort'])
     $_REQUEST['sort'] = 'data_max';
@@ -61,13 +62,12 @@ $arParams["ELEMENT_SORT_CODE"] = $arSort['code'];
 		"FILTER_NAME"	=>	$arParams["FILTER_NAME"],
 		"HIDE_LINK_WHEN_NO_DETAIL"	=>	$arParams["HIDE_LINK_WHEN_NO_DETAIL"],
 		"CHECK_DATES"	=>	$arParams["CHECK_DATES"],
-		"MOD_TAGS_URL"	=>	$arParams["MOD_TAGS_URL"],
 	),
 	$component
 );?></div><?
 if ($_REQUEST["catalog_ajax_call"] == "Y")
 {
-    $strAjaxItems = ob_get_flush();
+    $strAjaxItems = ob_get_clean();
     $APPLICATION->RestartBuffer();
 }
 
@@ -76,14 +76,9 @@ if ($_REQUEST["catalog_ajax_call"] == "Y")
 {
     $APPLICATION->RestartBuffer();
     echo \Bitrix\Main\Web\Json::encode([
-        'filter'=>$strAjaxFilter,
         'items'=>$strAjaxItems,
-        'title'=>$title,
-        'desc'=>$desc,
-        'h1'=>$h1,
-        'text'=>$text,
-        'breadcrumbs' => $breadcrumbs
     ]);
     die();
 }
 ?>
+</div>

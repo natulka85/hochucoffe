@@ -7,6 +7,9 @@ $(function(){
         watchSlidesProgress:true,
         loop: true,
         effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        },
         pagination: {
             el: '.banner .swiper__bullet',
             type: 'bullets',

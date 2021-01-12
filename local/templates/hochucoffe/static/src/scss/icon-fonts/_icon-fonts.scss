@@ -176,6 +176,9 @@
 	@if $filename == 3a_more {
 	$char: "\E031";
 }
+	@if $filename == 3b_eye {
+	$char: "\E032";
+}
 
 @return $char;
 }
@@ -337,4 +340,7 @@
 }
 .icon-3a_more {
 	@include icon(3a_more);
+}
+.icon-3b_eye {
+	@include icon(3b_eye);
 }

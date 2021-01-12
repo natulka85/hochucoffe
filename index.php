@@ -243,7 +243,8 @@ global $BP_TEMPLATE;
 
 <div class="inner">
     <section class="pomol">
-        <div class="page-block-head is-center"><h2 class="page-title _type-2">В чем завариваете кофе?</h2></div>
+        <div class="page-block-head is-center"><h2 class="page-title _type-2">В чем завариваете кофе?</h2><a href="/catalog/"
+                                                                                                             class="page-title-link">Перейти в каталог</a></div>
         <div class="pomol__sw-cont swiper-container"><div class="pomol__list swiper-wrapper">
                 <div class="pomol__item-wrap swiper-slide">
                     <div class="pomol__item is-franch">

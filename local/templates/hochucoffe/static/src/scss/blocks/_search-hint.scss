@@ -145,12 +145,14 @@
   .search-hint{
     &__wrap{
       padding: 20px 10px;
-      width: calc(100% + 20px);
       margin-left: -10px;
-      top: 50px;
       border-radius: 0;
       border-left: 0;
       border-right: 0;
+      width: 100vw;
+      right: -10px;
+      left: auto;
+      top: 110px;
     }
     .catg__labels .labels__items.is-left{
       display: none;

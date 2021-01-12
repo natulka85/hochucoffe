@@ -344,6 +344,15 @@
             color: $white;
         }
     }
+    @else if($color=='transp-white'){
+        background: transparent;
+        color: $white;
+        border: 1px solid $white;
+        &:hover{
+            background: $white;
+            color: $grafit;
+        }
+    }
     @else if($color=='transp-red'){
         background: transparent;
         color: $grafit;
