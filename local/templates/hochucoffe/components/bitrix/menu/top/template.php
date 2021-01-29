@@ -53,9 +53,9 @@ unset($arNewItems);
             <div class="header__logo">
                 <?$alt = 'Интернет-магазин ХочуКофе – кофе высокого качества с доставкой по Москве и всей России'?>
                 <?if($APPLICATION->GetCurPage()!="/"):?>
-                    <a href="/" title="Перейти на главную страницу сайта"><img src="<?=SITE_TEMPLATE_PATH?>/static/dist/images/logo_wh.svg" alt="<?=$alt?>"></a>
+                    <a href="/" title="Перейти на главную страницу сайта"><img src="<?=SITE_TEMPLATE_PATH?>/static/dist/images/svg/logo.svg" alt="<?=$alt?>"></a>
                 <?else:?>
-                    <a href="/"><img src="<?=SITE_TEMPLATE_PATH?>/static/dist/images/logo_wh.svg" alt="<?=$alt?>"></a>
+                    <a href="/"><img src="<?=SITE_TEMPLATE_PATH?>/static/dist/images/svg/logo.svg" alt="<?=$alt?>"></a>
                 <?endif?>
             </div>
             <div class="search">

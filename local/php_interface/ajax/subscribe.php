@@ -65,7 +65,8 @@ if(CModule::IncludeModule("subscribe")){
                 $json['error'] = 'ok';
                 $json['func'] ='$(".popup").html(`'.$out.'`);
                     showPopup($(".popup"),{widthCss:"560"});
-                    $("form.subscribe__form")[0].reset();'.$event;
+                    $("form.subscribe__form")[0].reset();
+                    $("form.f-subscribe__form")[0].reset();'.$event;
             }
         elseif ($subscr->LAST_ERROR!=''){
             $json['func'] ='
@@ -77,6 +78,7 @@ if(CModule::IncludeModule("subscribe")){
         $json['func'] = '';
     }
     $json['func'] .= $BP_TEMPLATE->Valid($valid,'form.subscribe__form');
+    $json['func'] .= $BP_TEMPLATE->Valid($valid,'form.f-subscribe__form');
 }
 
 

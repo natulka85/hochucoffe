@@ -1,0 +1,31 @@
+
+#cleversite_clever_container {
+  inset: auto 30px 20px auto !important;
+  @media #{$media-640} {
+    inset: auto 10px 70px auto!important
+  }
+}
+#cleversite_scenario{
+  inset: auto 0px 0px auto !important;
+}
+#cleversite_clever{
+  inset: auto 20px 20px auto !important;
+}
+#cleversite_call{
+  bottom: 100px !important;
+  top: auto !important;
+}
+#clever_callback_cont #cleversite_call .clever_callback_form_ico{
+  box-shadow: none !important;
+}
+#cleversite_chat,
+#cleversite_clever_button_image{
+  @media #{$media-640} {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  &>img{
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+}

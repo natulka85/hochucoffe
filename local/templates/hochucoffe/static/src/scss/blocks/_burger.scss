@@ -10,7 +10,7 @@ $height:3px;
     top: 50%;
     margin-top: -1px;
     height: $height;
-    background: $white;
+    background: $grafit;
     width: 100%;
     transition: background 0s 0.3s;
     border-radius: 10px;
@@ -23,7 +23,7 @@ $height:3px;
     left: 0;
     width: 100%;
     height: $height;
-    background-color: $white;
+    background-color: $grafit;
     border-radius: 10px;
     content: "";
   }
@@ -63,13 +63,13 @@ $height:3px;
 .burger--htx.is-active span::before {
   top: 0;
   transform: rotate(45deg);
-  background: $green;
+  background: $blue;
 }
 
 .burger--htx.is-active span::after {
   bottom: 0;
   transform: rotate(-45deg);
-  background: $green;
+  background: $blue;
 }
 
 .burger--htx.is-active span::before,

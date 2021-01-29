@@ -11,12 +11,12 @@ if(!empty($arResult['ITEMS'])){
         //для мета
         $arArtNames[] = strtolower($item['NAME']);
 
-        if(strlen($item['PREVIEW_TEXT']) >  $title_length){
-            $shotPrevText = substr($item['PREVIEW_TEXT'], 0, $title_length);
+        if(strlen($item['~PREVIEW_TEXT']) >  $title_length){
+            $shotPrevText = substr($item['~PREVIEW_TEXT'], 0, $title_length);
             $item['PREVIEW_TEXT_SHORT'] = substr($shotPrevText, 0, strrpos($shotPrevText, ' ')).'...';
         }
         else{
-            $item['PREVIEW_TEXT_SHORT'] = $item['PREVIEW_TEXT'];
+            $item['PREVIEW_TEXT_SHORT'] = $item['~PREVIEW_TEXT'];
         }
     }
 
@@ -59,5 +59,4 @@ $arResult["NAV_STRING"] = preg_replace_callback(
     }
     ,$arResult["NAV_STRING"]
 );
-
 ?>

@@ -20,6 +20,12 @@
         display: block;
       }
     }
+    @media #{$media-640} {
+      width: calc(100% - 30px);
+      border: 1px solid gray;
+      margin-top: 10px;
+      margin-left: 15px;
+    }
   }
   &__info-close{
     position: absolute;
@@ -122,8 +128,10 @@
       height: 26px;
       line-height: 26px;
     }
-    .main-checkbox__checkbox:checked+.main-checkbox__span:after, .main-checkbox.is-active:checked+.main-checkbox__span:after{
+    .main-checkbox__checkbox:checked+.main-checkbox__span:after,
+    .main-checkbox.is-active:checked+.main-checkbox__span:after{
       @include gradient('bege');
+      border-color: $bege;
     }
   }
   &__choose-block{

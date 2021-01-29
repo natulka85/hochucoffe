@@ -1,0 +1,51 @@
+.soc-col{
+  &__items{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__item{
+    &:before{
+      font-size: 36px;
+    }
+    &.icon-3o_fb{
+      &:before{
+        color: #1C75DA;
+      }
+      &:hover{
+        &:before{
+          color: darken(#1C75DA,5%);
+        }
+      }
+    }
+    &.icon-3p_ok{
+      &:before{
+        color: #F79400;
+      }
+      &:hover{
+        &:before{
+          color: darken(#F79400,5%);
+        }
+      }
+    }
+    &.icon-3r_vk{
+      &:before{
+        color: #4B8BD2;
+      }
+      &:hover{
+        &:before{
+        color: darken(#4B8BD2,5%);
+        }
+      }
+    }
+    &.icon-3s_in{
+      &:before{
+        color: $fiol;
+      }
+      &:hover{
+        &:before{
+          color: darken($fiol,5%);
+        }
+      }
+    }
+  }
+}

@@ -13,7 +13,7 @@
             <div class="basket__text _type-5">Какое утро без кофе? ^^</div>
         </div>
     </div>
-    <section class="cloud">
+    <!--<section class="cloud">
         <div class="cloud__list">
             <div class="cloud__item is-active"><a class="cloud__link" href="#">Камерун<span
                             class="cloud__num">50</span></a></div>
@@ -40,7 +40,7 @@
             <div class="cloud__item"><a class="cloud__link" href="#">Дорогой кофе<span
                             class="cloud__num">50</span></a></div>
         </div>
-    </section>
+    </section>-->
 
     <?include_once ($_SERVER['DOCUMENT_ROOT'].'/local/templates/hochucoffe/includes/you_viewed.php');?>
 

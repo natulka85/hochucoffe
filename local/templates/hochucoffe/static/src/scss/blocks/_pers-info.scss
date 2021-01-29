@@ -72,6 +72,7 @@
   }
   &__list-hold{
     position: relative;
+    padding-right: 12px;
     &:after{
       content: '';
       position: absolute;
@@ -87,8 +88,8 @@
     position: absolute;
     background: #fff;
     right: 0;
-    z-index: 100;
-    padding: 28px 8px;
+    z-index: 150;
+    padding: 28px 0;
     text-align: left;
     display: none;
     opacity: 0;
@@ -96,7 +97,6 @@
     @include Shadow();
     .basket{
       &__list{
-        padding: 0 14px;
         padding-bottom: 30px;
         max-height: 320px;
         overflow-y: auto;
@@ -109,11 +109,14 @@
         &::-webkit-resizer { background-color: #666;}
       }
       &__item{
-        padding: 10px 0;
+        padding: 14px 18px;
+        transition: .3s;
         &:not(:last-child){
           border-bottom: 1px dashed $grayBorder;
         }
         &:hover{
+          @include mainBoxshadow();
+          background: $grayLight;
           .basket__gram .cst-select-current{
             border-color: rgba(50,51,55,.5);
             color: $grafit;
@@ -130,27 +133,38 @@
       &__el{
         padding-left: 70px;
       }
+      &__el-pic{
+        width: 70px;
+        height: 70px;
+        left: 16px;
+      }
       &__el-control{
         position: relative;
-        top: -4px;
+      }
+      &__el-name-wrap{
+        margin-bottom: 10px;
       }
       &__cnt{
         top: auto;
-        right: 0;
+        right: -10px;
         bottom: -2px;
         color: $grayBorder;
       }
       &__cont-btn-wrap{
-        padding-right: 110px;
+        //padding-right: 110px;
         margin-top: 0;
         width: 100%;
+        justify-content: flex-start;
+        align-items: flex-end;
         ._text{
           display: none;
+        }
+        &._type-1{
+          padding-left: 62px;
         }
       }
       &__gram{
         .cst-select-current{
-          height: 26px;
           font-weight: 300;
           border-color: $grayBorder;
         }
@@ -181,11 +195,14 @@
        font-size: 14px !important;
      }
     .basket__cont-btn{
-      margin-left: 10px;
+      margin-left: 6px;
     }
   }
   &__res{
-    margin-top: 20px;
+    margin-top: 10px;
+    border-top: 1px solid #cacad0;
+    padding: 10px 10px 0 10px;
+    border-top: 1px solid $grayBorder;
   }
   &__res-block{
     display: flex;
@@ -199,7 +216,7 @@
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 20px;
-    padding-left: 10px;
+    padding-left: 20px;
   }
 }
 
@@ -237,7 +254,7 @@
     position: fixed;
     left: 0;
     bottom: -1px;
-    z-index: 1000;
+    z-index: 998;
     background: $grayLight;
     width: 100%;
     @include Shadow();

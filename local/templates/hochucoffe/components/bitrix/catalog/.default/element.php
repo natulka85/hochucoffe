@@ -13,7 +13,7 @@ global $APPLICATION,$BP_TEMPLATE; ?>
                 "SITE_ID" => "s1"
             )
         );?>
-    <div class="prod__content">
+
             <?
             $componentElementParams = array(
                 'IBLOCK_TYPE' => $arParams['IBLOCK_TYPE'],
@@ -154,7 +154,7 @@ global $APPLICATION,$BP_TEMPLATE; ?>
             );
 
             ?>
-    </div>
+
 
             <?//include_once($_SERVER['DOCUMENT_ROOT'].'/local/php_interface/ajax/delay_list.php');?>
         <?

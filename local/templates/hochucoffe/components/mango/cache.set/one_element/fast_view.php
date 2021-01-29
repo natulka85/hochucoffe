@@ -125,7 +125,7 @@ $this->setFrameMode(true);
                                 <div class="prod__deliv"><span>Бесплатная</span> доставка при заказе от 5000 ₽</div>
                                 <div class="prod__deliv-info"><span>Доставка на:</span> 26.12.2020</div>
                                 <div class="prod__btn-wrap">
-                                    <div class="prod__btn btn is-buy js-do" data-id="<?=$arResult['ID']?>" data-action="basket_change" <?foreach ($arResult['STATE']['DATA'] as $data=>$dataVal):?><?=$data?>="<?=$dataVal?>"<?endforeach;?>>В корзину</div>
+                                    <div class="prod__btn btn is-buy js-do" data-id="<?=$arResult['ID']?>" data-action="basket_change" <?foreach ($arResult['STATE']['DATA'] as $data=>$dataVal):?><?=$data?>="<?=$dataVal?>"<?endforeach;?> onclick="<?=$arParams['EVENTS']['v_korzinu']?>">В корзину</div>
                             </div>
                         </div>
                         <div class="prod__main">

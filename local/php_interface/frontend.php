@@ -35,7 +35,7 @@ $arLibs = [
         'rel'  => ['lib'],
     ],
     'barba' => [
-        'js'   => $cur_templ_path.'/static/dist/js/vendors/barna.min.js',
+        'js'   => $cur_templ_path.'/static/dist/js/vendors/barba.min.js',
         'rel'  => ['lib'],
     ],
     'mainjs' => [
@@ -53,7 +53,7 @@ $arLibs = [
             'cookie',
             'actual',
             'mango_slider',
-            'barba'
+            //'barba'
         ],
     ],
 ];

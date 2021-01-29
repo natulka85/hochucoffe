@@ -3,7 +3,7 @@
 global $BP_TEMPLATE;
 CModule::IncludeModule("iblock");
 CModule::IncludeModule("catalog");
-
+$arFilter ['ACTIVE'] = 'Y';
 $arFilter ['IBLOCK_ID'] = $arParams['IBLOCK_ID'];
 $arFilter ['IBLOCK_TYPE'] = $arParams['IBLOCK_TYPE'];
 $arTopCount = [];

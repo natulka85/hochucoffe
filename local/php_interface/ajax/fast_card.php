@@ -17,6 +17,15 @@ if($id>0){
         "=ID" => $id,
     );
 
+    if($_REQUEST['from']=='main'){
+        $ym['v_korzinu'] = 'ym(71202064,\'reachGoal\',\'click_v_korziny_glavnaya_bisrij_prosmotr\');';
+    }
+    elseif ($_REQUEST['from']=='catalog'){
+        $ym['v_korzinu'] = 'ym(71202064,\'reachGoal\',\'click_v_korziny_katalog_bistrij_prosmotr\');';
+    }
+    else{
+        $ym['v_korzinu'] = 'ym(71202064,\'reachGoal\',\'click_v_korziny_ostalnoe_bistrij_prosmotr\');';
+    }
     $arSettings = [
         "IBLOCK_TYPE" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_IB_TYPE,
         "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
@@ -26,7 +35,8 @@ if($id>0){
         "FILTER_NAME" => 'arFilterCard',
         'MOD_TEMPATE' => 'FAST_VIEW',
         'CATEGORY_TYPE'=> 'ONE_CARD',
-        'REQUEST_ID' => $id
+        'REQUEST_ID' => $id,
+        'EVENTS' => $ym
     ];
 
     $APPLICATION->IncludeComponent(

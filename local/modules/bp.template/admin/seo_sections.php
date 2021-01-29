@@ -79,7 +79,7 @@ if ((!empty($save) || !empty($restore)) && $request->isPost() && check_bitrix_se
     if($isChanged)
     {
         $сache = Cache::createInstance();
-        $сache->clean('bp_template_consts', '/vamsvet');
+        $сache->clean('bp_template_consts', '/hochucoffe');
     }
 }
 

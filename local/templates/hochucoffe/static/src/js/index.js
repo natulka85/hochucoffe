@@ -113,14 +113,15 @@ $(function(){
     }
     var swiper_6 = new Swiper('.pomol__sw-cont.swiper-container', {
         speed: 400,
-        slidesPerView: 2.32,
+        slidesPerView: 2.4,
         spaceBetween: 0,
-        slidesPerGroup: 2,
+        slidesPerGroup: 1,
+        initialSlide:0,
         loop: true,
         breakpoints: {
             641: {
                 slidesPerView: 8,
-                loop: false,
+                //loop: false,
             }
         }
     });
@@ -157,6 +158,20 @@ $(function(){
         },
     });
 
+    function setOffsetPosition($el) {
+        console.log($el,'$el');
+        var rect = $el[0].getBoundingClientRect();
+        var win = $el[0].ownerDocument.defaultView;
+
+        var elW = $el.width();
+        var elH = $el.height();
+        var marginB = 20;
+        return {
+            top: rect.top + win.pageYOffset - (elH),
+            left: rect.left + win.pageXOffset - (elW/2)
+        };
+    }
+
     function makeWindow($html,coord){
         var element = document.createElement('div');
         element.setAttribute('class', 'map__text');
@@ -190,11 +205,15 @@ $(function(){
         req.send(null);
         $(document).on('mouseenter', '.map__country-link', function(){
             var country = $(this).data('country_id');
-            var mapPoint = $(".map__left path[id="+country+"]");
-            mapPoint.attr("class",'is-hover');
-            var coord = mapPoint.offset();
+            if(country!==''){
+                var mapPoint = $('.map__left path[id='+country+']');
+                mapPoint.attr("class",'is-hover');
+                //var coord_1 = mapPoint.offset();
+                var coord = setOffsetPosition(mapPoint);
 
-            makeWindow($(this).html(),coord)
+                //console.log(coord_1,coord,'coord');
+                makeWindow($(this).html(),coord)
+            }
         })
         $(document).on('mouseleave', '.map__country-link, .map__left path', function(){
             $('.map__left path').attr('class','');
@@ -203,19 +222,17 @@ $(function(){
 
         $(document).on('mouseenter','.map__left path', function(){
             var mapPoint = $(this);
-            var coord = mapPoint.offset();
+            //var coord = mapPoint.offset();
+            var coord = setOffsetPosition(mapPoint);
             var html = $('.map__country-link[data-country_id='+mapPoint.attr('id')+']').find('span').html();
             if(html!=undefined && html !=='undefined'){
                 makeWindow('<span>'+html+'</span>',coord)
             }
-
-        })
-
-        $(document).on('click','.form__head',function () {
-            $(this).parents('.form').toggleClass('is-opened');
         })
     }
-
+    $(document).on('click','.form__head',function () {
+        $(this).parents('.form').toggleClass('is-opened');
+    })
     if($('.view__list.is-slider').length > 0){
         $(document).on('click','.view__bottom-arrows span.slick-prev',function(){
           $(this).parents('.view').find('button.slick-prev').trigger('click');
@@ -231,15 +248,11 @@ $(function(){
 function animeUtp(){
     var obj = $('.utp__item-wrap:not(.is-rotated)');
     obj.css({'width':'auto'});
-    /*setTimeout(function(){
-        obj.each(function(index){
-            $(this).css({'width':'auto'});
-            let left = $(this).offset().left + $(this).outerWidth();
-            //$(this).css({'transform':'translateX(-'+left+'px)'});
-        })
-    },1000)*/
-
+    addingClass();
     $(window).scroll(function () {
+        addingClass();
+    });
+    function addingClass(){
         if($('.utp__item-wrap:not(.is-rotated)').length>0){
             var scroll = $(window).scrollTop();
             var parent = $('.utp__list');
@@ -254,6 +267,6 @@ function animeUtp(){
                 })
             }
         }
-    });
+    }
 }
 

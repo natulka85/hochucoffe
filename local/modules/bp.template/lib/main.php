@@ -49,6 +49,51 @@ class Main
             'NAME_PROP' => 'Степень обжарки'
         ]
     ];
+    public $pomolSposobTem = [
+        'franch-press'=>[
+            'name'=>'Фрэнс-пресс',
+            'icon'=>'icon-3d_franch'
+        ],
+        'kemeks'=>[
+            'name'=>'Кемекс',
+            'icon'=>'icon-3c_kem'
+        ],
+        'aeroexpress'=>[
+            'name'=>'Аэропресс',
+            'icon'=>'icon-3e_aero'
+        ],
+        'purover'=>[
+            'name'=>'Пуровер',
+            'icon'=>'icon-3f_pur'
+        ],
+        'aspresso'=>[
+            'name'=>'Эспрессо',
+            'icon'=>'icon-3g_espres'
+        ],
+        'turka'=>[
+            'name'=>'Турка',
+            'icon'=>'icon-3h_turka'
+        ],
+        'sifon'=>[
+            'name'=>'Сифон',
+            'icon'=>'icon-3i_sif'
+        ],
+    ];
+    public $pomolSposob  = [
+        'Не молоть' =>['franch-press','kemeks','aeroexpress','sifon','purover','aspresso','turka'],
+        'Мелкий' =>[
+            'franch-press','kemeks','aeroexpress','sifon','purover','aspresso','turka'
+        ],
+        'Средний' =>[
+            'franch-press','kemeks','aeroexpress','sifon','purover','aspresso','turka'
+        ],
+        'Средний+' =>[
+            'franch-press','kemeks','aeroexpress','sifon','purover','aspresso','turka'
+        ],
+        'Крупный' =>[
+            'franch-press','kemeks','aeroexpress','sifon','purover','aspresso','turka'
+        ],
+    ];
 
     public static function initCity(){
         global $BP_TEMPLATE;

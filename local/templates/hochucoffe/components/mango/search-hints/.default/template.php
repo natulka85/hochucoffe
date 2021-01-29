@@ -19,7 +19,7 @@ $arResult['LABLES_TEMPLATE'] = [
 ];
 ?>
 <div class="search-hint__wrap">
-    <div class="search-hint__btn-close"></div>
+    <div class="search-hint__btn-close icon-2a_plus"></div>
 <?if(!empty($arResult['ITEMS']) || !empty($arResult['SECTIONS'])):?>
         <div class="search-hint">
             <div class="search-hint__side is-category">

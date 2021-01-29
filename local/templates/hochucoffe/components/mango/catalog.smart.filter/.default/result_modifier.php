@@ -183,11 +183,12 @@ function item_tmpl($tmpl, $arItem,$quant,$struct=false) {
                     'Классические ароматизаторы',
                     'Экзотические ароматизаторы',
                 ];
-                foreach($arItem['VALUES'] as $val){
+                /*foreach($arItem['VALUES'] as $val){
                     if(in_array($val['VALUE'],$arValidValues)){
                         $arValues[] =  $val;
                     }
-                }
+                }*/
+                $arValues = $arItem['VALUES'];
             }
             else{
                 $arValues = $arItem['VALUES'];
@@ -279,7 +280,7 @@ if($ar_res['DEPTH_LEVEL']==1 && $arResult['SECTION']['IBLOCK_ID']==$BP_TEMPLATE-
 
     $arResult["ITEMS"]["SECTION"] = array(
         "TYPE" => "SECTION",
-        "NAME" => "Тип светильника",
+        "NAME" => "Раздел кофе",
         "DISPLAY_TYPE" => "L",
         "DISPLAY_EXPANDED" => "Y",
         "VALUES" => $arSect,
@@ -306,7 +307,7 @@ if($ar_res['DEPTH_LEVEL']==1 && $arResult['SECTION']['IBLOCK_ID']==$BP_TEMPLATE-
 
     $arResult["ITEMS"]["SECTION"] = array(
         "TYPE" => "SECTION",
-        "NAME" => "Тип светильника",
+        "NAME" => "Раздел кофе",
         "DISPLAY_TYPE" => "L",
         "DISPLAY_EXPANDED" => "Y",
         "VALUES" => $arSect,
@@ -330,7 +331,7 @@ if($ar_res['DEPTH_LEVEL']==1 && $arResult['SECTION']['IBLOCK_ID']==$BP_TEMPLATE-
 
     $arResult["ITEMS"]["SUBSECTION"] = array(
         "TYPE" => "SUBSECTION",
-        "NAME" => "Вид светильника",
+        "NAME" => "Раздел кофе",
         "DISPLAY_TYPE" => "L",
         "DISPLAY_EXPANDED" => "Y",
         "VALUES" => $arSect,
@@ -358,7 +359,7 @@ if($ar_res['DEPTH_LEVEL']==1 && $arResult['SECTION']['IBLOCK_ID']==$BP_TEMPLATE-
 
     $arResult["ITEMS"]["SECTION"] = array(
         "TYPE" => "SECTION",
-        "NAME" => "Тип светильника",
+        "NAME" => "Раздел кофе",
         "DISPLAY_TYPE" => "L",
         "DISPLAY_EXPANDED" => "Y",
         "VALUES" => $arSect,
@@ -385,7 +386,7 @@ if($ar_res['DEPTH_LEVEL']==1 && $arResult['SECTION']['IBLOCK_ID']==$BP_TEMPLATE-
 
     $arResult["ITEMS"]["SUBSECTION"] = array(
         "TYPE" => "SUBSECTION",
-        "NAME" => "Вид светильника",
+        "NAME" => "Раздел кофе",
         "DISPLAY_TYPE" => "L",
         "DISPLAY_EXPANDED" => "Y",
         "VALUES" => $arSect,
@@ -402,20 +403,28 @@ function form_empty_url() {
     $val = substr($FORM_ACTION, 0, strpos($FORM_ACTION, 'filter/'));
     return $val;
 }
-
+$arExcludes = [19,20,21];//акция
 if(!empty($arResult['CHEKED_FILT'])){
     if(count($arResult['CHEKED_FILT']) <= 2){
         foreach ($arResult['CHEKED_FILT'] as $checked_filt_id=>$checked_filt_val) {
             $check_el = current($checked_filt_val);
+            if(in_array($checked_filt_id,$arExcludes)){
+                $ar = [];
+                $obSeoSection = new Bp\Template\SeoSection;
+                $ar['PROPS'][$arResult['ITEMS'][$checked_filt_id]["CODE"]][0]=$check_el['URL_ID'];
+                $check_el['VALUE'] = $BP_TEMPLATE->str_fst_upper($obSeoSection->getFullName($ar,$arResult['SECTION']['ID']));
+            }
 
             $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['TITLE'] = $check_el['VALUE'];
             $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['LINK'] = $BP_TEMPLATE->ChpuFilter()->convertOldToNew(form_empty_url().'filter/'.strtolower($arResult['ITEMS'][$checked_filt_id]["CODE"]).'-is-'.$check_el["URL_ID"].'/');
 
-            foreach($arResult['ITEMS'][$checked_filt_id]['VALUES'] as $value){
-                $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['ADDITIONAL'][] = array(
-                    'TITLE' => $value['VALUE'],
-                    'LINK' => $BP_TEMPLATE->ChpuFilter()->convertOldToNew(form_empty_url().'filter/'.strtolower($arResult['ITEMS'][$checked_filt_id]["CODE"]).'-is-'.$value["URL_ID"].'/')
-                );
+            if(!in_array($checked_filt_id,$arExcludes)){
+                foreach($arResult['ITEMS'][$checked_filt_id]['VALUES'] as $value){
+                    $APPLICATION->arAdditionalChain['FILTERS'][$checked_filt_id]['ADDITIONAL'][] = array(
+                        'TITLE' => $value['VALUE'],
+                        'LINK' => $BP_TEMPLATE->ChpuFilter()->convertOldToNew(form_empty_url().'filter/'.strtolower($arResult['ITEMS'][$checked_filt_id]["CODE"]).'-is-'.$value["URL_ID"].'/')
+                    );
+                }
             }
             //}
         }

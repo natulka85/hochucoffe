@@ -26,6 +26,9 @@
   }
   &__content{
     padding: 20px 34px;
+    @media #{$media-640} {
+      padding: 40px 24px;
+    }
   }
   &__img{
     width: 200px;
@@ -48,12 +51,19 @@
       font-size: 18px;
       line-height: 26px;
       text-align: center;
+      @media #{$media-640} {
+        font-size: 16px;
+        line-height: 20px;
+      }
     }
     &._type-3{
       text-align: center;
       font-family: "Istok Web",sans-serif;
       font-size: 26px;
       line-height: 28px;
+      @media #{$media-640} {
+        font-size: 22px;
+      }
     }
     &._type-4{
       font-size: 18px;
@@ -70,6 +80,11 @@
   &__btn-wrap{
     display: flex;
     justify-content: space-between;
+    @media #{$media-640} {
+      .popup__btn{
+        font-size: 16px;
+      }
+    }
   }
   &__btn{
     width: 49%;
@@ -200,4 +215,41 @@
     z-index: 1;
     padding: 40px 34px;
   }
+}
+
+.popup__box.add_to_cart{
+  .popup__footer{
+    padding: 5px 20px 20px 20px;
+    font-size: 18px;
+    text-align: center;
+    @media #{$media-640} {
+      padding: 5px 5px 20px 5px;
+      font-size: 16px;
+    }
+  }
+  .diagram{
+    width: 130px;
+    height: 130px;
+    margin: auto;
+    margin-top: 10px;
+  }
+  .is-green{
+    color: $green;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .is-blue{
+    color: $blue;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .popup__amount{
+    margin-bottom: 10px;
+  }
+  .popup__content{
+    @media #{$media-640} {
+      padding: 20px;
+    }
+  }
+
 }

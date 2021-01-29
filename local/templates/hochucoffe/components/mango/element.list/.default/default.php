@@ -4,6 +4,15 @@
 echo "</pre>";*/
 ?>
 <?if(count($arResult['ITEMS'])>0):?>
+<?if($arParams['MOD_TITTLE']!=''):?>
+        <div class="page-block-head is-center"><h2 class="page-title _type-2"><?=$arParams['MOD_TITTLE']?></h2>
+            <?if($arParams['MOD_BTN_MORE']!=''):?>
+                <a href="<?=$arParams['MOD_BTN_MORE']?>"
+                   class="page-title-link">Смотреть все</a>
+                <?endif;?>
+
+        </div>
+    <?endif;?>
     <?if($arParams['DISPLAY_TOP_PAGER']=='Y'):?>
         <div class="catg__list-control">
             <div class="mob__mob-control">
@@ -43,5 +52,6 @@ echo "</pre>";*/
         <?endif;?>
         <?=$arResult['NAV_STRING']?>
     <?endif;?>
+
 <?endif;?>
 

@@ -22,7 +22,7 @@
             </div>
         <?endif;?>
     <div class="catg__img js-slide-ix-block">
-        <div class="catg__fast js-do" data-action="fast_card" data-id="<?=$arItem['ID']?>">Быстрый просмотр</div>
+        <div class="catg__fast js-do" data-action="fast_card" data-id="<?=$arItem['ID']?>" data-from="<?=$arParams['data_from']?>">Быстрый просмотр</div>
         <a href="<?=$arItem['DETAIL_PAGE_URL']?>" class="js-slide-ix-target">
             <img src="<?=$arItem['DEFAULT_IMAGE']['SRC']?>" alt="<?=$arItem['DEFAULT_IMAGE']['ALT']?>" loading="lazy" data-index="0" class="catg__img-el">
             <?if(!empty($arItem["MORE_IMAGE"])):?>
@@ -92,7 +92,15 @@
             <span class="catg__name is-rus"><?=$arItem['NAME']?></span>
             <span class="catg__name is-eng"><?=$arItem['PROPERTIES']['NAME_ENG']['VALUE']?></span>
         </a>
-        <div class="catg__short"><?=$arItem['PROPERTIES']['VKUS']['VALUE_FORMATTED']?></div>
+        <?
+        $tip = false;
+        $tip = $arItem['PROPERTIES']['VKUS']['TIP'];?>
+        <div class="catg__short <?if($tip):?>js-tip<?endif;?>"><?=$arItem['PROPERTIES']['VKUS']['VALUE_FORMATTED']?></div>
+        <?if($tip):?>
+            <div class="tip"><?=$arItem['PROPERTIES']['VKUS']['TIP']?></div>
+        <?endif;?>
+
+
         <div class="catg__control">
             <div class="catg__select-block">
                 <div class="cst-select-list js-sort-list"><span
@@ -126,10 +134,13 @@
                 <div class="catg__sravn btn-sravn" title="В разработке" style="color: #b2b5b7 !important;cursor: default"></div>
                 <div class="catg__like btn-like js-do" data-state="N" data-img="<?=$arItem['DEFAULT_IMAGE']['SRC']?>" data-action="delay_change" data-id="<?=$arItem['ID']?>"></div>
             </div>
-            <div class="catg__btn btn <?=$arItem['STATE']['BUTTON_CLASS']?> js-do" data-action="<?=$arItem['STATE']['JS_ACTION']?>" data-id="<?=$arItem['ID']?>"
+            <?if($arItem['STATE']['BUTTON_TEXT']!=''):?>
+            <div class="catg__btn btn <?=$arItem['STATE']['BUTTON_CLASS']?> js-do" data-action="<?=$arItem['STATE']['JS_ACTION']?>" data-id="<?=$arItem['ID']?>" onclick="<?=$arParams['EVENTS']['v_korzinu']?>"
             <?foreach ($arItem['STATE']['DATA'] as $data=>$dataVal):?><?=$data?>="<?=$dataVal?>"<?endforeach;?>
             ><span><?=$arItem['STATE']['BUTTON_TEXT']?></span></div>
+    <?endif;?>
         </div>
     </div>
+    <?//echo $arItem['PROPERTIES']['AUTOSORT']['VALUE'];?>
 </div>
 <?if($arParams['MOD_AJAX']==''):?></div><?endif;?>

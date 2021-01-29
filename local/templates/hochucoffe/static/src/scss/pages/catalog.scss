@@ -1,6 +1,7 @@
 @import "../utils/assets";
 @import "../blocks/filter";
 @import "../blocks/menu-catalog";
+@import "../blocks/pomol";
 .catalog{
   //padding: 0 34px;
   padding-bottom: 100px;
@@ -41,6 +42,12 @@
     &.is-right{
       background: url(/local/templates/hochucoffe/static/dist/images/bg/vet_r.png) no-repeat  -22px 2%;
       background-size: 82% auto;
+    }
+  }
+  .pomol{
+    margin-top: 0;
+    @media #{$media-640} {
+      margin-top: -20px;
     }
   }
 }
@@ -84,7 +91,7 @@
 
 @media #{$media-640} {
   .catalog {
-    padding: 0;
+    padding: 0 0 50px 0;
 
     .catg {
       &__item {
@@ -108,7 +115,7 @@
       margin-top: 60px;
     }
 
-    .your-viewed {
+    /*.your-viewed {
       margin-top: 40px;
       margin-bottom: 100px;
       width: calc(100% + 20px);
@@ -126,7 +133,7 @@
       .catg__item{
         margin-right: 0;
       }
-    }
+    }*/
   }
   .menu-catalog{
     display: block;

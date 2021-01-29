@@ -39,7 +39,7 @@ if(count($arData['delay'])>0):?>
                                     </div>
                                 </div>
                                 <div class="basket__el-control">
-                                    <div class="basket__cont-btn-wrap">
+                                    <div class="basket__cont-btn-wrap _type-1">
                                         <?$inBasket = false;?>
                                         <?if(isset($arData['basket'][$prod_id])) $inBasket=true;?>
                                         <div class="basket__cont-btn btn-basket <?if(!$inBasket):?>js-do<?else:?>is-active<?endif;?>" data-action="basket_change" data-q="1" data-id="<?=$prod_id?>" <?foreach($arResult['TMPL_PROPS_DOP_OPTIONS'] as $k => $v):?>

@@ -1,0 +1,9 @@
+@import '../utils/vars';
+.policy{
+  a{
+    color: $green;
+    &:hover{
+      color: $grafit;
+    }
+  }
+}

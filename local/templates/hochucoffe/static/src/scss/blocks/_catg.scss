@@ -195,6 +195,9 @@
   &__rait{
     flex-grow: 1;
     justify-self: flex-end;
+    @media #{$media-640} {
+      align-self: flex-end;
+    }
     .catg__stars{
       justify-content: flex-end;
     }
@@ -206,6 +209,9 @@
   &__raiting{
     color: $orange;
     position: relative;
+    @media #{$media-640} {
+      top: 10px;
+    }
   }
   &__raiting-cnt{
     font-family: Helvetica,sans-serif;
@@ -241,6 +247,12 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    &+.tip{
+      bottom: 110px;
+      @media #{$media-640} {
+        display: none;
+      }
+    }
   }
   &__img{
     height: 180px;
@@ -556,7 +568,7 @@
   min-width: 100%;
   margin-top: 4px;
   display: none;
-  z-index: 101;
+  z-index: 999;
 }
 .cst-select-option{
   transition: .3s;

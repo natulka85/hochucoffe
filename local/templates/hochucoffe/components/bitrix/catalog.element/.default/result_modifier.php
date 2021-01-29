@@ -1,5 +1,4 @@
 <? if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
-
 global $BP_TEMPLATE;
 if(isset($arResult)) {
 
@@ -135,6 +134,11 @@ if(isset($arResult)) {
         $arResult['PROPERTIES']['VKUS']['VALUE_FORMATTED'] =  $vkus;
         unset($vkus);
     }
+    if(count($arResult['PROPERTIES']['SPOSOB_PRIGOTOVLENIYA']['VALUE'])>0){
+        $sposob_pregotovleniya = strtolower(implode(' / ',$arResult['PROPERTIES']['SPOSOB_PRIGOTOVLENIYA']['VALUE']));
+        $arResult['PROPERTIES']['SPOSOB_PRIGOTOVLENIYA']['VALUE'] =  $sposob_pregotovleniya;
+        unset($sposob_pregotovleniya);
+    }
 
     if($arResult['PROPERTIES']['WEIGHT_VAR']['~VALUE']!=''){
         $arResult['PROPERTIES']['WEIGHT_VAR_AR'] = json_decode($arResult['PROPERTIES']['WEIGHT_VAR']['~VALUE'],TRUE);
@@ -154,11 +158,13 @@ $arResult['TMPL_PROPS'] =[
     '_STRANA',
     'REGION_PROIZRASTANIYA',
     'GOD_UROGAYA',
+    'VISOTA_PROIZRASTANIYA',
     'SPOSOB_OBRABOTKI',
     "SPOSOB_PRIGOTOVLENIYA",
 ];
 $arResult['TMPL_PROPS_DOP_OPTIONS'] = $BP_TEMPLATE->Catalog()->dopProperties;
-
+$arResult['POMOL_TIPS'] = $BP_TEMPLATE->pomolSposob;
+$arResult['POMOL_TIPS_TEMP'] = $BP_TEMPLATE->pomolSposobTem;
 $arPropertiesLink = [
     'OCENKA_SCA',
     '_SOSTAV',

@@ -1,0 +1,32 @@
+.cons{
+  margin-top: 10px;
+  .main-checkbox__span{
+    font-size: 10px;
+    line-height: 12px;
+    color: $grayMiddle;
+    padding-left: 30px;
+    &>a{
+      transition: .3s;
+      border-bottom: 1px solid transparent;
+      &:hover{
+        border-bottom-color: $grafit;
+      }
+    }
+    &:after,
+    &:before{
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+    }
+    &:before{
+      font-size: 12px;
+    }
+    &:after{
+      border-color: $grayMiddle;
+    }
+  }
+  .main-checkbox__checkbox:checked+.main-checkbox__span:after,
+  .main-checkbox.is-active:checked+.main-checkbox__span:after{
+    background: $grayBrown;
+  }
+}

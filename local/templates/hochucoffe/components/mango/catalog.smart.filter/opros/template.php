@@ -25,34 +25,37 @@ global $BP_TEMPLATE;?>
         <div class="form__content-wrap"></div>
         <form class="index-form" name="smartfilter" id="smartfilter" action="<?echo $BP_TEMPLATE->ChpuFilter()->convertOldToNew($arResult["FORM_ACTION"])?>" method="get" >
             <div class="index-form__fields">
+               <!-- <?/*
                 <div class="index-form__quest">Какой сорт кофе предпочитаете?</div>
                 <div class="index-form__field-group">
                     <?
                     $checked = 'checked';
-                    foreach($arResult["ITEMS"]['SECTION']['VALUES'] as $sect_id =>$sect):?>
-                    <?if($sect['CHECKED']=='Y') $checked=''?>
+                    foreach($arResult["ITEMS"]['SECTION']['VALUES'] as $sect_id =>$sect):*/?>
+                    <?/*if($sect['CHECKED']=='Y') $checked=''*/?>
                         <div class="index-form__field">
                             <label class="index-form__label">
-                                <input class="index-form__radio main-checkbox__checkbox" type="radio" name="section_id" data-section_code="<?=$sect['CODE']?>" value="<?=$sect_id?>" <?if($sect['CHECKED']=='Y'):?> checked <?endif;?>>
-                                <span class="main-checkbox__span is-radio index-form__span"><?=$sect['VALUE']?></span>
-                                <svg width='15' height='14' viewbox='0 0 15 14' fill='none'>
-                                    <path d='M2 8.36364L6.23077 12L13 2'></path>
-                                </svg>
+                                <input class="index-form__radio main-checkbox__checkbox" type="radio" name="section_id" data-section_code="<?/*=$sect['CODE']*/?>" value="<?/*=$sect_id*/?>" <?/*if($sect['CHECKED']=='Y'):*/?> checked <?/*endif;*/?>>
+                                <span class="main-checkbox__span is-radio index-form__span"><?/*=$sect['VALUE']*/?></span>
+
 
                             </label>
                         </div>
-                    <?endforeach;?>
+                    <?/*endforeach;*/?>
                     <div class="index-form__field">
                         <label class="index-form__label">
-                            <input class="index-form__radio main-checkbox__checkbox" type="radio" name="section_id" value="<?=$BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE?>" <?=$checked?>>
+                            <input class="index-form__radio main-checkbox__checkbox" type="radio" name="section_id" value="<?/*=$BP_TEMPLATE->getConstants()->IBLOCK_MAIN_TYPE*/?>" <?/*=$checked*/?>>
                             <span class="main-checkbox__span is-radio index-form__span">Все люблю</span>
                         </label>
                     </div>
                 </div>
+                ?>-->
+
                 <?foreach($arResult["arConstruct"] as $key=>$struct):?>
                     <div class="index-form__quest"><?=$struct?></div>
-                    <div class="index-form__field-group">
+                    <div class="index-form__field-group-wr">
+                        <div class="index-form__field-group">
                         <?item_tmpl('O', $arResult["ITEMS"][$key],$arResult["ITEMS"][$key]['Q_OPENED']);?>
+                        </div>
                     </div>
                 <?endforeach;?>
                 <?//избавляемся от filter/clear/ в коде html

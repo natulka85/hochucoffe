@@ -8,10 +8,8 @@ var objSetupScroll ={
 
 
 $(function () {
-    console.log('test');
+
     //Barba.Pjax.start();
-
-
     var curUrl = window.location.href;
     if (curUrl.indexOf('#') > 0) {
         var data = parceAjaxUrl(curUrl);
@@ -64,6 +62,8 @@ $(function () {
     searchHint();
     changeCardList();
     inputValid();
+    footerMenu();
+    Ya();
 
     $("input[name='phone']").mask("+7(999)999-99-99");
 })
@@ -74,6 +74,16 @@ $(window).on('resize', function () {
         scaleHTML();
     }
 })
+function Ya(){
+    $(document).on('click','#cleversite_call', function(){
+        ym(71202064,'reachGoal','click_knopka_callback')
+        console.log('YM:click_knopka_callback');
+    })
+    $(document).on('click','#cleversite_clever_button', function(){
+        console.log('YM:click_knopka_chat');
+        ym(71202064,'reachGoal','click_knopka_chat');
+    })
+}
 function inputValid(){
     $('input,textarea').each(function(){
         if($(this).val()!=='' && $(this).val() !== '+7(___)___-__-__'){
@@ -148,9 +158,6 @@ function StickyMy(parent,element,num=0){
             }
             else{
                 element.removeClass('isFixedBottom').removeClass('isFixed');
-                if($flagLogoHeader){
-                    logoInHeader(logo_elem);
-                }
             }
         }
     }
@@ -236,23 +243,73 @@ function select(){
 }
 function HeaderSticky(){
     // When the user scrolls the page, execute myFunction
-    window.onscroll = function() {HeaderStickyD()};
 
 // Get the header
-    var header = document.getElementById("header");
+    var header = $(".header");
+    var mainMenu = $(".main-menu");
+    var height = header.outerHeight();
+    header.css({'height':height});
+    var scrollVal;
     if(header!=undefined){
-        var sticky = header.offsetTop;
-        var clone = $(header).clone(true);
+        HeaderStickyD();
+        /*var scroll = $(window).scrollTop();
+        if(scroll>=height){
+            header.addClass('is-sticky');
+            //console.log('rr');
+        }
+        else{
+            HideSticky();
+            //console.log('ss');
+        }*/
+
+        window.onscroll = function() {HeaderStickyD()};
+
 // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
         function HeaderStickyD() {
-            if (window.pageYOffset >= sticky + 10) {
-                clone.addClass('is-sticky').prependTo( ".content" );
-            } else {
-                $("#header.is-sticky").remove();
+            var scroll = $(window).scrollTop();
+            var validScroll = true;
+            if(window.outerWidth <= 640){
+                if($('.main-menu__list').is('.is-opened')){
+                    validScroll = false;
+                }
             }
+            if(validScroll){
+                if(scroll>=height && scroll<(height*4+20)) {
+                    if(!header.is('.is-sticky')){
+                        header.addClass('is-sticky');
+                        console.log('1',scroll);
+                    }
+
+                }
+                else if(scroll<(height*4+20)){
+                    if(header.is('.is-sticky')){
+                        HideSticky();
+                        console.log('2',scroll);
+                    }
+                }
+                else if(scroll<scrollVal && scroll>(height*4+20)){
+                    if(!header.is('.is-sticky')){
+                        header.addClass('is-sticky');
+                        console.log('3');
+                    }
+                }
+                else if(scroll>scrollVal && scroll>height*4){
+                    if(header.is('.is-sticky')){
+                        HideSticky();
+                        console.log('4');
+                    }
+
+                }
+                scrollVal = scroll;
+            }
+
+        }
+        function HideSticky(){
+            header.removeClass('is-sticky');
+            $('.search.is-opened').removeClass('is-opened');
+            closeMainMenu();
         }
     }
-
 }
 // AJAXRELOAD PARCE URL
 function parceAjaxUrl(url) {
@@ -373,7 +430,7 @@ function reloadPage(url, data, mode, nothistory=false) {
                             $('.page-title._type-1').text(h1);
                             $('.page-title-note').text(nav_cnt);
                             $('.catalog__text .page-text').html(text);
-                            $('.cloud').replaceWith(cloud);
+                            $('.js-ajax-top').replaceWith(cloud);
                             moreContent();
                         }
                         else if(mode === 'filter_opros'){
@@ -529,6 +586,10 @@ function adaptiveContent() {
             $('.footer._type-1').removeClass('_type-1').addClass('_type-2 _changed')
         }
 
+        if($('.pers-info.is-moved').length === 0){
+            console.log('fff');
+            $('.pers-info:not(.is-moved)').prependTo('.content').addClass('is-moved');
+        }
     }
     else{
         if($('.footer._type-2._changed').length > 0){
@@ -536,21 +597,27 @@ function adaptiveContent() {
         }
     }
 
-
 }
-
+function closeMainMenu(){
+    $('.main-menu__list.is-opened').removeClass('is-opened');
+    $('.main-menu__burger.is-menu.is-active').removeClass('is-active');
+}
 function searchBtn(){
     $(document).on('click','.search__btn',function(e){
         $(this).parents('.search').toggleClass('is-opened');
     })
-    $(document).on('click','.search:not(".is-opened") button',function (e) {
+    $(document).on('click','.search:not(.is-opened) button',function (e) {
         e.preventDefault();
         $(this).parents('.search').addClass('is-opened');
     })
-    $(document).on('mouseenter','.search__btn',function (e) {
-        e.preventDefault();
-        $(this).parents('.search').addClass('is-opened');
-    })
+    if(window.outerWidth>640){
+        $(document).on('mouseenter','.search__btn',function (e) {
+            e.preventDefault();
+            $(this).parents('.search').addClass('is-opened');
+            closeMainMenu();
+        })
+    }
+
     /*$(document).on('mouseleave','.search:not(".is-opened") button',function (e) {
         e.preventDefault();
         $(this).parents('.search').removeClass('is-opened');
@@ -568,6 +635,7 @@ function searchBtn(){
             domElem.is('.is-opened')) { // и не по его дочерним элементам
             //target.click();
             domElem.removeClass('is-opened');
+            $('.search-hint-ajax').empty();
         }
     });
 }
@@ -774,6 +842,20 @@ function NoTarget(){
             && domElem.has(e.target).length === 0) { // и не по его дочерним элементам
             domElem.removeClass('is-opened');
         }
+        var domElem = $('.main-menu__list');
+        var target = $('.js-link.is-menu');
+        if (!domElem.is(e.target) // если клик был не по нашему блоку
+            && domElem.has(e.target).length === 0
+            && !target.is(e.target)
+            && target.has(e.target).length === 0) { // и не по его дочерним элементам
+            closeMainMenu();
+        }
+
+        var domElem = $('.footer-menu__b');
+        if (!domElem.is(e.target) // если клик был не по нашему блоку
+            && domElem.has(e.target).length === 0) { // и не по его дочерним элементам
+            $('.footer-menu__b').removeClass('is-opened');
+        }
     });
 }
 function initProductDetailPhotoGallery() {
@@ -861,9 +943,11 @@ function inDelay($id,$state)
 }
 function inDelayList(objs)
 {
-    objs.forEach(function(item, i, arr) {
-        inDelay(item,'Y');
-    });
+    if(objs && objs.length>0){
+        objs.forEach(function(item, i, arr) {
+            inDelay(item,'Y');
+        });
+    }
 }
 
 function initScrollGoal() {
@@ -940,12 +1024,14 @@ function Anchor(){
 function menuBurger(){
     $(document).on('click','.js-link.is-menu', function(e){
         e.preventDefault();
-        if($('.main-menu__item-wrap.is-opened-sub').length>0){
+       /* if($('.main-menu__item-wrap.is-opened-sub').length>0){
             $('.main-menu__item-wrap.is-opened-sub .main-menu__item-btn').trigger('click');
         }
         else{
             $('.main-menu__list').toggleClass('is-opened');
-        }
+        }*/
+        $('.main-menu__list').toggleClass('is-opened');
+        $('.main-menu__burger.is-menu').toggleClass('is-active');
 
     })
     $(document).on('click', '.main-menu__item-btn',function(e){
@@ -957,9 +1043,15 @@ function menuBurger(){
                 $('.main-menu__item-wrap.is-opened-sub').removeClass('is-opened-sub');
             }
             $(this).parents('.main-menu__item-wrap').toggleClass('is-opened-sub');
-
         }
     })
+    if(window.outerWidth>640){
+        $(document).on('mouseenter', '.main-menu__item-wrap',function(e){
+            e.preventDefault();
+            $('.main-menu__item-wrap.is-opened-sub').removeClass('is-opened-sub');
+            $(this).addClass('is-opened-sub');
+        })
+    }
 }
 
 function initSliderImageMove(){
@@ -1015,9 +1107,9 @@ function  searchHint(){
             domElem.find('.search-hint-ajax').empty();
         }*/
     });
-    /*$(document).on('click','.search-hint__btn-close',function (e){ // событие клика по веб-документу
-        $(this).parents('.search-tip-ajax').empty();
-    });*/
+    $(document).on('click','.search-hint__btn-close',function (e){ // событие клика по веб-документу
+        $(this).parents('.search-hint-ajax').empty();
+    });
 }
 
 function changeCardList(){
@@ -1056,4 +1148,17 @@ function flyProd(elem){
             }
 
     }
+}
+
+function footerMenu(){
+    $(document).on('click','.footer-menu__btn',function(){
+        //$('.footer-menu__b').removeClass('is-opened');
+        //$(this).parents('.footer-menu__b').addClass('is-opened');
+        if($(this).parents('.footer-menu__b.is-opened').length>0){
+        }
+        else{
+            $('.footer-menu__b.is-opened').removeClass('is-opened');
+        }
+        $(this).parents('.footer-menu__b').toggleClass('is-opened');
+    })
 }

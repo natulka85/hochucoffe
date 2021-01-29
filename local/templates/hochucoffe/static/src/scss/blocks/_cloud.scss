@@ -4,6 +4,9 @@
     margin-bottom: 30px;
     font-weight: 500;
     font-size: 16px;
+    @media #{$media-640} {
+      margin-bottom: 20px;
+    }
   }
   &__list{
     display: flex;
@@ -21,17 +24,6 @@
     margin-right: 18px;
     margin-bottom: 14px;
     @include ShadowLight();
-    &:hover{
-      border-color: $bege;
-      background: $grayLight;
-      @include BorderPen($bege);
-    }
-    &.is-active{
-      border-color: $bege;
-      @include BorderPen($bege);
-      //box-shadow: none;
-      //box-shadow: inset 2px 2px 0 $bege, 1px 1px 0 $bege;
-    }
   }
   &__link{
     display: block;
@@ -62,7 +54,23 @@
     padding: 8px 10px;
   }
 }
-
+.cloud__list.is-standard{
+  .cloud{
+    &__item{
+      &:hover{
+        border-color: $bege;
+        background: $grayLight;
+        @include BorderPen($bege);
+      }
+      &.is-active{
+        border-color: $bege;
+        @include BorderPen($bege);
+        //box-shadow: none;
+        //box-shadow: inset 2px 2px 0 $bege, 1px 1px 0 $bege;
+      }
+    }
+  }
+}
 @media #{$media-640} {
   .cloud{
     margin-bottom: 30px;

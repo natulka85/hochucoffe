@@ -4,14 +4,16 @@ $this->setFrameMode(true);
 <?if(count($arResult['ITEMS'])>0):?>
 <section class="cloud" data-show_more="block" data-show_more_height="70">
     <div class="cloud__title">Возможно Вас заинтересует:</div>
-    <div class="cloud__list" data-show_more="content">
+    <div class="cloud__list is-standard" data-show_more="content">
         <?foreach ($arResult['ITEMS'] as $arItem):?>
             <div class="cloud__item<?if($arItem['ACTIVE']=='Y'):?> is-active<?endif;?>">
-                <a class="cloud__link" href="<?=$arItem['LINK']?>"><?=$arItem['NAME']?>
+                <a class="cloud__link" href="<?=$arItem['LINK']?>">
+                    <?=$arItem['NAME']?>
                     <?if($arItem['CNT']!=''):?>
-                        <span class="cloud__num">50</span>
+                        <span class="cloud__num"><?=$arItem['CNT']?></span>
                     <?endif;?>
-                </a></div>
+                </a>
+            </div>
         <?endforeach;?>
     </div>
     <div class="cloud__btn-more btn is-bege">

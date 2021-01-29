@@ -220,10 +220,9 @@ class Catalog
             && $PRICE1>1
         ) {
             $arResult['NAME'] = 'STATE_OUTSTOCK';
-            $arResult['BUTTON_TEXT'] = 'Под заказ';
+            $arResult['BUTTON_TEXT'] = '';
             $arResult['BUTTON_COLOR'] = 'buy-order';
-            $arResult['TEXT'] = 'Под заказ';
-            $arResult['TEXT_CARD'] = 'Под заказ';
+            $arResult['TEXT'] = 'Нет в наличии';
 
             if($PRICE2>0 && $PRICE2<$PRICE1)
             {
@@ -382,7 +381,7 @@ class Catalog
     }
     public function getSortList($iblock_id = 1, $type, $section_id)
     {
-        //if($type=='')
+        if($type=='')
             $type =  'ALL_CAT';
 
         $arData = json_decode($this->arConsts['VAR_'.$iblock_id]['VALUE'],true);

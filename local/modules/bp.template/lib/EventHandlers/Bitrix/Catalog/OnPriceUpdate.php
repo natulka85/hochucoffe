@@ -22,6 +22,7 @@ class OnPriceUpdate extends BaseEvent
         {
             $arPrice = \CCatalogProduct::GetOptimalPrice($arFields['PRODUCT_ID']);
             \CIBlockElement::SetPropertyValuesEx($arFields['PRODUCT_ID'], $iblock_id, array("OPTIMAL_PRICE" => $arPrice["PRICE"]["PRICE"]));
+
         }
     }
 }

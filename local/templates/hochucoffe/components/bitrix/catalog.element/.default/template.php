@@ -4,6 +4,7 @@ use \Bitrix\Main\Localization\Loc;
 $this->setFrameMode(true);
 ?>
 <div class="js-prod-ajax">
+    <div class="prod__content">
 <div class="prod__head">
     <h1 class="page-title _type-1"><?=$arResult['NAME']?></h1>
     <div class="prod__name is-eng"><?=$arResult['PROPERTIES']['NAME_ENG']['VALUE']?></div>
@@ -135,6 +136,13 @@ $this->setFrameMode(true);
                     <div class="prod__fields">
                         <?foreach ($arResult['PROPERTIES'][$dopProp]['VALUE'] as $keyVal=>$value):?>
                         <div class="prod__field">
+                            <?if($arResult['POMOL_TIPS'][$value]!=''):?>
+                                <div class="prod__field-tip">
+                                    <?foreach ($arResult['POMOL_TIPS'][$value] as $tip):?>
+                                        <div class="prod__field-icon <?=$arResult['POMOL_TIPS_TEMP'][$tip]['icon']?>" title="<?=$arResult['POMOL_TIPS_TEMP'][$tip]['name']?>"></div>
+                                    <?endforeach;?>
+                                </div>
+                            <?endif;?>
                             <div class="prod__form-btn-choose js-do<?if($arResult['STATE']['DATA_AR'][$dopProp][2] == $value):?> is-active
                             <?elseif ($value == $dopValue['DEFAULT_VALUE']):?> is-active<?endif;?>" data-action="card_params"  data-cur_id="<?=$arResult['ID']?>" data-code="<?=$dopProp?>" data-name="<?=$dopValue['NAME_PROP']?>" data-value="<?=$value?>">
                                 <?=$value?></div>
@@ -168,12 +176,16 @@ $this->setFrameMode(true);
                 <div class="prod__avail-block">
                     <div class="prod__avail"><?=$arResult['STATE']['TEXT']?></div>
                 </div>
+                <?if($arResult['STATE']['BUTTON_TEXT']!=''):?>
                 <div class="prod__deliv"><span>Бесплатная</span> доставка при заказе от 5000 ₽</div>
                 <div class="prod__link-bl js-do" data-action="form_cheaper">Хочу дешевле!</div>
                 <div class="prod__deliv-info"><span>Доставка на:</span> 26.12.2020</div>
                 <div class="prod__btn-wrap">
+
                     <div class="prod__btn btn is-buy js-do" data-id="<?=$arResult['ID']?>" data-action="basket_change" <?foreach ($arResult['STATE']['DATA'] as $data=>$dataVal):?><?=$data?>="<?=$dataVal?>"<?endforeach;?>>В корзину</div>
+
                 </div>
+            <?endif;?>
             </div>
         </div>
     </div>
@@ -326,6 +338,8 @@ $this->setFrameMode(true);
 
 
     </div>
+
+</div>
 </div>
 
 <section class="page-kartochka__screen-two">
@@ -334,6 +348,19 @@ $this->setFrameMode(true);
 <section class="page-kartochka__screen-three">
     <?include_once($_SERVER['DOCUMENT_ROOT'].'/local/php_interface/ajax/analogs.php');?>
 </section>
+<section class="page-kartochka__screen-four">
+    <?
+    $APPLICATION->IncludeComponent(
+        "mango:cache.set",
+        "cloud-element",
+        [
+            //'SECTION_ID' => $arResult['SECTION_ID'],
+            'PROPS' => $arResult['PROPERTIES'],
+        ],
+        false
+    );
+    ?>
+</section>
 <script>
     $(function (){
         if(window.outerWidth > 640){
@@ -341,4 +368,5 @@ $this->setFrameMode(true);
         }
     })
 </script>
+
 </div>

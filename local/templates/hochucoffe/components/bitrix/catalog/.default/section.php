@@ -80,7 +80,7 @@ if (!isset($arCurSection))
     );?>
 
 
-<div class="page-block-head"><h1 class="page-title _type-1"><?=$APPLICATION->ShowProperty('h1');?></h1>
+<div class="page-block-head"><?=$APPLICATION->ShowProperty('h1');?>
     <span class="page-title-note">товаров <?=$APPLICATION->ShowProperty('NavRecordCount')?></span>
 </div>
 <div class="catalog__text">
@@ -95,16 +95,35 @@ if (!isset($arCurSection))
 <?if($_REQUEST["catalog_ajax_call"] == "Y") {
 
     ob_start();
+}?>
+<div class="js-ajax-top"><?
+$FilterProps = $BP_TEMPLATE->SeoSection()->convertUrlToCheck($url);
+if(count($FilterProps['PROPS'])==1 && count($FilterProps['PROPS']['SPOSOB_PRIGOTOVLENIYA'])==1){
+    ?> <section class="pomol"><?
+    $APPLICATION->IncludeComponent(
+        "mango:cache.set",
+        "sposobi_zav",
+        [
+            "IBLOCK_TYPE" => 'content',
+            "IBLOCK_ID" => 8,
+            "ID_PROP" => $FilterProps['PROPS']['SPOSOB_PRIGOTOVLENIYA'][0],
+        ],
+        false
+    );?></section><?
 }
-$APPLICATION->IncludeComponent(
-    "mango:cache.set",
-    "cloud-section",
-    [
-        'SECTION_ID' => $arCurSection['ID'],
-        'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE']
-    ],
-    false
-);?>
+else{
+    $APPLICATION->IncludeComponent(
+        "mango:cache.set",
+        "cloud-section",
+        [
+            'SECTION_ID' => $arCurSection['ID'],
+            'SECTION_CODE' => $arResult['VARIABLES']['SECTION_CODE']
+        ],
+        false
+    );
+}
+?>
+</div>
 <?if ($_REQUEST["catalog_ajax_call"] == "Y")
 {
     $strAjaxCloud = ob_get_clean();
@@ -165,12 +184,13 @@ $APPLICATION->IncludeComponent(
         ?>
 
         <div class="js-ajax-content">
+
             <?
             //global $arrFilter;
-
             $arParams["PAGE_ELEMENT_COUNT"] = $BP_TEMPLATE->Catalog()->arCount;
             //sort
             $arSort = $BP_TEMPLATE->Catalog()->getCurSort($_REQUEST['sort'],$arParams["IBLOCK_ID"],$arParams['CATEGORY_TYPE'], $arCurSection['ID']);
+
             //pre($arParams['CATEGORY_TYPE']);
             //pre($arSort);
             $arParams["ELEMENT_SORT_FIELD"] = $arSort['prop'];
@@ -200,7 +220,11 @@ $APPLICATION->IncludeComponent(
                 'MOD_SECTION_TYPE' => $arResult['SECTION_TYPE'],
                 'MOD_AR_SECTION' => $arResult['SECTION_BY_TYPE'],
                 'CATEGORY_TYPE' => $arParams['CATEGORY_TYPE'],
-                'MOD_SECTION_INPUT' => $arResult['SECTION_INPUT']
+                'MOD_SECTION_INPUT' => $arResult['SECTION_INPUT'],
+                'data_from' => 'catalog',
+                'EVENTS' => [
+                    'v_korzinu' => 'ym(71202064,\'reachGoal\',\'click_v_korziny_katalog\')'
+                ]
             ];
 
             $APPLICATION->IncludeComponent(
@@ -225,7 +249,7 @@ $APPLICATION->IncludeComponent(
 
         ?>
     </div>
-    <div class="inner" style="clear: both">
+    <div style="clear: both">
         <? include ($_SERVER['DOCUMENT_ROOT'].'/local/templates/hochucoffe/includes/you_viewed.php');?>
         <div class="catalog__text-box"></div>
     </div>
@@ -244,7 +268,9 @@ if($APPLICATION->GetPageProperty("withoutmeta")!='Y')
 {
     $APPLICATION->SetPageProperty("title", $title);
     $APPLICATION->SetPageProperty("description", $desc);
-    $APPLICATION->SetPageProperty("h1", $h1);
+    if($h1!=''){
+        $APPLICATION->SetPageProperty("h1", '<h1 class="page-title _type-1">'.$h1.'</h1>');
+    }
     $APPLICATION->SetPageProperty("text", $text);
 }
 $strAjaxBreadcrumbs = $APPLICATION->GetNavChain(array('s1', false), 0, '/local/templates/hochucoffe/components/bitrix/breadcrumb/simple/template.php', true, false);

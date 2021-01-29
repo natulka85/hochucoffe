@@ -153,6 +153,14 @@
 }
 @mixin standardP(){
     p {
+        &:last-child{
+            margin-bottom: 0;
+        }
+        &:first-child{
+            margin-top: 0;
+        }
+
+        font-size: 16px;
         line-height: 1.86;
         @media screen and(max-width: 640px){
             font-size: 14px;
@@ -162,10 +170,10 @@
 }
 
 @mixin standardHH(){
-    h1,
+   /* h1,
     h1.name-page{
         margin-bottom: 25px;
-    }
+    }*/
     h2{
         font-size: 28px;
         margin: 25px 0;
@@ -263,37 +271,192 @@
 }
 @mixin niceScroll(){
     &::-webkit-scrollbar { width: 4px; height: 4px;}
-    &::-webkit-scrollbar-button {  background-color: $bege; }
+    &::-webkit-scrollbar-button {  background-color: #F1F1F1;
+        height: 0;}
     &::-webkit-scrollbar-track {  background-color: $bege;}
     &::-webkit-scrollbar-track-piece { background-color: #F1F1F1;}
     &::-webkit-scrollbar-thumb { height: 16px; background-color: $bege; border-radius: 2px;}
     &::-webkit-scrollbar-corner { background-color: #999;}
     &::-webkit-resizer { background-color: #666;}
 }
+//$p_bege:#FDD6AA;
+$p_bege:#ffcfab;
+$p_pink:#FDAAE4;
+$p_green:#90ee90;
+$p_blue:#8fe7fc;
+$p_fiol:#d5aafd;
+$p_lred:#ffa181;
+$p_yellow:#ffe581;
+$p_tred:#fe9898;;
 @mixin pomolColor(){
-    &.is-franch{
-        background: #fdd8a9;
+    &.is-french-press{
+        background: $p_bege;
     }
-    &.is-kem{
-        background: #fda9d0;
+    &.is-kemeks{
+        background: $p_pink;
     }
-    &.is-aero{
-        background: #acf29b;
+    &.is-aeropress{
+        //background: #AAFDB2;
+        background: $p_green;
     }
-    &.is-kofe{
-        background: #d5aafd;
+    &.is-kapelnaya-kofevarka{
+        //background: #AAEDFD;
+        background: $p_blue;
     }
-    &.is-sif{
+    &.is-kofemashina{
+        background: $p_fiol;
+    }
+    &.is-sifon{
         background: #9beef2;
     }
     &.is-turka{
-        background: #ffa181;
+        background: $p_lred;
     }
-    &.is-pur{
-        background: #feec55;
+    &.is-purover{
+        background: $p_yellow;
     }
-    &.is-kapsul{
+    &.is-kapsuly{
         background: #fdbd3a;
+    }&.is-moka{
+        background: $p_tred;
+    }
+}
+@mixin pomolColorImp(){
+    &.is-french-press{
+        .main-text__border{
+            border-color: $p_bege;
+            background: lighten($p_bege,16%);
+        }
+        .main-text__border-name{
+            color: darken($p_bege,20%);
+        }
+    }
+    &.is-kemeks{
+        .main-text__border{
+            border-color: $p_pink;
+            background: lighten($p_pink,16%);
+        }
+        .main-text__border-name{
+            color: darken($p_pink,20%);
+        }
+    }
+    &.is-aeropress{
+        //background: #AAFDB2;
+        .main-text__border{
+            border-color: $p_green;
+            background: lighten($p_green,23%);
+        }
+        .main-text__border-name{
+            color: darken($p_green,26%);
+        }
+    }
+    &.is-kapelnaya-kofevarka{
+        //background: #AAEDFD;
+        .main-text__border{
+            border-color: $p_blue;
+            background: lighten($p_blue,20%);
+        }
+        .main-text__border-name{
+            color: darken($p_blue,30%);
+        }
+    }
+    &.is-kofemashina{
+        .main-text__border{
+            border-color: $p_fiol;
+            background: lighten($p_fiol,16%);
+        }
+        .main-text__border-name{
+            color: darken($p_fiol,20%);
+        }
+    }
+    &.is-sifon{
+        //background: #9beef2;
+
+    }
+    &.is-turka{
+        .main-text__border{
+            border-color: $p_lred;
+            background: lighten($p_lred,23%);
+        }
+        .main-text__border-name{
+            color: darken($p_lred,20%);
+        }
+    }
+    &.is-purover{
+        .main-text__border{
+            border-color: $p_yellow;
+            background: lighten($p_yellow,22%);
+        }
+        .main-text__border-name{
+            color: darken($p_yellow,30%);
+        }
+    }
+    &.is-kapsuly{
+        background: #fdbd3a;
+    }&.is-moka{
+             .main-text__border{
+                 border-color: $p_tred;
+                 background: lighten($p_tred,19%);
+             }
+             .main-text__border-name{
+                 color: darken($p_tred,20%);
+             }
+     }
+}
+@mixin pomolVal(){
+    &.is-french-press{
+        &:after{
+            width: 20px;
+            height: 20px;
+        }
+    }
+    &.is-kemeks{
+        &:after{
+            width: 18px;
+            height: 18px;
+        }
+    }
+    &.is-kapelnaya-kofevarka{
+        &:after{
+            width: 16px;
+            height: 16px;
+        }
+    }
+    &.is-purover{
+        &:after{
+            width: 14px;
+            height: 14px;
+        }
+    }
+    &.is-moka{
+        &:after{
+            width: 12px;
+            height: 12px;
+        }
+    }
+    &.is-aeropress{
+        &:after{
+            width: 10px;
+            height: 10px;
+        }
+    }
+    &.is-kofemashina{
+        &:after{
+            width: 10px;
+            height: 10px;
+        }
+    }
+    &.is-kapsuly{
+        &:after{
+            width: 8px;
+            height: 8px;
+        }
+    }
+    &.is-turka{
+        &:after{
+            width: 6px;
+            height: 6px;
+        }
     }
 }
 
@@ -369,7 +532,8 @@
         border: 1px solid $grafit;
         &:hover{
             border-color: $blue;
-            @include gradient('blue');
+            background: $blue;
+            //@include gradient('blue');
             color: $white;
         }
     }
@@ -459,4 +623,9 @@
     &>.page-title-link{
         margin-left: 0;
     }
+}
+@mixin hideScroll(){
+    &::-webkit-scrollbar { width: 0; }
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
 }

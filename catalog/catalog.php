@@ -44,9 +44,12 @@ else
 
 //die();
 //$_SERVER['REQUEST_URI'] = str_replace('tipy',$_REQUEST['SECTION_CODE'],$_SERVER['REQUEST_URI']);
-
-//preg_match('/catalog\/[\w\-]+\//', $_SERVER['REQUEST_URI'], $output_array);
-if($_SERVER['REQUEST_URI']=='/catalog/'){
+$urlcheck = $_SERVER['REQUEST_URI'];
+if(strpos($urlcheck,'?')!==false){
+    $urlcheck = stristr($_SERVER['REQUEST_URI'],'?',TRUE);
+}
+preg_match('/catalog\/[\w\-]+\//', $urlcheck, $output_array);
+if($urlcheck=='/catalog/'){
     $CategoryType = "ALL_CAT";
 }
 elseif(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/')!==false)
@@ -63,7 +66,7 @@ elseif(strpos($_SERVER['REQUEST_URI'], '/catalog/filter/')!==false)
     {
         $CategoryType =  "BRAND";
     } elseif(
-        strpos($_SERVER['REQUEST_URI'], 'aktsiya-is-true')!==false
+        strpos($_SERVER['REQUEST_URI'], 'akciya-is-true')!==false
         && count($arUrl)<3
     )
     {
@@ -97,7 +100,7 @@ elseif($output_array[0]!=='')  //section+prim
         )
             $CategoryType = "STOCK_SECTION";
         elseif(
-            strpos($_SERVER['REQUEST_URI'], '_novinka-is-156fcd84-55c9-11e4-844e-d4ae52a11316')!==false
+            strpos($_SERVER['REQUEST_URI'], '_novinka-is-9d124cee396945c97e8c0c6231eda56a')!==false
         )
             $CategoryType =  "NEW_SECTION";
         else
@@ -105,6 +108,7 @@ elseif($output_array[0]!=='')  //section+prim
     }
 }
 
+//echo $CategoryType;
 
 // Доработка для D7 от версии 15.5
 //для того что бы сработал новый $_SERVER['REQUEST_URI']

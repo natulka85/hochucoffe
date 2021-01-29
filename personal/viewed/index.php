@@ -19,9 +19,8 @@ CModule::IncludeModule("sale");?>
             "SITE_ID" => "s1"
         )
     );?>
-    <div class="page-block-head">
-        <div class="page-block-head"><h1 class="page-title _type-1">Кофе, который Вы смотрели</h1></div>
-    </div>
+
+    <div class="page-block-head"><h1 class="page-title _type-1">Кофе, который Вы смотрели</h1></div>
 
 
 <?

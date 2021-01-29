@@ -113,8 +113,19 @@ if(isset($arResult['ITEMS'])) {
         $arResult['ITEMS'][$key] = array_merge($arItemsAdditional, $arItem);
 
         if(count($arItem['PROPERTIES']['VKUS']['VALUE_ENUM'])>0){
+            $arResult['ITEMS'][$key]['PROPERTIES']['VKUS']['TIP'] = false;
             $vkus = $BP_TEMPLATE->str_fst_upper(mb_strtolower(implode(', ',$arItem['PROPERTIES']['VKUS']['VALUE_ENUM'])));
-            $arResult['ITEMS'][$key]['PROPERTIES']['VKUS']['VALUE_FORMATTED'] =  $vkus;
+
+            $leng = 75;
+            if(strlen($vkus) > $leng){
+                $shotName = substr($vkus, 0, $leng);
+                $arResult['ITEMS'][$key]['PROPERTIES']['VKUS']['VALUE_FORMATTED'] = substr($shotName, 0, strrpos($shotName, ' ')).'...';
+                $arResult['ITEMS'][$key]['PROPERTIES']['VKUS']['TIP'] = $vkus;
+            }
+            else{
+                $arResult['ITEMS'][$key]['PROPERTIES']['VKUS']['VALUE_FORMATTED'] = $vkus;
+            }
+
             unset($vkus);
         }
 
@@ -157,13 +168,12 @@ if(isset($arResult['ITEMS'])) {
         ,$arResult["NAV_STRING"]
     );
     //sort
-
     if(count($arParams['SORT_LIST'])>0){
         $arPart = explode('_', $arParams["SORT_CODE"]);
 
         if(strpos($arParams["SORT_CODE"],'_min')!==false||
             strpos($arParams["SORT_CODE"],'_max')!==false) {
-            if (isset($arParams['SORT_LIST'][$arParams["SORT_CODE"]])) {
+            if (isset($arParams['SORT_LIST'][$arPart[0].'_min']) && isset($arParams['SORT_LIST'][$arPart[0].'_max'])) {
                 unset($arParams['SORT_LIST'][$arParams["SORT_CODE"]]);
             }
         }
@@ -184,7 +194,6 @@ if(isset($arResult['ITEMS'])) {
 
         }
 }
-
 if($arParams['CATEGORY_TYPE']!='ONE_CARD'){
     $NavFirstRecordShow = ($arResult["NAV_RESULT"]->NavPageNomer-1)*$arResult["NAV_RESULT"]->NavPageSize+1;
     if ($arResult["NAV_RESULT"]->NavPageNomer != $arResult["NAV_RESULT"]->NavPageCount)

@@ -180,14 +180,8 @@
 }
 @media #{$media-640} {
   .contacts{
-    padding: 20px 10px;
-    .breadcrumbs,.page-block-head{
-      padding-left: 10px;
-    }
     &__card{
       flex-wrap: wrap;
-      width: calc(100% + 20px);
-      margin-left: -10px;
     }
     &__visit{
       width: 100%;
@@ -241,9 +235,10 @@
     }
     &__text {
       margin-top: 22px;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 22px;
       margin-bottom: 24px;
+      padding: 0 20px;
     }
     &__soc-block{
       margin-top: 20px;

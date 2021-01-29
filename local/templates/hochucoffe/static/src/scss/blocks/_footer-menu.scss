@@ -1,0 +1,86 @@
+.footer-menu{
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 34px;
+  @media #{$media-640} {
+    flex-wrap: wrap;
+    padding-top: 20px;
+  }
+  &__title{
+    font-family: IstokWeb, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  &__b{
+    position: relative;
+    @media #{$media-640} {
+      width: 50%;
+      flex-grow: 1;
+      &.is-opened{
+        .footer-menu__sub{
+          opacity: 1;
+          height: initial;
+          visibility: visible;
+        }
+        .footer-menu__btn{
+          &:before{
+            animation: smaller .8s;
+            content: '\E01B';
+            transition: .3s;
+          }
+        }
+      }
+    }
+  }
+  &__btn{
+    display: none;
+    position: absolute;
+    right: 12px;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding-top: 2px;
+    transition: .3s;
+    &:before{
+      display: inline-block;
+      animation: bigger .8s;
+    }
+    @media #{$media-640} {
+      display: block;
+    }
+  }
+  &__s-item{
+    font-size: 14px;
+    line-height: 16px;
+    &:not(:last-child){
+      margin-bottom: 20px;
+    }
+    &>a{
+      transition: .3s;
+      color: $grayMiddle;
+      &:hover{
+        color: $grafit;
+      }
+    }
+  }
+  &__sub{
+    @media #{$media-640} {
+      transition: .3s;
+      opacity: 0;
+      height: 0;
+      visibility: hidden;
+      position: absolute;
+      background: $white;
+      z-index: 1;
+      width: 100%;
+      padding: 20px;
+      border-radius: 10px;
+      @include mainBoxshadow();
+    }
+  }
+}

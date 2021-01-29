@@ -179,6 +179,66 @@
 	@if $filename == 3b_eye {
 	$char: "\E032";
 }
+	@if $filename == 3c_kem {
+	$char: "\E033";
+}
+	@if $filename == 3d_franch {
+	$char: "\E034";
+}
+	@if $filename == 3e_aero {
+	$char: "\E035";
+}
+	@if $filename == 3f_pur {
+	$char: "\E036";
+}
+	@if $filename == 3g_espres {
+	$char: "\E037";
+}
+	@if $filename == 3h_turka {
+	$char: "\E038";
+}
+	@if $filename == 3i_sif {
+	$char: "\E039";
+}
+	@if $filename == 3j_sp {
+	$char: "\E03A";
+}
+	@if $filename == 3k_pom {
+	$char: "\E03B";
+}
+	@if $filename == 3l_temp {
+	$char: "\E03C";
+}
+	@if $filename == 3m_wat {
+	$char: "\E03D";
+}
+	@if $filename == 3n_timer {
+	$char: "\E03E";
+}
+	@if $filename == 3o_fb {
+	$char: "\E03F";
+}
+	@if $filename == 3p_ok {
+	$char: "\E040";
+}
+	@if $filename == 3r_vk {
+	$char: "\E041";
+}
+	@if $filename == 3s_in {
+	$char: "\E042";
+}
+	@if $filename == 3t_phone {
+	$char: "\E043";
+}
+	@if $filename == 3u_mail {
+	$char: "\E044";
+}
+	@if $filename == 3v_point {
+	$char: "\E045";
+}
+	@if $filename == 3x_phone {
+	$char: "\E046";
+}
 
 @return $char;
 }
@@ -343,4 +403,64 @@
 }
 .icon-3b_eye {
 	@include icon(3b_eye);
+}
+.icon-3c_kem {
+	@include icon(3c_kem);
+}
+.icon-3d_franch {
+	@include icon(3d_franch);
+}
+.icon-3e_aero {
+	@include icon(3e_aero);
+}
+.icon-3f_pur {
+	@include icon(3f_pur);
+}
+.icon-3g_espres {
+	@include icon(3g_espres);
+}
+.icon-3h_turka {
+	@include icon(3h_turka);
+}
+.icon-3i_sif {
+	@include icon(3i_sif);
+}
+.icon-3j_sp {
+	@include icon(3j_sp);
+}
+.icon-3k_pom {
+	@include icon(3k_pom);
+}
+.icon-3l_temp {
+	@include icon(3l_temp);
+}
+.icon-3m_wat {
+	@include icon(3m_wat);
+}
+.icon-3n_timer {
+	@include icon(3n_timer);
+}
+.icon-3o_fb {
+	@include icon(3o_fb);
+}
+.icon-3p_ok {
+	@include icon(3p_ok);
+}
+.icon-3r_vk {
+	@include icon(3r_vk);
+}
+.icon-3s_in {
+	@include icon(3s_in);
+}
+.icon-3t_phone {
+	@include icon(3t_phone);
+}
+.icon-3u_mail {
+	@include icon(3u_mail);
+}
+.icon-3v_point {
+	@include icon(3v_point);
+}
+.icon-3x_phone {
+	@include icon(3x_phone);
 }

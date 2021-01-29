@@ -1,0 +1,65 @@
+.f-subscribe{
+  margin-top: 20px;
+  max-width: 230px;
+  @media #{$media-640} {
+    max-width: 300px;
+    margin: 20px auto 10px auto;
+  }
+  &__title{
+    font-family: Istok Web,sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: $grayMiddle;
+    margin-bottom: 10px;
+    text-align: center;
+    @media #{$media-640} {
+
+    }
+  }
+  &__form{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__field{
+    position: relative;
+    width: 80%;
+    padding-bottom: 6px;
+  }
+  &__input{
+    background: $grayLight;
+    border: 1px solid $grayMiddle;
+    border-radius: 10px 0px 0px 10px;
+    height: 36px;
+    line-height: 36px;
+    width: 100%;
+    &::placeholder{
+      color: $grayLight;
+    }
+  }
+  &__btn{
+    background: $grayLight;
+    border: 1px solid $grayMiddle;
+    border-radius: 0px 10px 10px 0px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    width: 20%;
+    margin-left: -1px;
+    padding: 0;
+    cursor: pointer;
+    transition: .3s;
+    &:before{
+      font-size: 24px;
+    }
+    &:hover{
+      background: $blue;
+      //border-color: $green;
+      &:before{
+        color: $white;
+      }
+    }
+  }
+}

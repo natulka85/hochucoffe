@@ -18,22 +18,24 @@ global $BP_TEMPLATE;?>
         <div class="mob__btn-back icon-2m_arrow-l js-link is-filter"></div>
     </div>
     <?if(count($arResult["ACTIVE"])>0):?>
-    <div class="filter__info<?=$_REQUEST['ax_filter_class']?>">
-        <div class="filter__control-block">
-            <div class="filter__info-title">Выбранные фильтры</div>
-            <div class="filter__info-btn" data-all="Y">Cбросить все</div>
-        </div>
-        <?foreach ($arResult["ACTIVE"] as $name => $val):?>
-            <div class="filter__info-params">
-                <div class="filter__info-params-name"><?=$name?>:</div>
-                <?foreach ($val as $k=>$v):?>
-                    <div class="filter__info-params-value" data-id="<?=$k?>"><span><?=$v?></span>
-                        <div class="filter__remove icon-1o_krest"></div>
-                    </div>
-                <?endforeach;?>
+    <div class="filter__info-wr">
+        <div class="filter__info<?=$_REQUEST['ax_filter_class']?>">
+            <div class="filter__control-block">
+                <div class="filter__info-title">Выбранные фильтры</div>
+                <div class="filter__info-btn" data-all="Y">Cбросить все</div>
             </div>
-        <?endforeach;?>
-        <div class="filter__info-close icon-2a_plus"></div>
+            <?foreach ($arResult["ACTIVE"] as $name => $val):?>
+                <div class="filter__info-params">
+                    <div class="filter__info-params-name"><?=$name?>:</div>
+                    <?foreach ($val as $k=>$v):?>
+                        <div class="filter__info-params-value" data-id="<?=$k?>"><span><?=$v?></span>
+                            <div class="filter__remove icon-1o_krest"></div>
+                        </div>
+                    <?endforeach;?>
+                </div>
+            <?endforeach;?>
+            <div class="filter__info-close icon-2a_plus"></div>
+        </div>
     </div>
     <?endif?>
     <form class="filter__choose" name="smartfilter" id="smartfilter" action="<?echo $BP_TEMPLATE->ChpuFilter()->convertOldToNew($arResult["FORM_ACTION"])?>" method="get" >
@@ -91,5 +93,6 @@ global $BP_TEMPLATE;?>
         if(window.outerWidth > 640){
             StickyMy($('.filter__choose'), $('.filter__info:not(.noSticky)'),0);
         }
+        $('.filter__info-wr').css('height',$('.filter__info').outerHeight());
     })
 </script>

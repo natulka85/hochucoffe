@@ -2,8 +2,12 @@
 
 //if($arResult["VARIABLES"]["SECTION_CODE"]!='')
 //   $APPLICATION->AddHeadString('<meta name="robots" content="noindex, nofollow">');
+
 $this->setFrameMode(true);
-global $BP_TEMPLATE;
+global $BP_TEMPLATE;?>
+<div class="articles-page-detail">
+
+<?php
 
 $ElementID = $APPLICATION->IncludeComponent(
     "bitrix:news.detail",
@@ -60,3 +64,61 @@ $ElementID = $APPLICATION->IncludeComponent(
     $component
 );
 ?>
+    <div class="articles-detail__more-art">
+        <div class="page-block-head is-center"><h2 class="page-title _type-2">Читайте также</h2>
+            <a href="/articles/"
+               class="page-title-link">Смотреть все</a></div>
+<?
+global $artFilter;
+$artFilter['!=ID'] = $ElementID;
+$APPLICATION->IncludeComponent(
+    "bitrix:news.list",
+    "",
+    Array(
+        "IBLOCK_TYPE"	=>	$arParams["IBLOCK_TYPE"],
+        "IBLOCK_ID"	=>	$arParams["IBLOCK_ID"],
+        "NEWS_COUNT"    =>   6,
+        'SORT_LIST' => '',
+        "SORT_BY1"	=>	$arParams["ELEMENT_SORT_FIELD"],
+        "SORT_ORDER1"	=>	$arParams["ELEMENT_SORT_ORDER"],
+        "SORT_BY2"	=>	$arParams["ELEMENT_SORT_CODE"],
+        "SORT_ORDER2"	=>	$arParams["ELEMENT_SORT_ORDER"],
+        'SORT_CODE' => $arParams["ELEMENT_SORT_CODE"],
+        "FIELD_CODE"	=>	$arParams["LIST_FIELD_CODE"],
+        "PROPERTY_CODE"	=>	$arParams["LIST_PROPERTY_CODE"],
+        "DETAIL_URL"	=>	$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["detail"],
+        "SECTION_URL"	=>	$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["section"],
+        "IBLOCK_URL"	=>	$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["news"],
+        "DISPLAY_PANEL"	=>	$arParams["DISPLAY_PANEL"],
+        "SET_TITLE"	=>	$arParams["SET_TITLE"],
+        "SET_STATUS_404" => $arParams["SET_STATUS_404"],
+        "INCLUDE_IBLOCK_INTO_CHAIN"	=>	$arParams["INCLUDE_IBLOCK_INTO_CHAIN"],
+        "CACHE_TYPE"	=>	$arParams["CACHE_TYPE"],
+        "CACHE_TIME"	=>	$arParams["CACHE_TIME"],
+        "CACHE_FILTER"	=>	$arParams["CACHE_FILTER"],
+        "CACHE_GROUPS" => $arParams["CACHE_GROUPS"],
+        "DISPLAY_TOP_PAGER"	=>	'N',
+        "DISPLAY_BOTTOM_PAGER"	=>	'N',
+        "PAGER_TITLE"	=>	$arParams["PAGER_TITLE"],
+        "PAGER_TEMPLATE"	=>	$arParams["PAGER_TEMPLATE"],
+        "PAGER_SHOW_ALWAYS"	=>	$arParams["PAGER_SHOW_ALWAYS"],
+        "PAGER_DESC_NUMBERING"	=>	$arParams["PAGER_DESC_NUMBERING"],
+        "PAGER_DESC_NUMBERING_CACHE_TIME"	=>	$arParams["PAGER_DESC_NUMBERING_CACHE_TIME"],
+        "PAGER_SHOW_ALL" => $arParams["PAGER_SHOW_ALL"],
+        "DISPLAY_DATE"	=>	$arParams["DISPLAY_DATE"],
+        "DISPLAY_NAME"	=>	"Y",
+        "DISPLAY_PICTURE"	=>	$arParams["DISPLAY_PICTURE"],
+        "DISPLAY_PREVIEW_TEXT"	=>	$arParams["DISPLAY_PREVIEW_TEXT"],
+        "PREVIEW_TRUNCATE_LEN"	=>	$arParams["PREVIEW_TRUNCATE_LEN"],
+        "ACTIVE_DATE_FORMAT"	=>	$arParams["LIST_ACTIVE_DATE_FORMAT"],
+        "USE_PERMISSIONS"	=>	$arParams["USE_PERMISSIONS"],
+        "GROUP_PERMISSIONS"	=>	$arParams["GROUP_PERMISSIONS"],
+        "FILTER_NAME"	=>	'artFilter',
+        "HIDE_LINK_WHEN_NO_DETAIL"	=>	$arParams["HIDE_LINK_WHEN_NO_DETAIL"],
+        "CHECK_DATES"	=>	$arParams["CHECK_DATES"],
+    ),
+    $component
+);?>
+    </div>
+
+</div>

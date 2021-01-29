@@ -464,16 +464,18 @@
     font-weight: 300;
     position: relative;
     display: flex;
+    align-items: center;
     justify-content: space-between;
     font-size: 16px;
     line-height: 20px;
-    padding: 6px 0;
+    padding: 6px 10px;
     &:nth-child(even){
       //background: $grayLight;
       background: #f8f8fb;
     }
   }
   &__main-param{
+    min-width: 40%;
     position: relative;
     z-index: 2;
     padding-right: 10px;
@@ -514,8 +516,106 @@
   }
   &__field{
     margin-top: 10px;
+    position: relative;
     &:not(:last-child){
       margin-right: 10px;
+    }
+    &:hover{
+      .prod__field-tip{
+        visibility: visible;
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+  &__field-tip{
+    position: absolute;
+    border-radius: 12px/50%;
+    border: 1px solid $grafit;
+    padding: 10px 20px;
+    @include mainBoxshadow();
+    bottom: calc(100% + 20px);
+    background: $white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    transform: scale(0);
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    z-index: 1;
+    @media #{$media-640} {
+      min-width: 140px;
+      flex-wrap: wrap;
+      padding: 10px;
+      justify-content: center;
+    }
+    &:before{
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 30px;
+      bottom: -16px;
+      border: 8px solid;
+      border-color: $grafit transparent transparent $grafit;
+    }
+    &:after{
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: 31px;
+      bottom: -14px;
+      border: 7px solid;
+      border-color: #fff transparent transparent #fff;
+    }
+  }
+  &__field-icon{
+    &:not(:last-child){
+      margin-right: 10px;
+    }
+    @media #{$media-640} {
+      margin-bottom: 6px;
+    }
+    &:before{
+      font-size: 40px;
+      color: $grayBrown;
+      @media #{$media-640} {
+        font-size: 30px;
+      }
+    }
+    &.icon-3e_aero{
+      &:before{
+        font-size: 46px;
+        @media #{$media-640} {
+          font-size: 36px;
+        }
+      }
+    }
+    &.icon-3g_espres{
+      &:before{
+        font-size: 46px;
+        @media #{$media-640} {
+          font-size: 30px;
+        }
+      }
+    }
+    &.icon-3i_sif{
+      &:before{
+        font-size: 46px;
+        @media #{$media-640} {
+          font-size: 36px;
+        }
+      }
+    }
+    &.icon-3h_turka{
+      &:before{
+        font-size: 30px;
+        @media #{$media-640} {
+          font-size: 20px;
+        }
+      }
     }
   }
   &__form-btn-choose{
@@ -653,6 +753,90 @@
     padding: 14px 16px;
     text-align: right;
   }
+  .cloud{
+    @media #{$media-640} {
+      width: calc(100% + 40px);
+      margin-left: -20px;
+    }
+  }
+  .cloud__item{
+    max-width: 180px;
+    min-width: 140px;
+    padding: 10px 5px;
+    min-height: 100%;
+    &:hover{
+      box-shadow: none;
+    }
+    @media #{$media-640} {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      scroll-margin-left: 15px;
+    }
+  }
+  .cloud__item-wr{
+      &:last-child{
+        @media #{$media-640} {
+          border-right: 15px solid transparent;
+        }
+      }
+  }
+  .cloud__img-wrap{
+    display: inline-block;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    border: 1px solid #ebebeb;
+    height: 100px;
+    width: 100px;
+    //box-shadow: 1px 1px 8px rgba(50,51,55,.1);
+    overflow: hidden;
+  }
+  .cloud__list{
+    justify-content: center;
+    align-items: stretch;
+    @media #{$media-640} {
+      justify-content: flex-start;
+      padding: 0 20px !important;
+      width: 100% !important;
+      scroll-snap-type: x mandatory;
+    }
+  }
+  .cloud__num{
+    text-align: center;
+    display: block;
+  }
+  .cloud__link{
+    height: 100%;
+    width: 100%;
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    @media #{$media-640} {
+      font-size: 14px;
+      padding: 0 10px;
+    }
+  }
+
+  .your-viewed{
+    margin-top: 30px;
+  }
+}
+.page-kartochka__screen-two,
+.page-kartochka__screen-tree,
+.page-kartochka__screen-four{
+  //margin-top: 30px;
+}
+@keyframes bulk {
+  0%{
+    transform: scale(0);
+  }
+  50%{
+    transform: scale(1.2);
+  }
+  100%{
+  transform: scale(1);
+}
 }
 @media screen and (min-width: 641px){
   .prod{
@@ -676,7 +860,7 @@
 }
 @media #{$media-640} {
   .prod {
-    padding: 1px 10px 30px 10px;
+    //padding: 1px 10px 30px 10px;
     .catg__star{
       line-height: 1;
       &:before{
@@ -719,8 +903,8 @@
       }
     }
     &__wrap{
-      width: calc(100% + 40px);
-      margin-left: -20px;
+      width: calc(100% + 20px);
+      margin-left: -10px;
     }
     &__link-text{
       font-size: 12px;
@@ -749,19 +933,21 @@
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      padding: 0 16px;
+      //padding: 0 16px;
     }
     &__main-char{
       padding-right: 0;
       order: 3;
       width: 100%;
+      .prod__main-title{
+        padding-left: 16px;
+      }
     }
     &__check-wrap{
       width: 100%;
       order: 1;
       margin-top: 26px;
       position: relative;
-
     }
     &__check{
       width: 100%;
@@ -808,17 +994,28 @@
     &__btn-wrap{
       position: fixed;
       bottom: 56px;
-      z-index: 1000;
+      z-index: 999;
       width: 100%;
       left: 0;
       background: $grayLight;
       padding: 10px 20px 8px 20px;
-      @include Shadow();
+      @include mainBoxshadow();
+      .count-block{
+        &__value,
+        &__btn{
+          height: 46px;
+          line-height: 46px;
+          width: 46px;
+        }
+      }
     }
     &__btn{
       max-width: 334px;
-      font-size: 22px;
+      //font-size: 22px;
       margin: auto;
+      font-size: 18px;
+      height: 46px;
+      line-height: 46px;
       &.is-review{
         margin-left: 0;
         font-size: 12px;
@@ -831,6 +1028,7 @@
     &__main-choose-bl{
       width: 100%;
       margin-bottom: 20px;
+      padding: 0 16px;
       &.is-weight {
         margin-top: 26px;
       }
@@ -848,6 +1046,7 @@
     }
     &__main-bl{
       font-size: 14px;
+      padding: 6px 20px;
     }
     &__bottom{
       width: 100%;
@@ -929,7 +1128,6 @@
         margin-right: 8px;
       }
     }
-
     &__btn-more {
       margin: 20px 0 30px 0;
       font-size: 14px;

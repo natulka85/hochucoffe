@@ -86,6 +86,3 @@ if ($_REQUEST["catalog_ajax_call"] == "Y")
     die();
 }
 ?>
-<?
-$popup_type = 'article-read';
-include_once($_SERVER["DOCUMENT_ROOT"].'/local/templates/vamsvet/include/popup-articles.php');?>

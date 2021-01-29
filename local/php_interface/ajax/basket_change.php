@@ -55,10 +55,13 @@ elseif($element_id>0){
         $sum = 0;
         foreach($_SESSION['bp_cache']['bp_user']['basket'] as $prod_id=>$arBasket)
         {
-            $sum = $sum + $_SESSION['bp_cache']['bp_user']['products'][$prod_id]['PRICE_1']*$arBasket['quantity'];
+            foreach ($arBasket as $val){
+                $sum = $sum + $_SESSION['bp_cache']['bp_user']['products'][$prod_id]['PRICE_1']*$val['quantity'];
+            }
         }
 
-        $free_delivary = $_SESSION['bp_cache']['bp_user']['city_data']['PROPERTY_FREE_DELIVERY_SUMM_VALUE'];
+        //$free_delivary = $_SESSION['bp_cache']['bp_user']['city_data']['PROPERTY_FREE_DELIVERY_SUMM_VALUE'];
+        $free_delivary = 5000;
 
         $arWordParts = [
             'Ж' => 'добавлена',
@@ -175,48 +178,82 @@ elseif($element_id>0){
             }
 
             $out .= '<div class="popup__btn-wrap">';
-            $out .= '<div class="popup__btn btn is-bege" onclick="window.location.href = \'/personal/basket/\';">Перейти в корзину</div>';
-            $out .= '<div class="popup__btn btn is-blue" onclick="flyProd($(this));closePopup();">Продолжить покупки</div>';
+            $out .= '<div class="popup__btn btn is-blue-s" onclick="window.location.href = \'/personal/basket/\';">Перейти в корзину</div>';
+            $out .= '<div class="popup__btn btn is-white" onclick="flyProd($(this));closePopup();">Продолжить покупки</div>';
             $out .= '</div>';
             $out .= '</div>';
             $out .= '<hr>';
 
             $dost_part = '';
+            $dost_part .= '<div class="popup__footer">';
             if($free_delivary>0)
             {
                 if($sum>$free_delivary)
                 {
-                    $dost_part .= '<div class="popup__row">';
-                    $dost_part .= '<span>В корзине товаров на сумму:</span>';
-                    $dost_part .= '<div class="popup_amount">'.\SaleFormatCurrency($sum, 'RUB').'</div>';
-                    $dost_part .= '</div>';
+
+                    $dost_part .= '<div class="popup__amount"><strong>В корзине товаров на сумму: </strong><span class="is-blue">'.\SaleFormatCurrency($sum, 'RUB').'</span></div>';
                     $dost_part .= '<div class="popup__dost">';
 
                     if($_SESSION['bp_cache']['bp_user']['city']=='Москва')
-                        $dost_part .= '<span>Ваша доставка - бесплатная по Москве!</span>';
+                        $dost_part .= '<span>Доставка по Москве - <span class="is-green">бесплатной</span> !</span>';
                     elseif($_SESSION['bp_cache']['bp_user']['city']=='Санкт-Петербург')
-                        $dost_part .= '<span>Ваша доставка - бесплатная по Санкт-Петербургу!</span>';
+                        $dost_part .= '';
                     else
-                        $dost_part .= '<span>Поздравляем, доставка до пункта выдачи будет бесплатной!</span>';
+                        $dost_part .= '';
 
-                    $dost_part .= '<img src="'.SITE_TEMPLATE_PATH.'/static/dist/images/general/delivery-truck.jpg">';
-                    $dost_part .= '<div class="line-deliver"></div>';
-                    $dost_part .= '</div>';
                 } else {
-                    $dost_part .= '<div class="popup__row">';
-                    $dost_part .= '<span>До бесплатной доставки осталось:</span>';
-                    $dost_part .= '<div class="popup_amount">'.\SaleFormatCurrency(($free_delivary-$sum), 'RUB').'</div>';
-                    $dost_part .= '</div>';
-                    $dost_part .= '<div class="popup__dost">';
-                    $dost_part .= '<img style="right: '.round(440*(($free_delivary-$sum)/$free_delivary)-10).'px; filter: gray; /* IE6-9 */ -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */ filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */" src="'.SITE_TEMPLATE_PATH.'/static/dist/images/general/delivery-truck.jpg">';
-                    $dost_part .= '<div class="line-deliver" style="background-position-x: '.round(-440*(($free_delivary-$sum)/$free_delivary)).'px;"></div>';
-                    $dost_part .= '</div>';
+                    $dost_part .= '<div class="popup__amount"><strong>В корзине товаров на сумму: </strong><span class="is-blue">'.\SaleFormatCurrency($sum, 'RUB').'</span></div>';
+                    $dost_part .= '<div>До бесплатной доставки осталось: <span class="is-green">'.\SaleFormatCurrency(($free_delivary-$sum), 'RUB').'</span></div>';
+                    $dost_part .= '<div class="diagram">
+    <div class="img_1">
+        <svg class="diagram__picture"
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             viewBox="0 0 300 300">
+            <defs>
+                <pattern id="image" x="0%" y="0%" height="100%" width="100%">
+                    <image x="0%" y="0%" width="100%" height="100%" xlink:href="/local/templates/hochucoffe/static/src/images/bg/coffe_chb.png"></image>
+                </pattern>
+                <clipPath id="clip-path">
+                    <circle cx="50%" cy="50%" r="50%"/>
+                </clipPath>
+
+                <mask id="mask">
+                    <rect width="100%" height="100%" fill="#000"/>
+                    <circle cx="50%" cy="50%" r="50%" fill="#fff" fill-opacity="0"/>
+                    <circle id="circle-progress"
+                            cx="52%" cy="52%" r="50%"
+                            fill="none" stroke="#fff" stroke-width="100%"
+                            stroke-dasharray="942.5" stroke-dashoffset="942.5"
+                            transform="rotate(-90 150 150)"/>
+                </mask>
+            </defs>
+            <circle id="sd" class="medium" cx="50%" cy="50%" r="50%" fill="url(#image)" stroke="none" stroke-width="0.5%"></circle>
+            <g mask="url(#mask)" clip-path="url(#clip-path)">
+                <image width="100%" height="100%"
+                       preserveAspectRatio="xMidYMid slice"
+                       xlink:href="/local/templates/hochucoffe/static/src/images/bg/coffe_cvet.png"/>
+            </g>
+        </svg>
+    </div>
+
+</div>
+<script>
+    function setPercent(perc) {
+        var circleProgress = document.querySelector("#circle-progress");
+        var tl = circleProgress.getTotalLength();
+        //console.log("'.$free_delivary.'--'.$sum.'","tl");
+        circleProgress.setAttribute("stroke-dashoffset", (1 - perc / 100) * tl);
+    }
+</script>';
                 }
+                $dost_part .= '</div>';
+
             }  else {
                 $summ_part = '';
                 $summ_part .= '<div class="popup__row">';
                 $summ_part .= '<span>В корзине товаров на сумму:</span>';
-                $summ_part .= '<div class="popup_amount">'.\SaleFormatCurrency($sum, 'RUB').'</div>';
+                $summ_part .= '<div class="popup__amount">'.\SaleFormatCurrency($sum, 'RUB').'</div>';
                 $summ_part .= '</div>';
 
             }
@@ -231,7 +268,15 @@ elseif($element_id>0){
         $out .= '<script>';
         //$out .= "$('body').prepend('<div class=\"shadow shadow-select\"></div>');";
         //$out .= 'flyProd(`'.$element_id.'`);';
+
         $out .= 'showPopup($(".popup"),{cssAuto:"true"});';
+        if($sum < $free_delivary){
+            $persent = 100 - round(($free_delivary-$sum)/$free_delivary*100);
+            $out.='setPercent('.$persent.');';
+        }
+        else{
+            $persent = 100;
+        }
         $out .= '$(".sbasket-refresh").click();';
         $out .= '$("#basket-refresh").click();';
         $out .= 'inBasket($(\'.js-do[data-id="'.$element_id.'"][data-action=basket_change]\'),'.$quant.','.$basket_id.','.$element_id.');';

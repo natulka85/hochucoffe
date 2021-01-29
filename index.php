@@ -144,6 +144,7 @@ global $BP_TEMPLATE;
         $prodFilter = array(
             "IBLOCK_ID" => $BP_TEMPLATE->getConstants()->IBLOCK_MAIN_ID,
             ">PROPERTY_OSTATOK_POSTAVSHCHIKA" => 0,
+            "=PROPERTY__HIT_PRODAZH" => 'true',
         );
         $APPLICATION->IncludeComponent(
             "mango:element.list",
@@ -163,7 +164,11 @@ global $BP_TEMPLATE;
                 "DISPLAY_BOTTOM_PAGER" => "N",
                 "PAGER_TEMPLATE" => "",
                 'MOD_ITEM_CLASS' => 'swiper-slide',
-                'MOD_LIST_CLASS' => 'swiper-wrapper'
+                'MOD_LIST_CLASS' => 'swiper-wrapper',
+                'data_from' => 'main',
+                'EVENTS' => [
+                        //'v_korzinu' => 'ym(71202064,\'reachGoal\',\'click_v_korziny_glavnaya\');'
+                ]
             ),
             false
         );?>
@@ -245,73 +250,19 @@ global $BP_TEMPLATE;
     <section class="pomol">
         <div class="page-block-head is-center"><h2 class="page-title _type-2">В чем завариваете кофе?</h2><a href="/catalog/"
                                                                                                              class="page-title-link">Перейти в каталог</a></div>
-        <div class="pomol__sw-cont swiper-container"><div class="pomol__list swiper-wrapper">
-                <div class="pomol__item-wrap swiper-slide">
-                    <div class="pomol__item is-franch">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_1.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_1_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Фрэнч-Пресс</div>
-                    </div>
-                </div>
-                <div class="pomol__item-wrap swiper-slide"><div class="pomol__item is-kem">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_2.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_2_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Кемекс</div>
-                    </div></div>
-                <div class="pomol__item-wrap swiper-slide"><div class="pomol__item is-aero">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_3.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_3_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Аэропресс</div>
-                    </div></div>
-                <div class="pomol__item-wrap swiper-slide"><div class="pomol__item is-sif">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_4.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_4_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Сифон</div>
-                    </div></div>
-                <div class="pomol__item-wrap swiper-slide">
-                    <div class="pomol__item is-pur">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_8.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_8_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Пуровер</div>
-                    </div>
-                </div>
-                <div class="pomol__item-wrap swiper-slide">
-                    <div class="pomol__item is-kofe">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_6.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_6_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Эспрессо</div>
-                    </div>
-                </div>
-                <div class="pomol__item-wrap swiper-slide"><div class="pomol__item is-kapsul">
-                        <div class="pomol__img">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_9.png" alt="">
-                            <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_9_c.png" alt="">
-                        </div>
-                        <div class="pomol__name">Капсуллы</div>
-                    </div></div>
-                <div class="pomol__item-wrap swiper-slide"><div class="pomol__item is-turka">
-                        <div class="pomol__img">
-                            <div class="pomol__img is-turka">
-                                <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_7.png" alt="">
-                                <img src="/local/templates/hochucoffe/static/dist/images/develop/pom_p_7_c.png" alt="">
-                            </div>
-                        </div>
-                        <div class="pomol__name">Турка</div>
-                    </div>
-                </div>
-            </div></div>
+        <?
+
+        $APPLICATION->IncludeComponent(
+            "mango:cache.set",
+            "sposobi_zav",
+            [
+                "IBLOCK_TYPE" => 'content',
+                "IBLOCK_ID" => 8,
+                'TARGET' => '_blank'
+            ],
+            false
+        );
+        ?>
         <div class="pomol__note">* В нашем Магазине при заказе зерного кофе Вы можете выбрать любой помол, а
             также степень обжарки !!!
         </div>
@@ -339,14 +290,18 @@ global $BP_TEMPLATE;
 
             "SECTION_ID" => "",
             "FILTER_NAME" => "prodFilter",
-            "SORT_FIELD" => "",
-            "SORT_ORDER" => "asc",
+            "SORT_FIELD" => "PROPERTY_DISCOUNT",
+            "SORT_ORDER" => "desc",
 
             "DISPLAY_TOP_PAGER" => "N",
             "DISPLAY_BOTTOM_PAGER" => "N",
             "PAGER_TEMPLATE" => "",
             'MOD_ITEM_CLASS' => 'swiper-slide',
-            'MOD_LIST_CLASS' => 'swiper-wrapper'
+            'MOD_LIST_CLASS' => 'swiper-wrapper',
+            'data_from' => 'main',
+            'EVENTS' => [
+                'v_korzinu' => 'ym(71202064,\'reachGoal\',\'click_v_korziny_glavnaya\')'
+            ]
         ),
         false
     );?>

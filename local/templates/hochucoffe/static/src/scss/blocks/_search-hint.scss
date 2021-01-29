@@ -30,6 +30,7 @@
     &:hover{
       border-color: $blue;
       background: $grayLight;
+      @include BorderPen($blue);
       &>a{
         text-decoration: none;
       }
@@ -51,11 +52,14 @@
     align-items: center;
     padding: 4px 10px;
     position: relative;
+    transition: .3s;
     &:not(:last-child){
       border-bottom: 1px dashed $grayBorder;
     }
     &:hover{
       text-decoration: none;
+      //@include mainBoxshadow();
+      //background: $grayLight;
     }
     .catg__labels .labels__item{
       &.is-sale{
@@ -90,6 +94,8 @@
     margin-right: 10px;
     display: block;
     position: relative;
+    border-radius: 8px;
+    overflow: hidden;
   }
   &__title{
     font-size: 16px;
@@ -121,6 +127,8 @@
   }
   &__price{
     font-size: 16px;
+    display: flex;
+    white-space: nowrap;
     s{
       padding-left: 2px;
       font-size: 14px;
@@ -128,6 +136,10 @@
       top: -10px;
       color: $grayBrown;
       white-space: nowrap;
+      @media #{$media-640} {
+        top: 0;
+        display: block;
+      }
     }
   }
   &__buy-info{
@@ -138,6 +150,9 @@
   &__name{
     font-size: 16px;
     padding-right: 130px;
+  }
+  &__btn-close{
+    @extend .popup__close;
   }
 }
 
@@ -152,19 +167,21 @@
       width: 100vw;
       right: -10px;
       left: auto;
-      top: 110px;
+      top: 115px;
     }
     .catg__labels .labels__items.is-left{
       display: none;
     }
     &__buy-info{
       position: static;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
     &__prods-name{
       font-size: 12px;
     }
     &__prods-img{
-      width: 60px;
+      width: 70px;
     }
     &__main-btn{
       .btn{

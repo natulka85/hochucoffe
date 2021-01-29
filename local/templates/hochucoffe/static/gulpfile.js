@@ -37,12 +37,15 @@ function logBabelMetadata() {
         cb(null, file);
     });
 }
-
-/*browserSync.init({
-    proxy: "http://hochucoffe.ru",
-    open: false,
-    port: 2222
+/*
+gulp.task('browserSync', function () {
+    browserSync({
+        server: {
+            baseDir: '/dist',
+        },
+    });
 });*/
+
 var path = {
     //папка куда складываются готовые файлы
     build: {
@@ -249,7 +252,7 @@ gulp.task('img:copy',function(){
 
 gulp.task('default', gulp.series(
     //'svg-task', //ломаеет иконки нафиг
-    'pug:build',
+    //'pug:build',
     'sass:build',
     'icons:build',
     'fonts:copy',
@@ -257,7 +260,7 @@ gulp.task('default', gulp.series(
     'js-libs',
     'style-libs',
     'compress:JS',
-    'compress:IMG',
+    //'compress:IMG',
     'watch', function(done) {
         done();
     }));

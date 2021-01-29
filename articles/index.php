@@ -1,7 +1,8 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
-$APPLICATION->SetTitle("Новости магазина зернового кофе");
+$APPLICATION->SetTitle("Статьи магазина зернового кофе");
 \Bitrix\Main\Page\Asset::getInstance()->addCss("/local/templates/hochucoffe/static/dist/css/articles-page.css");
+\Bitrix\Main\Page\Asset::getInstance()->addJs("/local/templates/hochucoffe/static/dist/js/articles.min.js");
 ?>
 <div class="articles-page">
 <?$APPLICATION->IncludeComponent("bitrix:breadcrumb","simple",Array(
@@ -35,6 +36,7 @@ $APPLICATION->SetTitle("Новости магазина зернового ко�
     "CACHE_TYPE" => "N",	// Тип кеширования
     "CACHE_TIME" => "3600",	// Время кеширования (сек.)
     "CACHE_FILTER" => "N",	// Кешировать при установленном фильтре
+    'FILTER_NAME'=> 'artFilter',
     "CACHE_GROUPS" => "Y",	// Учитывать права доступа
     "SET_TITLE" => "N",	// Устанавливать заголовок страницы
     "SET_STATUS_404" => "Y",	// Устанавливать статус 404, если не найдены элемент или раздел

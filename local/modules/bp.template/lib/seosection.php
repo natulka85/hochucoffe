@@ -15,7 +15,7 @@ class SeoSection
         '_HIT_PRODAZH','AKCIYA','WEIGHT',
     ];
 
-    protected function __construct()
+    public function __construct()
     {
         $dbConst = SettingsTable::getList(array(
             'select' => array('ID','NAME','CODE','VALUE'),
@@ -110,29 +110,31 @@ class SeoSection
             case 'ALL_CAT_FILTER' || 'SECTION_FILTER':
                 $arProps = self::convertUrlToCheck($page_url);
                 $text = '';
-                $arPredlog = json_decode($this->arConsts['SEO_predlog_1']['VALUE'], TRUE);
-                $arPredList = json_decode($this->arConsts['SEO_list_1']['VALUE'], TRUE);
-                foreach ($arProps['PROPS'] as $propCode=>$val){
-                    $ar = [];
-                    $ar['PROPS'][$propCode] = $val;
 
-                    $arVars['predlog_1'][] = str_replace('[prop_value]',$BP_TEMPLATE->str_fst_lower(self::getFullName($ar, $id)),$arPredlog[$propCode]);
-                    $arVars['list_1'][] = $arPredList[$propCode];
-                }
-                foreach ($arVars['predlog_1'] as $pred){
-                    if($pred!=''){
-                        $text .= '<p>'.$pred.'</p>';
-                    }
-                }
-                $text .= '<p>Для того, чтобы было проще ориентироваться во всем ассортименте нашего интернет-магазина, мы подготовили:</p>';
-                $text .= '<ul>';
+                if(count($arProps['PROPS'])==1 && count($arProps['PROPS'][array_keys($arProps['PROPS'])[0]][0])==1){
+                    $arPredlog = json_decode($this->arConsts['SEO_predlog_1']['VALUE'], TRUE);
+                    $arPredList = json_decode($this->arConsts['SEO_list_1']['VALUE'], TRUE);
+                    foreach ($arProps['PROPS'] as $propCode=>$val){
+                        $ar = [];
+                        $ar['PROPS'][$propCode] = $val;
 
-                foreach ($arVars['list_1'] as $list){
-                    if($list!=''){
-                        $text .= '<li>'.$list.'</li>';
+                        $arVars['predlog_1'][] = str_replace('[prop_value]',$BP_TEMPLATE->str_fst_lower(self::getFullName($ar, $id)),$arPredlog[$propCode]);
+                        $arVars['list_1'][] = $arPredList[$propCode];
                     }
-                }
-                $text .= '<li>Качественное описание каждого товара;</li>
+                    foreach ($arVars['predlog_1'] as $pred){
+                        if($pred!=''){
+                            $text .= '<p>'.$pred.'</p>';
+                        }
+                    }
+                    $text .= '<p>Для того, чтобы было проще ориентироваться во всем ассортименте нашего интернет-магазина, мы подготовили:</p>';
+                    $text .= '<ul>';
+
+                    foreach ($arVars['list_1'] as $list){
+                        if($list!=''){
+                            $text .= '<li>'.$list.'</li>';
+                        }
+                    }
+                    $text .= '<li>Качественное описание каждого товара;</li>
                                 <li>Оценки SCA;</li>
                                 <li>Страну и регион происхождения;</li>
                                 <li>Год урожая;</li>
@@ -167,6 +169,7 @@ class SeoSection
                             </ul>
                         </p>
                          <strong>Будем рады возможности побаловать Вас свежим и вкусным Кофе!</strong>';
+                }
                 return $text;
             default:
                 return '';
@@ -220,18 +223,6 @@ class SeoSection
 
     public function getCanonical($curDir)
     {
-        /*global $APPLICATION;
-        $page_url = $APPLICATION->getCurPage();
-
-        $dbConst = \Bp\Template\CanonicalTable::getList(array(
-            'select' => array('VALUE'),
-            'filter' => array('URL' => $page_url)
-        ));
-        if($arConst = $dbConst->Fetch())
-        {
-            if($arConst['VALUE']!='')
-                \Bitrix\Main\Page\Asset::getInstance()->addString('<link rel="canonical" href="https://www.vamsvet.ru'.$arConst['VALUE'].'">');
-        }*/
         if($curDir!='')
             \Bitrix\Main\Page\Asset::getInstance()->addString('<link rel="canonical" href="http://hochucoffe.ru'.$curDir.'">');
     }
@@ -312,8 +303,10 @@ class SeoSection
             $arPropsCodes = array_keys($arProps['PROPS']);
             foreach($arProps['PROPS'] as $prop_code=>$arValue)
             {
+                $i = 0;
                 foreach($arValue as $value)
                 {
+                    $i++;
                     //if($prop_code=='_STEPEN_ZASHCHITY_IP')
                     //    $value = 'IP'.$value;
                     $good_value = false;
@@ -322,6 +315,12 @@ class SeoSection
                         $value = $prop_code.'__'.$value;
                     }
                     $x = self::getSeoConst('props_x', $value);
+                    if($i>1){
+                        $x = self::getSeoConst('props_xalt', $value);
+                        if($x!=''){
+                            $x = ', '.$x;
+                        }
+                    }
                     if($x!='')
                     {
                         $arX[] = $x;
@@ -331,8 +330,14 @@ class SeoSection
                         $getfrom = 'props_y';
 
                     $y = self::getSeoConst($getfrom, $value);
+                    if($i>1){
+                        $y = self::getSeoConst('props_yalt', $value);
+                        if($y!=''){
+                            $y = ', '.$y;
+                        }
+                    }
 
-                    if($y!='' && $prop_code!='_PROIZVODITEL') $y = strtolower($y);
+                    //if($y!='' && $prop_code!='_PROIZVODITEL') $y = strtolower($y);
                     if($y!='')
                     {
                         $arY[] = $y;
@@ -347,11 +352,13 @@ class SeoSection
                     $good = true;
                 }
             }
+
             if($good)
             {
-                $out_x = implode(' ', $arX);
-                $out_y = implode(' ', $arY);
+                $out_x = str_replace(' , ',', ',implode(' ', $arX));
+                $out_y = str_replace(' , ',', ',implode(' ', $arY));
                 $out = mb_ucfirst(strtolower($out_x)).' '.strtolower(self::getSeoConst('secname', $id)).' '.$out_y;
+
                 return trim($out);
             } else
                 return '';
